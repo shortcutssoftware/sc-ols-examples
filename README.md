@@ -5,3 +5,7 @@ developers with the use of Shortcuts APIs.
 
 Each folder is an independent and self-contained example.
 
+Examples:
+
+* [Single Signon](single-signon/)
+
