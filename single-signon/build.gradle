@@ -1,0 +1,30 @@
+group 'com.shortcuts.example.single_signon'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5+")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web:1.5+"
+    compile "org.springframework.boot:spring-boot-starter-actuator:1.5+"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+springBoot {
+    mainClass = "com.shortcuts.example.single_signon.ApplicationsOnSeparatePorts"
+}

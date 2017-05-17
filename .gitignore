@@ -1,0 +1,11 @@
+.DS_Store
+*.xcuserstate
+.gradle
+gradle
+gradlew*
+.idea
+*.iml
+build
+out
+*.jar
+*.war
