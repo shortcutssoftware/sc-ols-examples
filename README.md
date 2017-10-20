@@ -8,6 +8,10 @@ folder is an independent and self-contained example.
 
 Shows a basic workflow using the Shrotcuts Widgets and Online Services with minimal changes from the widgets natural workflow order.
 
+## [API Javascript Sample](api-js-sample/)
+
+Shows sample implemenation against the API using JavaScript.
+
 ## [Single Signon](single-signon/)
 
 Shows how the single signon process works with Shortcuts 
