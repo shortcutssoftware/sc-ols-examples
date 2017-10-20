@@ -1,26 +1,25 @@
 const randomInt = require('random-int');
-const hmacSha1 = require('crypto-js/hmac-sha1')
-const base64 = require('crypto-js/enc-base64')
+const CryptoJS = require("crypto-js");
 const _ = require('underscore');
-
 const config = require('./config.js')
+const log = require('./log.js');
 
-var oauth = (function() {
+var oauth = (function () {
 
     function randomString(length, chars) {
         var result = '';
         for (var i = length; i > 0; --i) result += chars[randomInt(0, chars.length)];
         return result;
     }
-    
+
     function generateNonce() {
         return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     }
-    
+
     function generateTimestamp() {
         return Math.floor((new Date()).getTime() / 1000);
     }
-    
+
     function encode(value) {
         if (value == null) {
             return '';
@@ -41,8 +40,9 @@ var oauth = (function() {
         value = value.replace(/\)/g, "%29");
         return value;
     }
-    
-    function sign(method, url) {
+
+    function sign(method, url, options) {
+        var options = _.extend({}, options);
         // Parse the URL into parts
         // Note that we are currently assuming that the url is already in canonical format, i.e. standardized scheme, port and domain.
         var urlParts = url.split('?');
@@ -58,11 +58,11 @@ var oauth = (function() {
                 };
             });
         }
-    
+
         // Generate anti-replay values
-        var nonce = (this.generateNonce || generateNonce)();
-        var timestamp = (this.generateTimestamp || generateTimestamp)();
-    
+        var nonce = (options.generateNonce || generateNonce)();
+        var timestamp = (options.generateTimestamp || generateTimestamp)();
+
         // Generate the oauth parameters
         var oauthParams = [
             { key: 'oauth_consumer_key', value: encode(config.consumerKey) },
@@ -72,7 +72,7 @@ var oauth = (function() {
             { key: 'oauth_token', value: encode(config.accessTokenKey) },
             { key: 'oauth_version', value: '1.0' }
         ];
-    
+
         // Combine in the query paramaters and sort them.
         var sortedParams = _.union(queryParams, oauthParams).sort(function (left, right) {
             if (left.key < right.key) {
@@ -87,17 +87,23 @@ var oauth = (function() {
                 return 0;
             }
         });
-    
+        log.info('URL: %s', url);
+        log.info('Parameters: %s', JSON.stringify(sortedParams));
+
         // Format the parameters back into a single string.
         var formattedParams = _.map(sortedParams, function (param) {
             return param.key + '=' + param.value;
         }).join('&');
-    
+
         // Calculate the OAuth Signature
         var base = method + '&' + encode(url) + '&' + encode(formattedParams);
         var key = encode(config.consumerSecret) + '&' + encode(config.accessTokenSecret);
-        var signature = hmacSha1(base, key).toString(base64);
-    
+        var signatureBytes = CryptoJS.HmacSHA1(base, key);
+        var signature = signatureBytes.toString(CryptoJS.enc.Base64);
+
+        log.info('Signing %s with %s', base, key);
+        log.info('Resulting signature is %s', signature);
+
         // Compile the OAuth Header
         var authHeader =
             'OAuth realm="' + url + '", ' +
@@ -108,7 +114,7 @@ var oauth = (function() {
             'oauth_signature_method="' + 'HMAC-SHA1' + '", ' +
             'oauth_version="' + '1.0' + '", ' +
             'oauth_signature="' + encode(signature) + '"';
-    
+
         return authHeader;
     };
     return {
