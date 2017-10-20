@@ -21,12 +21,17 @@
     }
 
     function renderServiceSelectionWidget(target, siteId) {
-        return target.shortcutsWidget('booking/service-selection-list', { siteId: siteId });        
+
+        target.on(shortcuts.widgets.events.WIDGET_DONE, function () {
+            target.shortcutsWidget('booking/service-selection-list', { siteId: siteId });
+        });
+
+        return target.shortcutsWidget('booking/service-selection-list', { siteId: siteId });
     }
 
     function initializeApplication(target, siteId) {
         return initializeWidgets().then(
-            function() {
+            function () {
                 renderServiceSelectionWidget(target, siteId);
             });
     }
