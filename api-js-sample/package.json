@@ -1,0 +1,20 @@
+{
+  "name": "api-js-sample",
+  "version": "1.0.0",
+  "description": "Example API usage of the Shortcuts Live API",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Shortcuts Software",
+  "license": "ISC",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "crypto-js": "^3.1.9-1",
+    "random-int": "^1.0.0",
+    "underscore": "^1.8.3"
+  }
+}
