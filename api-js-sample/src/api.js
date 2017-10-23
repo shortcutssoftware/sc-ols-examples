@@ -35,11 +35,10 @@ var api = (function () {
                 try {
                     jsonContent = JSON.parse(content);
                     log.info('Json content: %s', JSON.stringify(jsonContent));
-                    done(null, { status: response.statusCode, content: jsonContent });
                 } catch (e) {
                     log.info('Non-json content: %s', content);
-                    done(null, { status: response.statusCode, content: content });
                 }
+                done(null, { status: response.statusCode, content: jsonContent || content });
             });
 
             request.on('error', function (err) {
@@ -73,9 +72,14 @@ var api = (function () {
         request('POST', href, data, done);
     }
 
+    function del(href, done) {
+        request('DELETE', href, null, done);
+    }
+
     return {
         get: get,
-        post: post
+        post: post,
+        del: del
     };
 })();
 

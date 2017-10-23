@@ -4,5 +4,8 @@ module.exports = {
     consumerSecret: '5JPeuazfjc9qJjNXktNV',
     accessTokenKey: 'F096VkVTh3KpLj6PXMtM',
     accessTokenSecret: 'RQyEvU3bINqvTK3G4vXE',
-    siteId: '30179'
+    companyId: '2200',
+    siteId: '30179',
+    customerUsername: 'michael@walters.id.au',
+    customerPassword: 'password'
 };

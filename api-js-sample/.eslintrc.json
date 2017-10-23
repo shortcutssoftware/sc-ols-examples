@@ -27,6 +27,8 @@
         "_": false,
         "before": false,
         "describe": false,
-        "it": false
+        "it": false,
+        "xdescribe": false,
+        "xit": false
     }
 }
