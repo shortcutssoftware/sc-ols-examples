@@ -1,4 +1,4 @@
-const assert = require('assert');
+const expect = require('expect.js');
 const config = require('../src/config.js');
 const site = require('../src/site.js');
 const url = require('url');
@@ -14,10 +14,11 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.employees);
+                expect(result.status).to.eql(200);
+                expect(result.content.employees).to.not.be(undefined);
+                expect(result.content.employees).to.be.an('array');
+                expect(result.content.employees).to.not.be.empty();
+                
                 done();
             })
         })
@@ -31,11 +32,13 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
+                expect(result.status).to.eql(200);
+                expect(result.content).to.not.be(undefined);
+                expect(result.content).to.be.an('object');
+                expect(result.content.href).to.not.be(undefined);
+                expect(result.content.href).to.be.an('string');
+                expect(result.content.href).to.eql(url.resolve(config.apiUri, 'site/' + config.siteId))
 
-                assert.equal(url.resolve(config.apiUri, 'site/' + config.siteId), result.content.href);
                 done();
             })
         })
@@ -49,11 +52,12 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
+                
+                expect(result.status).to.eql(200);
+                expect(result.content.service_categories).to.not.be(undefined);
+                expect(result.content.service_categories).to.be.an('array');
+                expect(result.content.service_categories).to.not.be.empty();
 
-                assert.equal(url.resolve(config.apiUri, 'site/' + config.siteId + '/service_categories'), result.content.href);
                 done();
             })
         })
@@ -67,10 +71,11 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.services);
+                expect(result.status).to.eql(200);
+                expect(result.content.services).to.not.be(undefined);
+                expect(result.content.services).to.be.an('array');
+                expect(result.content.services).to.not.be.empty();
+
                 done();
             })
         })
@@ -84,10 +89,11 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.services);
+                expect(result.status).to.eql(200);
+                expect(result.content.services).to.not.be(undefined);
+                expect(result.content.services).to.be.an('array');
+                expect(result.content.services).to.not.be.empty();
+
                 done();
             })
         })
@@ -102,10 +108,11 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.employees);
+                expect(result.status).to.eql(200);
+                expect(result.content.employees).to.not.be(undefined);
+                expect(result.content.employees).to.be.an('array');
+                expect(result.content.employees).to.not.be.empty();
+
                 done();
             })
         })
@@ -119,10 +126,11 @@ describe('Site', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.services);
+                expect(result.status).to.eql(200);
+                expect(result.content.services).to.not.be(undefined);
+                expect(result.content.services).to.be.an('array');
+                expect(result.content.services).to.not.be.empty();
+
                 done();
             })
         })

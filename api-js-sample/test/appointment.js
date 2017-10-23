@@ -1,4 +1,4 @@
-const assert = require('assert');
+var expect = require('expect.js');
 const search = require('../src/search.js');
 const appointment = require('../src/appointment.js');
 const _ = require('underscore');
@@ -20,10 +20,10 @@ describe('Appointment', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.customer);
+                expect(result.status).to.eql(200);
+                expect(result.content.customer).to.not.be(undefined);
+                expect(result.content.customer).to.be.an('object');
+                
                 sharedState.customerSessionHref = result.content.href;
                 done();
             })
@@ -35,10 +35,11 @@ describe('Appointment', function () {
                     return;
                 }  
                 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.available_appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.available_appointments).to.not.be(undefined);
+                expect(result.content.available_appointments).to.be.an('array');
+                expect(result.content.available_appointments).to.not.be.empty();
+
                 sharedState.appointmentDetails = result.content.available_appointments[1];
                 done();
             });
@@ -53,11 +54,10 @@ describe('Appointment', function () {
                     done(err);
                     return;
                 }
+                
+                expect(result.status).to.eql(200);
+                expect(result.content.href).to.not.be(undefined);
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.href);
                 sharedState.appointment = result.content.appointments[0];
                 done();
             });
@@ -73,13 +73,14 @@ describe('Appointment', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
 
-                assert.ok(result.content.appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.appointments).to.not.be(undefined);
+                expect(result.content.appointments).to.be.an('array');
+                expect(result.content.appointments).to.not.be.empty();
                 var foundAppointment = _.findWhere(result.content.appointments, { href: sharedState.appointment.href });
-                assert.ok(foundAppointment);
+                expect(foundAppointment).to.not.be(undefined);
+
                 done();
             });
         });
@@ -95,9 +96,7 @@ describe('Appointment', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
+                expect(result.status).to.eql(200);
 
                 sharedState.cancelledAppointment = sharedState.appointment;
                 done();
@@ -114,13 +113,12 @@ describe('Appointment', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-
-                assert.ok(result.content.appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.appointments).to.not.be(undefined);
+                expect(result.content.appointments).to.be.an('array');
                 var foundAppointment = _.findWhere(result.content.appointments, { href: sharedState.cancelledAppointment.href });
-                assert.ok(!foundAppointment);
+                expect(foundAppointment).to.not.be(undefined);
+                
                 done();
             });
         });

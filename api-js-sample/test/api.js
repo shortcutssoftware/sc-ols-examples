@@ -1,4 +1,4 @@
-var assert = require('assert');
+var expect = require('expect.js');
 var config = require('../src/config.js');
 var api = require('../src/api.js');
 var url = require('url');
@@ -14,9 +14,8 @@ describe('API', function () {
                     return;
                 }
 
-                assert.equal(200, result.status );
-                assert.equal(url.resolve(config.apiUri, 'site/' + config.siteId), result.content.href);
-
+                expect(result.status).to.eql(200);
+                expect(result.content.href).to.eql(url.resolve(config.apiUri, 'site/' + config.siteId));
                 done();
             })
         })

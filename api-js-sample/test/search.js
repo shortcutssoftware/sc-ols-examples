@@ -1,4 +1,4 @@
-const assert = require('assert');
+var expect = require('expect.js');
 const search = require('../src/search.js');
 
 describe('Search', function () {
@@ -12,10 +12,11 @@ describe('Search', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.available_appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.available_appointments).to.not.be(undefined);
+                expect(result.content.available_appointments).to.be.an('array');
+                expect(result.content.available_appointments).to.not.be.empty();
+
                 done();
             })
         })
@@ -29,10 +30,11 @@ describe('Search', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.available_appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.available_appointments).to.not.be(undefined);
+                expect(result.content.available_appointments).to.be.an('array');
+                expect(result.content.available_appointments).to.not.be.empty();
+
                 done();
             })
         })
@@ -47,10 +49,11 @@ describe('Search', function () {
                     return;
                 }
 
-                if (result.status !== 200) {
-                    assert.fail('Status Code:' + result.status);
-                }
-                assert.ok(result.content.available_appointments);
+                expect(result.status).to.eql(200);
+                expect(result.content.available_appointments).to.not.be(undefined);
+                expect(result.content.available_appointments).to.be.an('array');
+                expect(result.content.available_appointments).to.not.be.empty();
+
                 done();
             })
         })
