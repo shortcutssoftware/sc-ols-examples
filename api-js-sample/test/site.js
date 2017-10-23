@@ -6,9 +6,9 @@ const url = require('url');
 describe('Site', function () {
     this.timeout(5000);
 
-    describe('retrieveEmployeebyEmployeeAlias', function() {
+    describe('retrieveEmployeeByEmployeeAlias', function() {
         it('should be able to retrieve Wendy', function (done) {
-            site.retrieveEmployeebyEmployeeAlias('Wendy', function (err, result) {
+            site.retrieveEmployeeByEmployeeAlias('Wendy', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -101,7 +101,7 @@ describe('Site', function () {
 
     
     describe('retrieveServiceEmployeePricing()', function () {
-        it('should be able to retrieve wax leg service', function (done) {
+        it('should be able to retrieve employee pricing for the Wax Leg service.', function (done) {
             site.retrieveServiceEmployeePricing('Wax Leg', function (err, result) {
                 if (err) {
                     done(err);
@@ -119,7 +119,7 @@ describe('Site', function () {
     });
 
     describe('retrieveEmployeeServicePricing', function() {
-        it('should be able to retrieve Wendy', function (done) {
+        it('should be able to retrieve service pricing for employee with alias of Wendy', function (done) {
             site.retrieveEmployeeServicePricing('Wendy', function (err, result) {
                 if (err) {
                     done(err);

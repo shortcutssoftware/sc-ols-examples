@@ -1,5 +1,5 @@
-var expect = require('expect.js');
-var oauth = require('../src/oauth.js');
+const expect = require('expect.js');
+const oauth = require('../src/oauth.js');
 
 describe('Oauth', function() {
 

@@ -7,12 +7,12 @@ var appointment = (function () {
     var companyHref = url.resolve(config.apiUri, 'company/' + config.companyId);
     var siteHref = url.resolve(config.apiUri, 'site/' + config.siteId)
 
-    function authenticate(done) {
+    function authenticate(username, password, done) {
         api.post(url.resolve(companyHref + '/', 'authenticate_customer'),
             {
                 credential_type_code: 'password',
-                username: config.customerUsername,
-                password: config.customerPassword
+                username: username,
+                password: password
             }, done);
     }
 

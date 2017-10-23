@@ -1,7 +1,7 @@
-var expect = require('expect.js');
-var config = require('../src/config.js');
-var api = require('../src/api.js');
-var url = require('url');
+const expect = require('expect.js');
+const config = require('../src/config.js');
+const api = require('../src/api.js');
+const url = require('url');
 
 describe('API', function () {
     this.timeout(5000);

@@ -39,7 +39,7 @@ var site = (function () {
     }
 
     // Retrieving employee by alias/name {alias}
-    function retrieveEmployeebyEmployeeAlias(employeeAlias, done) {
+    function retrieveEmployeeByEmployeeAlias(employeeAlias, done) {
         api.get(url.resolve(siteHref + '/', 'employees?search=' + employeeAlias + '&is_active=true&is_bookable=true&is_customer_bookable=true&fields=display,href'), done);
     }
 
@@ -51,19 +51,19 @@ var site = (function () {
                 return;
             }
             serviceHref = result.content.services[0].href;
-            api.get(url.resolve(serviceHref + '/', 'employee_pricing?is_active=true&is_bookable=true&is_customer_bookable=true&fields=display,href'), done);
+            api.get(url.resolve(serviceHref + '/', 'employee_pricing?is_active=true&is_bookable=true&is_customer_bookable=true'), done);
         });
     }
 
     function retrieveEmployeeServicePricing(employeeAlias, done) {
-        retrieveEmployeebyEmployeeAlias(employeeAlias, function (err, result) {
+        retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) {
             var employeeHref;
             if (err) {
                 done(err);
                 return;
             }
             employeeHref = result.content.employees[0].href;
-            api.get(url.resolve(employeeHref + '/', 'service_pricing?is_active=true&is_bookable=true&is_customer_bookable=true&fields=display,href'), done);
+            api.get(url.resolve(employeeHref + '/', 'service_pricing?is_active=true&is_bookable=true&is_customer_bookable=true'), done);
         });
     }
 
@@ -72,7 +72,7 @@ var site = (function () {
         retrieveServiceCategories: retrieveServiceCategories,
         retrieveServicesByServiceCategoryName: retrieveServicesByServiceCategoryName,
         retrieveServicesByServiceName: retrieveServicesByServiceName,
-        retrieveEmployeebyEmployeeAlias: retrieveEmployeebyEmployeeAlias,
+        retrieveEmployeeByEmployeeAlias: retrieveEmployeeByEmployeeAlias,
         retrieveServiceEmployeePricing: retrieveServiceEmployeePricing,
         retrieveEmployeeServicePricing: retrieveEmployeeServicePricing
     }

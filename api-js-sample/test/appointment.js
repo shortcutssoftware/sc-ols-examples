@@ -1,4 +1,5 @@
-var expect = require('expect.js');
+const expect = require('expect.js');
+const config = require('../src/config.js');
 const search = require('../src/search.js');
 const appointment = require('../src/appointment.js');
 const _ = require('underscore');
@@ -14,7 +15,7 @@ describe('Appointment', function () {
             cancelledAppointment: null
         };
         it('should be able to authenticate using configured user', function (done) {
-            appointment.authenticate(function (err, result) {
+            appointment.authenticate(config.customerUsername, config.customerPassword, function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -62,6 +63,26 @@ describe('Appointment', function () {
                 done();
             });
         });
+
+        it('Should not be able to double-book the time-slot', function(done){
+            if(!sharedState.customerSessionHref || !sharedState.appointmentDetails ||!sharedState.appointment) {
+                done('Inconclusive - earlier tests failed');
+                return;
+            }
+            appointment.bookAppointment(sharedState.customerSessionHref, sharedState.appointmentDetails, function(err, result) {
+                if (err) {
+                    done(err);
+                    return;
+                }
+                
+                expect(result.status).to.eql(409); // Conflict
+                expect(result.content.error_type_code).to.eql('system');
+                expect(result.content.message).to.eql('Proposed appointment is no longer available');
+
+                done();
+            });
+        });
+
         it('Should be able to retrieve the same appointment', function(done) {
             if(!sharedState.customerSessionHref || !sharedState.appointment) {
                 done('Inconclusive - earlier tests failed');
@@ -99,26 +120,6 @@ describe('Appointment', function () {
                 expect(result.status).to.eql(200);
 
                 sharedState.cancelledAppointment = sharedState.appointment;
-                done();
-            });
-        });
-        xit('Should not able to retrieve the cancelled appointment', function(done) {
-            if(!sharedState.customerSessionHref || !sharedState.cancelledAppointment) {
-                done('Inconclusive - earlier tests failed');
-                return;
-            }
-            appointment.retrieveAppointments(sharedState.customerSessionHref, function(err, result) {
-                if (err) {
-                    done(err);
-                    return;
-                }
-
-                expect(result.status).to.eql(200);
-                expect(result.content.appointments).to.not.be(undefined);
-                expect(result.content.appointments).to.be.an('array');
-                var foundAppointment = _.findWhere(result.content.appointments, { href: sharedState.cancelledAppointment.href });
-                expect(foundAppointment).to.not.be(undefined);
-                
                 done();
             });
         });

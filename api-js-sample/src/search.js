@@ -96,7 +96,7 @@ var search = (function () {
 
         Promise.all([
             new Promise(function (resolve, reject) { site.retrieveServicesByServiceName(serviceName, function (err, result) { if (err) reject(err); else resolve(result); }) }),
-            new Promise(function (resolve, reject) { site.retrieveEmployeebyEmployeeAlias(employeeAlias, function (err, result) { if (err) reject(err); else resolve(result); }) })
+            new Promise(function (resolve, reject) { site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) { if (err) reject(err); else resolve(result); }) })
         ]).then(
             function (results) {
                 var serviceHref = results[0].content.services[0].href;

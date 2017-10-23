@@ -1,4 +1,4 @@
-var expect = require('expect.js');
+const expect = require('expect.js');
 const search = require('../src/search.js');
 
 describe('Search', function () {
