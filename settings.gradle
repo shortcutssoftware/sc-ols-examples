@@ -1,1 +1,2 @@
 include ':other:single-signon'
+include ':api:java'

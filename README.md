@@ -20,7 +20,9 @@ that you start using the APIs with your own Access Keys.
 
 ### API
 
-...to come...
+#### [Java API Example](./api/java/)
+
+An end-to-end example of using the shortcuts API.
 
 ### Legacy
 
