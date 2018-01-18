@@ -1,10 +1,7 @@
-group 'com.shortcuts.example.single_signon'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-
 sourceCompatibility = 1.8
+
+apply plugin: 'org.springframework.boot'
 
 buildscript {
     repositories {
