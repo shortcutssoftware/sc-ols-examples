@@ -4,7 +4,6 @@
 An example of how to work with the Shortcuts API, and drive Shortcuts 
 Online Services. Various common business processes are covered in this
 example. More will be added over time, and we welcome contributions.
-(Just fork the repository and submit a pull request)
 
 The interactions in this example make use of the individual APIs detailed 
 at [Shortcuts API](http://www.shortcutssoftware.io/developer/).
@@ -57,29 +56,29 @@ the two types of authentication:
 
 ### Usage
 
-After you authenticate, all that you gave to do to invoke an API is
+After you authenticate, all that you have to do to invoke an API is
 to make an HTTP request to the API endpoint. The HTTP request should
 be built up with a few characteristics, all of which will be familiar 
 to you as an API developer:
 
-1. HTTP method must be specified to match the expected method in the documentation
-1. HTTP URI must be specified to match the documentation
-    1. path parameters are mandatory
-    1. query string parameters are optional
-    1. request body must match the json schema in the documentation
+1. HTTP method must be specified to match the expected method in [the documentation](http://www.shortcutssoftware.io/developer/).
+1. HTTP URI must be specified to match the documentation:
+    1. path parameters are mandatory,
+    1. query string parameters are optional.
+1. the request body (where required) must match the json schema in the documentation.
 1. the following headers must be set:
-    1. the `Authorization` header must contain the JWT token (acquired above)
-    1. the `Content-Type` header must be set to `application/json`
+    1. the `Authorization` header must contain the JWT token (acquired above),
+    1. the `Content-Type` header must be set to `application/json`.
 
 After that, it is a matter of submitting the correct requests in the correct
-sequence. This is easy to do in most cases, as this example will show you; we
-anticipate that you will not need any additional help until you start to
+sequence. This is easy to do in most cases, as this example will show you. 
+We anticipate that you will not need any in-depth help until you start to
 implement business processes that are unique to the way you use the
 Shortcuts Online Services. 
 
 ---
 
-When you do develop request patterns that allow you to follow complex
+When you develop request patterns that allow you to follow complex
 business processes that are not covered in this example, we would love 
 to know about them. Please consider creating a 
 [pull request](https://help.github.com/articles/about-pull-requests/)
