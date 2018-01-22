@@ -12,8 +12,8 @@ If you browse through the API documentation above you will see
 detailed information about how to call each of the individual 
 APIs that give access to Shortcuts Online Services. This example, 
 however, is designed to give you a working application that shows 
-the way that these individual APIs need to be called in order to 
-implement common business processes.
+the way that these individual APIs work together, and how they 
+can be called in sequence to implement common business processes.
 
 ## How it works:
 
@@ -27,7 +27,8 @@ issued when your site was set up and your on-premise software was
 installed. This is what you do when you want to call the APIs as 
 if they were being driven by your business, not by an individual. 
 The capabilities that you will have if you authenticate this way 
-are not as configurable as an individual's capabilities.
+are powerful, but they are not as configurable as credential-based 
+capabilities.
 
 1. Authenticate using [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
 credentials, issued when you request API user access from Shortcuts
@@ -46,7 +47,8 @@ and can be discarded and/or reacquired at will.
 
 #### Important: Each time you call the Shortcuts API you must supply a JWT token in the `Authorization` header.
 
-If you fail to authenticate, you will receive an http status code of 401.
+If you fail to authenticate, you will receive an http status code of 
+`401 Unauthorized` whenever you attempt to access the Shortcuts APIs.
 
 Please take a look at the following classes to see examples of
 the two types of authentication:
@@ -80,10 +82,9 @@ Shortcuts Online Services.
 
 When you develop request patterns that allow you to follow complex
 business processes that are not covered in this example, we would love 
-to know about them. Please consider creating a 
-[pull request](https://help.github.com/articles/about-pull-requests/)
+to know about them. Please consider forking this repository, and creating 
+a [pull request](https://help.github.com/articles/about-pull-requests/)
 if you would like to share your creations. 
-
 
 ---
 
