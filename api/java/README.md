@@ -53,7 +53,7 @@ If you fail to authenticate, you will receive an http status code of
 Please take a look at the following classes to see examples of
 the two types of authentication:
 
-- [Using site details](./src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
+- [Using on-premise details](./src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
 - TODO
 
 ### Usage
