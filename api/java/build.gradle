@@ -1,27 +1,33 @@
-apply plugin: 'java'
-sourceCompatibility = 1.8
-
-apply plugin: 'org.springframework.boot'
+group = 'com.shortcuts.example.api'
 
 buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5+")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web:1.5+"
-    compile "org.springframework.boot:spring-boot-starter-actuator:1.5+"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly('org.projectlombok:lombok:1.16.16')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-springBoot {
-    mainClass = "com.shortcuts.example.java.FooApplication"
+jar {
+    baseName 'java-example'
 }
+
