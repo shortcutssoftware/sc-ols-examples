@@ -88,7 +88,8 @@ if you would like to share your creations.
 
 ---
 
-Please contact us if you have any questions about this example.
+Please [email us](mailto:rob.barrett@shortcuts.com.au) 
+if you have any questions about this example.
 
 
 
