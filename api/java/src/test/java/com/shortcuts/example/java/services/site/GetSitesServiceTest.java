@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +31,7 @@ public class GetSitesServiceTest {
                 new GetSitesRequest());
 
         assertNotNull(getSitesResponse);
-        assertTrue(!getSitesResponse.getSites().isEmpty());
+        assertFalse(getSitesResponse.getSites().isEmpty());
     }
 
 }
