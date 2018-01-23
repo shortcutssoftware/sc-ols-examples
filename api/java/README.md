@@ -54,7 +54,7 @@ Please take a look at the following classes to see examples of
 the two types of authentication:
 
 - [Using on-premise details](./src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
-- TODO
+- [Using oauth credentials](./src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
 ### Usage
 
@@ -68,9 +68,7 @@ to you as an API developer:
     1. path parameters are mandatory,
     1. query string parameters are optional.
 1. the request body (where required) must match the json schema in the documentation.
-1. the following headers must be set:
-    1. the `Authorization` header must contain the JWT token (acquired above),
-    1. the `Content-Type` header must be set to `application/json`.
+1. the `Authorization` header must contain the JWT token (acquired above).
 
 After that, it is a matter of submitting the correct requests in the correct
 sequence. This is easy to do in most cases, as this example will show you. 

@@ -22,9 +22,11 @@ repositories {
 }
 
 dependencies {
-    compileOnly('org.projectlombok:lombok:1.16.16')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'commons-io:commons-io:2.+'
+    compile 'org.springframework.security.oauth:spring-security-oauth:2.1.1.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 
 jar {

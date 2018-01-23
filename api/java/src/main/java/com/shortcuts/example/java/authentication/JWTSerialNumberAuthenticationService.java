@@ -1,19 +1,19 @@
 package com.shortcuts.example.java.authentication;
 
 import com.shortcuts.example.java.BaseUrlAware;
+import com.shortcuts.example.java.util.RestTemplateCallingUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
 public class JWTSerialNumberAuthenticationService extends BaseUrlAware implements JWTAuthentication {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private RestTemplateCallingUtil restTemplateCallingUtil;
 
     @Value("${authentication.onPremise.serialNumber}")
     private String serialNumber;
@@ -21,8 +21,8 @@ public class JWTSerialNumberAuthenticationService extends BaseUrlAware implement
     @Value("${authentication.onPremise.siteInstallationId}")
     private String siteInstallationId;
 
-    public RestTemplate getRestTemplate() {
-        return restTemplate;
+    public RestTemplateCallingUtil getRestTemplateCallingUtil() {
+        return restTemplateCallingUtil;
     }
 
     public String getSerialNumber() {
@@ -36,21 +36,24 @@ public class JWTSerialNumberAuthenticationService extends BaseUrlAware implement
     @Override
     public String authenticate() {
 
-        // set up an authentication request object
+        // set up authentication request object with
+        // serial number and site installation id
         AuthenticationRequest authenticationRequest = new AuthenticationRequest();
         authenticationRequest.setCredential_type_code("serial");
         authenticationRequest.setSerial_number(getSerialNumber());
         authenticationRequest.setSite_installation_id(getSiteInstallationId());
 
         // call the api
-        ResponseEntity<AuthenticationResponse> responseEntity = restTemplate.postForEntity(
-                String.format("%s/authenticate", getBaseUrl()),
+        AuthenticationResponse authenticationResponse = restTemplateCallingUtil.postForObject(
+                getEndpoint("authenticate"),
+                new HttpHeaders(),
                 authenticationRequest,
                 AuthenticationResponse.class);
 
-        String jwtToken = responseEntity.getBody().getAccess_token();
+        String jwtToken = authenticationResponse.getAccess_token();
         log.info("authentication result: {}", jwtToken);
 
         return jwtToken;
     }
+
 }

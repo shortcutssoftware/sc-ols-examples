@@ -18,7 +18,7 @@ public class JWTSerialNumberAuthenticationServiceTest {
     @Test
     public void testConfigurationIsAvailable() {
         assertTrue(jwtSerialNumberAuthenticationService.getBaseUrl().startsWith("https://"));
-        assertNotNull(jwtSerialNumberAuthenticationService.getRestTemplate());
+        assertNotNull(jwtSerialNumberAuthenticationService.getRestTemplateCallingUtil());
         assertNotNull(jwtSerialNumberAuthenticationService.getSerialNumber());
         assertNotNull(jwtSerialNumberAuthenticationService.getSiteInstallationId());
     }
