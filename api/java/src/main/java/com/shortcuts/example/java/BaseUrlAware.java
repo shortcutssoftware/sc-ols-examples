@@ -1,7 +1,9 @@
 package com.shortcuts.example.java;
 
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -20,16 +22,30 @@ public class BaseUrlAware {
         return baseUrl;
     }
 
-    public URI getEndpointURI(String... pathSegments) {
-        return getEndpointURI(Optional.empty(), pathSegments);
+    public URI getEndpointURI(String path, Object... uriVariables) {
+        return getEndpointURI(path, Optional.empty(), uriVariables);
     }
 
-    public URI getEndpointURI(Optional<MultiValueMap<String, String>> queryParameters, String... pathSegments) {
+    public URI getEndpointURI(
+            String path,
+            @NonNull Optional<MultiValueMap<String, String>> queryParameters,
+            Object... uriVariables) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
-        String[] segments = pathSegments != null ? pathSegments : new String[]{};
-        String path = String.format("/%s", String.join("/", segments));
+        if (path != null) {
+            if (!path.startsWith("/")) {
+                path = String.format("/%s", path);
+            }
+        } else {
+            path = "/";
+        }
         uriComponentsBuilder.path(path);
         queryParameters.ifPresent(uriComponentsBuilder::queryParams);
-        return uriComponentsBuilder.build().toUri();
+        UriComponents uriComponents;
+        if (uriVariables != null) {
+            uriComponents = uriComponentsBuilder.buildAndExpand(uriVariables);
+        } else {
+            uriComponents = uriComponentsBuilder.build();
+        }
+        return uriComponents.toUri();
     }
 }

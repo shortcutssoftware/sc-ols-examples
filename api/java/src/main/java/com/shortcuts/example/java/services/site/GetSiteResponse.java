@@ -5,5 +5,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class GetSitesRequest {
+public class GetSiteResponse {
+
+    private Site site;
+
 }

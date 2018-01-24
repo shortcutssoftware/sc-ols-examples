@@ -27,42 +27,48 @@ public class RestTemplateCallingUtil {
     public <T> T getForObject(
             URI uri,
             HttpHeaders headers,
-            Class<T> clazz) {
+            Class<T> clazz,
+            Object... uriVariables) {
         HttpMethod method = HttpMethod.GET;
         HttpEntity<String> httpEntity = getRequestEntity(headers, null);
         return getResponseObject(
                 uri,
                 method,
                 httpEntity,
-                clazz);
+                clazz,
+                uriVariables);
     }
 
     public <T> T postForObject(
             URI uri,
             HttpHeaders headers,
             Object requestBody,
-            Class<T> clazz) {
+            Class<T> clazz,
+            Object... uriVariables) {
         HttpMethod method = HttpMethod.POST;
         HttpEntity<String> httpEntity = getRequestEntity(headers, requestBody);
         return getResponseObject(
                 uri,
                 method,
                 httpEntity,
-                clazz);
+                clazz,
+                uriVariables);
     }
 
     private <T> T getResponseObject(
             URI uri,
             HttpMethod method,
             HttpEntity<String> requestEntity,
-            Class<T> clazz) {
+            Class<T> clazz,
+            Object... uriVariables) {
         try {
             log.info("request {} {}, entity: {}", method, uri, requestEntity);
             ResponseEntity<String> responseEntity = restTemplate.exchange(
-                    uri,
+                    uri.toString(),
                     method,
                     requestEntity,
-                    String.class);
+                    String.class,
+                    uriVariables);
             HttpStatus responseEntityStatusCode = responseEntity.getStatusCode();
             String responseEntityBody = responseEntity.getBody();
             log.info("response status code [{}], body: {}", responseEntityStatusCode, responseEntityBody);

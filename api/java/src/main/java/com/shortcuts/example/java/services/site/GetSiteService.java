@@ -14,27 +14,27 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class GetSitesService extends BaseShortcutsAPIService
-        implements ShortcutsAPIGetService<Void, GetSitesResponse> {
+public class GetSiteService extends BaseShortcutsAPIService
+        implements ShortcutsAPIGetService<Void, Site> {
 
-    public GetSitesService() {
+    public GetSiteService() {
         super(HttpMethod.GET);
     }
 
     @Override
-    public GetSitesResponse call(
+    public Site call(
             String jwtToken,
             Optional<HttpHeaders> httpHeaders,
             Optional<MultiValueMap<String, String>> queryParameters,
             Object... uriVariables) throws ShortcutsAPIException {
-        URI endpoint = getEndpointURI("sites", queryParameters, uriVariables);
+        URI endpoint = getEndpointURI("site/{site_id}", queryParameters, uriVariables);
         HttpHeaders headers = setupAuthorizationHeader(httpHeaders, jwtToken);
-        GetSitesResponse getSitesResponse = restTemplateCallingUtil.getForObject(
+        Site site = restTemplateCallingUtil.getForObject(
                 endpoint,
                 headers,
-                GetSitesResponse.class,
+                Site.class,
                 uriVariables);
-        log.info("response: {}", getSitesResponse);
-        return getSitesResponse;
+        log.info("response: {}", site);
+        return site;
     }
 }

@@ -23,6 +23,7 @@ public interface ShortcutsAPIPostService<T, R> extends ShortcutsAPIService<T, R>
             @NonNull String jwtToken,
             @NonNull T requestObject,
             @NonNull Optional<HttpHeaders> httpHeaders,
-            @NonNull Optional<MultiValueMap<String, String>> queryParameters) throws ShortcutsAPIException;
+            @NonNull Optional<MultiValueMap<String, String>> queryParameters,
+            Object... uriVariables) throws ShortcutsAPIException;
 
 }

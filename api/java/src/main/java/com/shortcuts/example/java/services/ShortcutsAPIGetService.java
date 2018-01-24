@@ -21,6 +21,7 @@ public interface ShortcutsAPIGetService<T, R> extends ShortcutsAPIService<T, R> 
     R call(
             @NonNull String jwtToken,
             @NonNull Optional<HttpHeaders> httpHeaders,
-            @NonNull Optional<MultiValueMap<String, String>> queryParameters) throws ShortcutsAPIException;
+            @NonNull Optional<MultiValueMap<String, String>> queryParameters,
+            Object... uriVariables) throws ShortcutsAPIException;
 
 }
