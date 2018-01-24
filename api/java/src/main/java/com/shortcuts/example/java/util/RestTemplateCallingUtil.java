@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.URI;
 
 /**
  * Some convenience methods for various ForObject methods with headers.
@@ -24,7 +25,7 @@ public class RestTemplateCallingUtil {
     private ObjectMapper objectMapper;
 
     public <T> T getForObject(
-            String uri,
+            URI uri,
             HttpHeaders headers,
             Class<T> clazz) {
         HttpMethod method = HttpMethod.GET;
@@ -37,7 +38,7 @@ public class RestTemplateCallingUtil {
     }
 
     public <T> T postForObject(
-            String uri,
+            URI uri,
             HttpHeaders headers,
             Object requestBody,
             Class<T> clazz) {
@@ -51,7 +52,7 @@ public class RestTemplateCallingUtil {
     }
 
     private <T> T getResponseObject(
-            String uri,
+            URI uri,
             HttpMethod method,
             HttpEntity<String> requestEntity,
             Class<T> clazz) {

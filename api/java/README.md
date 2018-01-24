@@ -17,6 +17,10 @@ however, start you off with working code that shows the way that
 individual APIs work together, and how they can be called in 
 sequences that implement common business processes.
 
+## Want to go straight to the implementation?
+
+[Scenarios](#scenarios)
+
 ## How it works:
 
 ### Authentication
@@ -89,6 +93,20 @@ calling the Shortcuts API:
 - [GetSitesService.java](./src/main/java/com/shortcuts/example/java/services/site/GetSitesService.java)
 - [GetSitesServiceTest.java](./src/test/java/com/shortcuts/example/java/services/site/GetSitesServiceTest.java)
  
+## Scenarios
+
+Some common scenarios encountered when using the Shortcuts APIs.
+
+### Client knows they want a specific service in a specific date/time window but doesn't know who with.
+
+### Client wants category of service (e.g. massage) in a specific date/time window but doesn't know which kind of massage or who with.
+
+### Client wants specific service with specific stylist/therapist but doesn't know available times/dates or gives range of date/time.
+
+### Client wants specific service within time/date window, wants to choose price band, doesn't know who with.
+
+### Client to be able to cancel booking before cancellation period expiration/cut off.
+
 
 ---
 

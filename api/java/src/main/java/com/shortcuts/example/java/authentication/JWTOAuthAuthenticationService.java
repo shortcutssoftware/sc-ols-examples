@@ -104,7 +104,7 @@ public class JWTOAuthAuthenticationService extends BaseUrlAware implements JWTAu
 
         URL endpointUrl;
         try {
-            endpointUrl = new URL(getEndpoint("authenticate"));
+            endpointUrl = getEndpoint("authenticate").toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
