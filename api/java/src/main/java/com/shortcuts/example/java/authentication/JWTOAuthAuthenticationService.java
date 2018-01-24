@@ -69,7 +69,7 @@ public class JWTOAuthAuthenticationService extends BaseUrlAware implements JWTAu
 
         // call the api
         AuthenticationResponse authenticationResponse = restTemplateCallingUtil.postForObject(
-                getEndpoint("authenticate"),
+                getEndpointURI("authenticate"),
                 httpHeaders,
                 authenticationRequest,
                 AuthenticationResponse.class);
@@ -104,7 +104,7 @@ public class JWTOAuthAuthenticationService extends BaseUrlAware implements JWTAu
 
         URL endpointUrl;
         try {
-            endpointUrl = getEndpoint("authenticate").toURL();
+            endpointUrl = getEndpointURI("authenticate").toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

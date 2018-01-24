@@ -20,11 +20,11 @@ public class BaseUrlAware {
         return baseUrl;
     }
 
-    public URI getEndpoint(String... pathSegments) {
-        return getEndpoint(Optional.empty(), pathSegments);
+    public URI getEndpointURI(String... pathSegments) {
+        return getEndpointURI(Optional.empty(), pathSegments);
     }
 
-    public URI getEndpoint(Optional<MultiValueMap<String, String>> queryParameters, String... pathSegments) {
+    public URI getEndpointURI(Optional<MultiValueMap<String, String>> queryParameters, String... pathSegments) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(baseUrl);
         String[] segments = pathSegments != null ? pathSegments : new String[]{};
         String path = String.format("/%s", String.join("/", segments));

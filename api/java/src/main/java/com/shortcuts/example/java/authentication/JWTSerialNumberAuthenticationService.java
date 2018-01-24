@@ -45,7 +45,7 @@ public class JWTSerialNumberAuthenticationService extends BaseUrlAware implement
 
         // call the api
         AuthenticationResponse authenticationResponse = restTemplateCallingUtil.postForObject(
-                getEndpoint("authenticate"),
+                getEndpointURI("authenticate"),
                 new HttpHeaders(),
                 authenticationRequest,
                 AuthenticationResponse.class);

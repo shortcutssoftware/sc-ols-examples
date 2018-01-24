@@ -26,7 +26,7 @@ public class GetSitesService extends BaseShortcutsAPIService
             String jwtToken,
             Optional<HttpHeaders> httpHeaders,
             Optional<MultiValueMap<String, String>> queryParameters) throws ShortcutsAPIException {
-        URI endpoint = getEndpoint(queryParameters,"sites");
+        URI endpoint = getEndpointURI(queryParameters,"sites");
         HttpHeaders headers = setupAuthorizationHeader(httpHeaders, jwtToken);
         GetSitesResponse getSitesResponse = restTemplateCallingUtil.getForObject(
                 endpoint,
