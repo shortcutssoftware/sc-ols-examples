@@ -163,6 +163,7 @@ Postman-Token: 18a4be67-b046-4ea4-57b7-04783bd15fda
 }
 ```
 
+Returns:
 
 ``` json
 {
@@ -217,9 +218,10 @@ Postman-Token: 18a4be67-b046-4ea4-57b7-04783bd15fda
 }
 ```
 
-Note that the employee is referenced in the available appointment. You 
-can iterate through these appointments to select the desired employee.
-
+Note that in the above example we only asked for 1 appointment, and the 
+employee is referenced in the available appointment. You can request a 
+number of appointments and iterate through these appointments to select 
+the desired employee.
 
 
 
