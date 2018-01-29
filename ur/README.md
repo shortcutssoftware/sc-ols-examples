@@ -14,7 +14,7 @@ Cache-Control: no-cache
 Postman-Token: 01f7e490-5442-a59e-1473-d0cbc4dff980
 ```
 
-Returns:
+Results:
 
 ``` json
 {
@@ -51,6 +51,7 @@ Postman-Token: c6562309-94da-f615-8d52-765c4c2df58a
 
 ```
 
+Results:
 
 ``` json
 {
@@ -163,7 +164,7 @@ Postman-Token: 18a4be67-b046-4ea4-57b7-04783bd15fda
 }
 ```
 
-Returns:
+Results:
 
 ``` json
 {
