@@ -228,6 +228,67 @@ the desired employee.
 
 ## Client wants category of service (e.g. massage) in a specific date/time window but doesn’t know which kind of massage or who with.
 
+Get the list of service categories:
+
+``` text
+GET /webapi/site/40487/service_categories?is_bookable=true HTTP/1.1
+Host: pos.shortcutssoftware.com
+Authorization: OAuth oauth_consumer_key="jv6YflwoCatKYxBNffV5",oauth_token="nJjQdJiPxDYfxfmqfM4S",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1517185641",oauth_nonce="mCTDZ7oVvlr",oauth_version="1.0",oauth_signature="f9NU1GhOQsLNMKdxcTiEChruoaI%3D"
+Cache-Control: no-cache
+Postman-Token: 8f73cd30-6015-10df-8b2b-59a51ded4eca
+
+```
+
+Results:
+
+``` json
+{
+    "service_categories": [
+        {
+            "display_name": "Body Treatments",
+            "is_active": true,
+            "is_customer_bookable": true,
+            "links": [
+                {
+                    "rel": "collection/services",
+                    "href": "https://pos.shortcutssoftware.com/webapi/site/40487/service_category/11/services"
+                }
+            ],
+            "version": 0,
+            "updated_utc_date_time": "2018-01-25T05:14:35",
+            "created_utc_date_time": "2018-01-25T05:14:35",
+            "is_system_service_category": false,
+            "href": "https://pos.shortcutssoftware.com/webapi/site/40487/service_category/11"
+        },
+        {
+            "display_name": "Facials",
+            "is_active": true,
+            "is_customer_bookable": true,
+            "links": [
+                {
+                    "rel": "collection/services",
+                    "href": "https://pos.shortcutssoftware.com/webapi/site/40487/service_category/10/services"
+                }
+            ],
+            "version": 0,
+            "updated_utc_date_time": "2018-01-25T05:14:35",
+            "created_utc_date_time": "2018-01-25T05:14:35",
+            "is_system_service_category": false,
+            "href": "https://pos.shortcutssoftware.com/webapi/site/40487/service_category/10"
+        }
+...
+    ],
+    "paging": {
+        "page": 1,
+        "number_of_pages": 1
+    },
+    "href": "https://pos.shortcutssoftware.com/webapi/site/40487/service_categories"
+}
+```
+
+To get available appointments for a service category:
+
+
 
 
 ## Client wants specific service with specific stylist/therapist but doesn’t know available times/dates or gives range of date/time.
