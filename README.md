@@ -6,6 +6,9 @@ self-contained example.
 
 ## [Common tasks](./common/)
 
+Shows step-by-step explanations of the APIs called when performing
+some common booking scenarios.
+
 ## [Default Worklow](default-workflow/)
 
 Shows a basic workflow using the Shortcuts Widgets and Online 
