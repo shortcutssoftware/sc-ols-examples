@@ -38,12 +38,14 @@ var search = (function () {
                             requested_services: [{
                                 gender_code: 'unknown',
                                 links: [
-                                    { rel: 'site/service', href: serviceHref }
+                                    {rel: 'site/service', href: serviceHref}
                                 ]
                             }],
                             date_time_filter: [defaultDateTimeFilter]
                         },
-                        function (err, result) { if (err) reject(err); else resolve(result); });
+                        function (err, result) {
+                            if (err) reject(err); else resolve(result);
+                        });
 
                 }));
             }
@@ -52,7 +54,7 @@ var search = (function () {
 
             Promise.all(availabilitySearches).then(
                 function (results) {
-                    var result = { status: 200, content: { available_appointments: [] } };
+                    var result = {status: 200, content: {available_appointments: []}};
                     log.info('Processing results: %s', JSON.stringify(results));
                     for (var i = 0; i < results.length; i++) {
                         result.content.available_appointments = _.union(result.available_appointments, results[i].content.available_appointments);
@@ -84,12 +86,14 @@ var search = (function () {
                             requested_services: [{
                                 gender_code: 'unknown',
                                 links: [
-                                    { rel: 'site/service', href: serviceHref }
+                                    {rel: 'site/service', href: serviceHref}
                                 ]
                             }],
                             date_time_filter: [dateTimeFilter]
                         },
-                        function (err, result) { if (err) reject(err); else resolve(result); });
+                        function (err, result) {
+                            if (err) reject(err); else resolve(result);
+                        });
 
                 }));
             }
@@ -98,7 +102,7 @@ var search = (function () {
 
             Promise.all(availabilitySearches).then(
                 function (results) {
-                    var result = { status: 200, content: { available_appointments: [] } };
+                    var result = {status: 200, content: {available_appointments: []}};
                     log.info('Processing results: %s', JSON.stringify(results));
                     for (var i = 0; i < results.length; i++) {
                         result.content.available_appointments = _.union(result.available_appointments, results[i].content.available_appointments);
@@ -126,7 +130,7 @@ var search = (function () {
                     requested_services: [{
                         gender_code: 'unknown',
                         links: [
-                            { rel: 'site/service', href: serviceHref }
+                            {rel: 'site/service', href: serviceHref}
                         ]
                     }],
                     date_time_filter: [defaultDateTimeFilter]
@@ -149,7 +153,7 @@ var search = (function () {
                     requested_services: [{
                         gender_code: 'unknown',
                         links: [
-                            { rel: 'site/service', href: serviceHref }
+                            {rel: 'site/service', href: serviceHref}
                         ]
                     }],
                     date_time_filter: [dateTimeFilter]
@@ -159,7 +163,7 @@ var search = (function () {
     }
 
     function byServiceNameAndDateTimeFilterAndPriceBand(serviceName, dateTimeFilter, priceBand, done) {
-        byServiceNameAndDateTimeFilter(serviceName, dateTimeFilter, function(err, result) {
+        byServiceNameAndDateTimeFilter(serviceName, dateTimeFilter, function (err, result) {
             if (err) {
                 done(err)
             }
@@ -168,8 +172,13 @@ var search = (function () {
             var filtered = [];
             for (var i = 0; i < result.content.available_appointments.length; i++) {
                 var available_appointment = result.content.available_appointments[i];
-                if (true) {
+                if (!priceBand) {
                     filtered.push(available_appointment);
+                } else {
+                    if ((priceBand.lower <= available_appointment.sell_price)
+                        && (priceBand.upper >= available_appointment.sell_price)) {
+                        filtered.push(available_appointment);
+                    }
                 }
             }
 
@@ -181,8 +190,16 @@ var search = (function () {
     function byServiceAndEmployeeName(serviceName, employeeAlias, done) {
 
         Promise.all([
-            new Promise(function (resolve, reject) { site.retrieveServicesByServiceName(serviceName, function (err, result) { if (err) reject(err); else resolve(result); }) }),
-            new Promise(function (resolve, reject) { site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) { if (err) reject(err); else resolve(result); }) })
+            new Promise(function (resolve, reject) {
+                site.retrieveServicesByServiceName(serviceName, function (err, result) {
+                    if (err) reject(err); else resolve(result);
+                })
+            }),
+            new Promise(function (resolve, reject) {
+                site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) {
+                    if (err) reject(err); else resolve(result);
+                })
+            })
         ]).then(
             function (results) {
                 var serviceHref = results[0].content.services[0].href;
@@ -194,8 +211,8 @@ var search = (function () {
                         requested_services: [{
                             gender_code: 'unknown',
                             links: [
-                                { rel: 'site/service', href: serviceHref },
-                                { rel: 'site/employee', href: employeeHref }
+                                {rel: 'site/service', href: serviceHref},
+                                {rel: 'site/employee', href: employeeHref}
                             ]
                         }],
                         date_time_filter: [defaultDateTimeFilter]
@@ -212,8 +229,16 @@ var search = (function () {
     function byServiceAndEmployeeNameAndDateTimeFilter(serviceName, employeeAlias, dateTimeFilter, done) {
 
         Promise.all([
-            new Promise(function (resolve, reject) { site.retrieveServicesByServiceName(serviceName, function (err, result) { if (err) reject(err); else resolve(result); }) }),
-            new Promise(function (resolve, reject) { site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) { if (err) reject(err); else resolve(result); }) })
+            new Promise(function (resolve, reject) {
+                site.retrieveServicesByServiceName(serviceName, function (err, result) {
+                    if (err) reject(err); else resolve(result);
+                })
+            }),
+            new Promise(function (resolve, reject) {
+                site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) {
+                    if (err) reject(err); else resolve(result);
+                })
+            })
         ]).then(
             function (results) {
                 var serviceHref = results[0].content.services[0].href;
@@ -225,8 +250,8 @@ var search = (function () {
                         requested_services: [{
                             gender_code: 'unknown',
                             links: [
-                                { rel: 'site/service', href: serviceHref },
-                                { rel: 'site/employee', href: employeeHref }
+                                {rel: 'site/service', href: serviceHref},
+                                {rel: 'site/employee', href: employeeHref}
                             ]
                         }],
                         date_time_filter: [dateTimeFilter]

@@ -22,10 +22,10 @@ describe('Common Tasks', function () {
         };
 
 
-        it('search for appointments by service and date/time window', function(done) {
+        it('search for appointments by service and date/time window', function (done) {
 
-            search.byServiceNameAndDateTimeFilter('Cut for Men', dateTimeFilter, function(err, result) {
-                if(err) {
+            search.byServiceNameAndDateTimeFilter('Cut for Men', dateTimeFilter, function (err, result) {
+                if (err) {
                     done(err);
                     return;
                 }
@@ -39,10 +39,10 @@ describe('Common Tasks', function () {
             });
         });
 
-        it('search for appointments by service category and date/time window', function(done) {
+        it('search for appointments by service category and date/time window', function (done) {
 
-            search.byServiceCategoryAndDateTimeFilter('Hair', dateTimeFilter, function(err, result) {
-                if(err) {
+            search.byServiceCategoryAndDateTimeFilter('Hair', dateTimeFilter, function (err, result) {
+                if (err) {
                     done(err);
                     return;
                 }
@@ -56,10 +56,10 @@ describe('Common Tasks', function () {
             });
         });
 
-        it('search for appointments by service and employee and date/time window', function(done) {
+        it('search for appointments by service and employee and date/time window', function (done) {
 
-            search.byServiceAndEmployeeNameAndDateTimeFilter('Cut for Men', 'Wendy', dateTimeFilter, function(err, result) {
-                if(err) {
+            search.byServiceAndEmployeeNameAndDateTimeFilter('Cut for Men', 'Wendy', dateTimeFilter, function (err, result) {
+                if (err) {
                     done(err);
                     return;
                 }
@@ -73,14 +73,14 @@ describe('Common Tasks', function () {
             });
         });
 
-        it('search for appointments by service and date/time window and price band', function(done) {
+        it('search for appointments by service and date/time window and price band - inclusive', function (done) {
 
             var priceBand = {
                 upper: 100,
                 lower: 10
             };
-            search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function(err, result) {
-                if(err) {
+            search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function (err, result) {
+                if (err) {
                     done(err);
                     return;
                 }
@@ -98,25 +98,30 @@ describe('Common Tasks', function () {
 
                 done();
             });
+
         });
 
-        var priceBand = {
-            upper: 10,
-            lower: 1
-        };
-        search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function(err, result) {
-            if(err) {
-                done(err);
-                return;
-            }
+        it('search for appointments by service and date/time window and price band - exclusive', function (done) {
 
-            expect(result.status).to.eql(200);
-            expect(result.content.available_appointments).to.be.empty();
+            var priceBand = {
+                upper: 10,
+                lower: 1
+            };
+            search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function (err, result) {
+                if (err) {
+                    done(err);
+                    return;
+                }
 
-            console.log(JSON.stringify(result.content.available_appointments));
+                expect(result.status).to.eql(200);
+                expect(result.content.available_appointments).to.be.empty();
 
-            done();
+                console.log(JSON.stringify(result.content.available_appointments));
+
+                done();
+            });
         });
+
     });
 
 });
