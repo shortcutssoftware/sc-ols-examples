@@ -53,7 +53,7 @@ var search = (function () {
             Promise.all(availabilitySearches).then(
                 function (results) {
                     var result = { status: 200, content: { available_appointments: [] } };
-                    log.info('Procesing results: %s', JSON.stringify(results));
+                    log.info('Processing results: %s', JSON.stringify(results));
                     for (var i = 0; i < results.length; i++) {
                         result.content.available_appointments = _.union(result.available_appointments, results[i].content.available_appointments);
                     }
@@ -66,7 +66,52 @@ var search = (function () {
         })
     }
 
-    // Retrieving the site details
+    function byServiceCategoryAndDateTimeFilter(serviceCategoryName, dateTimeFilter, done) {
+        site.retrieveServicesByServiceCategoryName(serviceCategoryName, function (err, result) {
+            if (err) {
+                done(err);
+                return;
+            }
+
+            var availabilitySearches = [];
+            for (var i = 0; i < result.content.services.length; i++) {
+                var serviceHref = result.content.services[i].href;
+
+                availabilitySearches.push(new Promise(function (resolve, reject) {
+                    api.post(
+                        url.resolve(siteHref + '/', 'calculate_available_appointments'),
+                        {
+                            requested_services: [{
+                                gender_code: 'unknown',
+                                links: [
+                                    { rel: 'site/service', href: serviceHref }
+                                ]
+                            }],
+                            date_time_filter: [dateTimeFilter]
+                        },
+                        function (err, result) { if (err) reject(err); else resolve(result); });
+
+                }));
+            }
+
+            log.info('Searching for %s services', availabilitySearches.length);
+
+            Promise.all(availabilitySearches).then(
+                function (results) {
+                    var result = { status: 200, content: { available_appointments: [] } };
+                    log.info('Processing results: %s', JSON.stringify(results));
+                    for (var i = 0; i < results.length; i++) {
+                        result.content.available_appointments = _.union(result.available_appointments, results[i].content.available_appointments);
+                    }
+                    done(null, result);
+                },
+                function (err) {
+                    done(err);
+                }
+            );
+        })
+    }
+
     function byServiceName(serviceName, done) {
         site.retrieveServicesByServiceName(serviceName, function (err, result) {
             if (err) {
@@ -90,8 +135,49 @@ var search = (function () {
         });
     }
 
+    function byServiceNameAndDateTimeFilter(serviceName, dateTimeFilter, done) {
+        site.retrieveServicesByServiceName(serviceName, function (err, result) {
+            if (err) {
+                done(err);
+                return;
+            }
 
-    // Retrieving the site details
+            var serviceHref = result.content.services[0].href;
+            api.post(
+                url.resolve(siteHref + '/', 'calculate_available_appointments'),
+                {
+                    requested_services: [{
+                        gender_code: 'unknown',
+                        links: [
+                            { rel: 'site/service', href: serviceHref }
+                        ]
+                    }],
+                    date_time_filter: [dateTimeFilter]
+                },
+                done);
+        });
+    }
+
+    function byServiceNameAndDateTimeFilterAndPriceBand(serviceName, dateTimeFilter, priceBand, done) {
+        byServiceNameAndDateTimeFilter(serviceName, dateTimeFilter, function(err, result) {
+            if (err) {
+                done(err)
+            }
+
+            // filter available appointments by price band
+            var filtered = [];
+            for (var i = 0; i < result.content.available_appointments.length; i++) {
+                var available_appointment = result.content.available_appointments[i];
+                if (true) {
+                    filtered.push(available_appointment);
+                }
+            }
+
+            result.content.available_appointments = filtered;
+            done(null, result);
+        });
+    }
+
     function byServiceAndEmployeeName(serviceName, employeeAlias, done) {
 
         Promise.all([
@@ -115,7 +201,38 @@ var search = (function () {
                         date_time_filter: [defaultDateTimeFilter]
                     },
                     done);
-            
+
+            },
+            function (err) {
+                done(err);
+            }
+        );
+    }
+
+    function byServiceAndEmployeeNameAndDateTimeFilter(serviceName, employeeAlias, dateTimeFilter, done) {
+
+        Promise.all([
+            new Promise(function (resolve, reject) { site.retrieveServicesByServiceName(serviceName, function (err, result) { if (err) reject(err); else resolve(result); }) }),
+            new Promise(function (resolve, reject) { site.retrieveEmployeeByEmployeeAlias(employeeAlias, function (err, result) { if (err) reject(err); else resolve(result); }) })
+        ]).then(
+            function (results) {
+                var serviceHref = results[0].content.services[0].href;
+                var employeeHref = results[1].content.employees[0].href;
+
+                api.post(
+                    url.resolve(siteHref + '/', 'calculate_available_appointments'),
+                    {
+                        requested_services: [{
+                            gender_code: 'unknown',
+                            links: [
+                                { rel: 'site/service', href: serviceHref },
+                                { rel: 'site/employee', href: employeeHref }
+                            ]
+                        }],
+                        date_time_filter: [dateTimeFilter]
+                    },
+                    done);
+
             },
             function (err) {
                 done(err);
@@ -126,8 +243,11 @@ var search = (function () {
     return {
         byServiceCategoryName: byServiceCategoryName,
         byServiceName: byServiceName,
-        byServiceAndEmployeeName: byServiceAndEmployeeName
-
+        byServiceAndEmployeeName: byServiceAndEmployeeName,
+        byServiceNameAndDateTimeFilter: byServiceNameAndDateTimeFilter,
+        byServiceNameAndDateTimeFilterAndPriceBand: byServiceNameAndDateTimeFilterAndPriceBand,
+        byServiceCategoryAndDateTimeFilter: byServiceCategoryAndDateTimeFilter,
+        byServiceAndEmployeeNameAndDateTimeFilter: byServiceAndEmployeeNameAndDateTimeFilter
     }
 })();
 
