@@ -1,4 +1,4 @@
 const bunyan = require('bunyan');
-var log = bunyan.createLogger({ name: 'api-js-sample' });
+var log = bunyan.createLogger({ name: 'js-example' });
 
 module.exports = log;

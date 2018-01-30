@@ -125,7 +125,7 @@ time is stored in the token itself, so you can proactively acquire
 a new token when it approaches expiry if you wish. Tokens are cheap
 and can be discarded and/or reacquired at will.
 
-_Important:_ Each time you call the Shortcuts API you must 
+_Important:_ Each time you call the _(new)_ Shortcuts API you must 
 supply a JWT token in the `Authorization` header.
 
 Please take a look at the following classes to see examples of
@@ -155,7 +155,8 @@ sign the request.
 
 ### Comparison
 
-The big differences between the _(new)_ and the _(legacy)_ APIs are:
+The big differences between authentication for the _(legacy)_ and 
+the _(new)_ APIs are:
 
 - Using the _(legacy)_ API
   - You need to sign every request individually.
@@ -171,17 +172,17 @@ API usage generally falls into one or more of the following categories.
 For example, the most common business process is to create a booking. 
 This can be done as follows:
 
-1. Authenticate
-1. Search for services at a site
-1. Select a service
-1. Search for available appointments for that service
-1. Authenticate the client
-1. Create a booking for the client
+1. Authenticate,
+1. Search for services at a site,
+1. Select a service,
+1. Search for available appointments for that service,
+1. Authenticate the client,
+1. Create a booking for the client.
 
-These steps will take you through some of the below categories.
+Following these steps will take you through some of the below categories.
 
-It is important to remember that you are not limited to just the
-business processes in these examples. It is entirely valid for
+*It is important to remember that you are not limited to just the
+business processes in these examples.* It is entirely valid for
 you to make calls to various APIs below, and then make bookings 
 based on your own combinations of the data returned for your own
 reasons. For example: you could search for all employees who are 
@@ -195,8 +196,8 @@ The Company APIs are used to retrieve information about the business
 
 ### Site
 
-The Site APIs are used to retrieve information about the actual physical
-locations of businesses through the Shortcuts API.
+The Site APIs are used to retrieve information about the real physical
+locations of the business through the Shortcuts API.
 
 The Sites APIs will give you information about:
 
@@ -209,7 +210,7 @@ The Sites APIs will give you information about:
 
 The Customer APIs will allow you to manage information related to your customers. 
 This includes information about the customers themselves, like contact details, 
-as well as information about customer bookings, and for apps that are put in 
+as well as information about customer bookings. And for apps that are put in 
 the hands of a customer, there are also APIs to manage customer sessions.
 
 ### Appointment
@@ -220,7 +221,7 @@ so the Appointment APIs are never used in isolation.
 
 ## Examples
 
-### _(legacy)_ API
+### Legacy API
 
 #### [Common tasks](./legacy/common/)
 
@@ -231,7 +232,7 @@ APIs called when performing some common booking scenarios.
 Shows a basic workflow using the Shortcuts Widgets and Online 
 Services with minimal changes from the widgets natural workflow order.
 
-#### [API Javascript Sample](./legacy/js/)
+#### [Javascript API Example](./legacy/js/)
 
 Shows sample implementation against the API using JavaScript.
 
@@ -240,8 +241,23 @@ Shows sample implementation against the API using JavaScript.
 Shows how the single sign-on process works with Shortcuts 
 Online Services. Intended for implementors of single sign-on.
 
-### _(new)_ API
+### New API
 
 #### [Java API Example](./api/java/)
 
 An end-to-end example of using the Shortcuts API from the Java language.
+
+
+---
+## Notes:
+
+- When you develop request patterns that allow you to follow complex
+business processes that are not covered in this example, we would love 
+to know about them. Please consider forking this repository, and creating 
+a [pull request](https://help.github.com/articles/about-pull-requests/)
+if you would like to share your creations. 
+- Please [email us](mailto:rob.barrett@shortcuts.com.au) 
+if you have any questions about this example.
+
+
+
