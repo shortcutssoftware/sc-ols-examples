@@ -1,0 +1,37 @@
+group = 'com.shortcuts.example.api'
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'commons-io:commons-io:2.+'
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.10"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.10"
+    compile 'org.springframework.security.oauth:spring-security-oauth:2.1.1.RELEASE'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
+
+jar {
+    baseName 'java-sample'
+}
+
