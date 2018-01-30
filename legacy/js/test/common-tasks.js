@@ -11,11 +11,10 @@ describe('Common Tasks', function () {
 
         var siteHref = url.resolve(config.apiUri, 'site/' + config.siteId);
         var fromDate = new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000);
-        var todate = new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000);
-
+        var toDate = new Date(new Date().getTime() + 14 * 24 * 60 * 60 * 1000);
         var dateTimeFilter = {
             from_date: fromDate.getFullYear().toString() + '-' + (fromDate.getMonth() + 1) + '-' + fromDate.getDate(),
-            to_date: todate.getFullYear().toString() + '-' + (todate.getMonth() + 1) + '-' + todate.getDate(),
+            to_date: toDate.getFullYear().toString() + '-' + (toDate.getMonth() + 1) + '-' + toDate.getDate(),
             start_time: '00:00:00',
             finish_time: '23:59:59',
             days_of_week: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
