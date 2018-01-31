@@ -184,7 +184,7 @@ One way that this could be done is as follows:
 
 Following these steps will take you through some of the areas below.
 
-#### It is important to know that you are not limited to just the business processes in the examples that follow
+##### You are not limited to just the business processes in the examples that follow
  
 It is entirely valid for you to make calls to various APIs below, 
 and then make bookings based on your own combinations of the data 
