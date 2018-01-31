@@ -1,8 +1,6 @@
+# Common API questions and example solutions
 
-# Common API questions
-
-
-### Client knows they want a specific service in a specific date/time window but doesn’t know who with.
+### Customer knows they want a specific service in a specific date/time window but doesn’t know who with.
 
 Firstly, prepare a date-time filter
 
@@ -47,12 +45,12 @@ service is known, and is able to be supplied as a parameter.
 ```
 
 Please refer to test of `search.byServiceNameAndDateTimeFilter` in 
-[common-tasks.js](../js/test/common-tasks.js), 
+[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
 and also function `byServiceNameAndDateTimeFilter()` in 
-[search.js](../js/src/search.js)
+[search.js](../../v1-examples/js/src/search.js)
 
 
-### Client wants category of service (e.g. massage) in a specific date/time window but doesn’t know which kind of massage or who with.
+### Customer wants category of service (e.g. massage) in a specific date/time window but doesn’t know which kind of massage or who with.
 
 Firstly, prepare a date-time filter as before.
 
@@ -112,11 +110,11 @@ for them all. The result is the union of all the individual search results.
 ```
 
 Please refer to test of `search.byServiceCategoryAndDateTimeFilter` in 
-[common-tasks.js](../js/test/common-tasks.js), 
+[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
 and also function `byServiceCategoryAndDateTimeFilter()` in 
-[search.js](../js/src/search.js)
+[search.js](../../v1-examples/js/src/search.js)
 
-### Client wants specific service with specific stylist/therapist but doesn’t know available times/dates or gives range of date/time.
+### Customer wants specific service with specific stylist/therapist but doesn’t know available times/dates or gives range of date/time.
 
 Firstly, prepare a date-time filter as before.
 
@@ -167,12 +165,12 @@ then used as parameters to call `calculate_avilable_appointments`.
 ```
 
 Please refer to test of `search.byServiceAndEmployeeNameAndDateTimeFilter` in 
-[common-tasks.js](../js/test/common-tasks.js), 
+[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
 and also function `byServiceAndEmployeeNameAndDateTimeFilter()` in 
-[search.js](../js/src/search.js)
+[search.js](../../v1-examples/js/src/search.js)
 
 
-### Client wants specific service within time/date window, wants to choose price band, doesn’t know who with.
+### Customer wants specific service within time/date window, wants to choose price band, doesn’t know who with.
 
 Firstly, prepare a date-time filter as before.
 
@@ -217,16 +215,16 @@ through the results, keeping only the appointments that fall within the price ba
 ```
 
 Please refer to test of `search.byServiceNameAndDateTimeFilterAndPriceBand` in 
-[common-tasks.js](../js/test/common-tasks.js), 
+[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
 and also function `byServiceNameAndDateTimeFilterAndPriceBand()` in 
-[search.js](../js/src/search.js)
+[search.js](../../v1-examples/js/src/search.js)
 
 
-### Client to be able to cancel booking before cancellation period expiration/cut off.
+### Customer to be able to cancel booking before cancellation period expiration/cut off.
 
 This is a single-step process. The function takes three arguments: 
 
-1. the customer session href from the customer authentication step.
+1. the customer session href from the authenticateCustomer step.
 1. an appointment href.
 1. a callback of the form `function(err, result)`.
 
@@ -238,4 +236,4 @@ This is a single-step process. The function takes three arguments:
     }
 ```
 
-Please refer to `cancelAppointment()` in [appointment.js](../js/src/appointment.js)
+Please refer to `cancelAppointment()` in [appointment.js](../../v1-examples/js/src/appointment.js)

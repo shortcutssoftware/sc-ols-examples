@@ -7,7 +7,7 @@ var appointment = (function () {
     var companyHref = url.resolve(config.apiUri, 'company/' + config.companyId);
     var siteHref = url.resolve(config.apiUri, 'site/' + config.siteId)
 
-    function authenticate(username, password, done) {
+    function authenticateCustomer(username, password, done) {
         api.post(url.resolve(companyHref + '/', 'authenticate_customer'),
             {
                 credential_type_code: 'password',
@@ -33,7 +33,7 @@ var appointment = (function () {
     }
 
     return {
-        authenticate: authenticate,
+        authenticate: authenticateCustomer,
         bookAppointment: bookAppointment,
         retrieveAppointments: retrieveAppointments,
         cancelAppointment: cancelAppointment

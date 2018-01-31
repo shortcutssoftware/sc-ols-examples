@@ -326,6 +326,24 @@ The Sites APIs will give you information about:
 - Pricing,
 - Available appointments.
 
+For instance, this code will search for service definitions (by name) in a site:
+
+```js
+    var siteHref = url.resolve(config.apiUri, 'site/' + config.siteId)
+    
+    function retrieveServicesByServiceName(jwtToken, serviceName, done) {
+        api.get(
+            url.resolve(siteHref + '/', 'services?search=' + serviceName + '&is_active=true&is_bookable=true&is_customer_bookable=true&fields=display,href'),
+            {Authorization: 'JWT ' + jwtToken},
+            done);
+    }
+```
+
+Please refer to [site.js version 2 examples](./v2-examples/js/src/site.js), 
+or [site.js version 1 examples](./v1-examples/js/src/site.js) for more ways
+to interact with the Site APIs. 
+
+
 ### Customer
 
 The Customer APIs will allow you to manage information related to your customers. 
@@ -333,38 +351,71 @@ This includes information about the customers themselves, like contact details,
 as well as information about customer bookings. And for apps that are put in 
 the hands of a customer, there are also APIs to manage customer sessions.
 
+For instance, this code will attempt to authenticate a customer:
+
+```js
+    var companyHref = url.resolve(config.apiUri, 'company/' + config.companyId);
+
+    function authenticateCustomer(jwtToken, username, password, done) {
+        api.post(
+            url.resolve(companyHref + '/', 'authenticate_customer'),
+            {Authorization: 'JWT ' + jwtToken},
+            {
+                credential_type_code: 'password',
+                username: username,
+                password: password
+            },
+            done);
+    }
+``` 
+
 ### Appointment
 
 The Appointment APIs allow you to manage appointments for customers. The 
 appointment is where services, employees, rosters and customers come together,
 so the Appointment APIs are never used in isolation.
 
-### Shortcuts API Version 2
+Please refer to [appointment.js version 2 examples](./v2-examples/js/src/appointment.js), 
+or [appointment.js version 1 examples](./v1-examples/js/src/appointment.js) for more
+ways to interact with the Appointment APIs.
 
-#### [Java API Example](./v2-examples/java)
+### Common questions and solutions in the API
 
-An end-to-end example of using the Shortcuts API from the Java language.
+Please refer here for a curated list of common questions that API 
+developers ask, and example solutions. [Common tasks](./v2-examples/common)
 
-### Shortcuts API Version 1
+#### Calling the Shortcuts API from the Java language
 
-#### [Common tasks](./v1-examples/common)
+Please refer here for an end-to-end example of using the Shortcuts API 
+from the Java language. [Java API Example](./v2-examples/java)
 
-APIs called when performing some common booking scenarios.
+### Calling the Shortcuts API through the Shortcuts Widgets
 
-#### [Default Worklow](./widgets-examples/default-workflow)
+You do not necessarily have to write code to call the Shortcuts APIs.
+For many common tasks and processes, we provide the Shortcuts Widgets, 
+that can be embedded in your website, and provide seamless access to 
+the Shortcuts APIs to your website users.
 
-Shows a basic workflow using the Shortcuts Widgets and Online 
+_The widgets can be styled vi CSS to match your brand._
+
+This example shows a basic workflow using the Shortcuts Widgets and Online 
 Services with minimal changes from the widgets natural workflow order.
+[Default Worklow using Widgets](./widgets-examples/default-workflow)
 
-#### [Javascript API Example](./v1-examples/js)
 
-Shows sample implementation against the API using JavaScript.
+### Single Sign-on
 
-#### [Single Signon](./other/single-signon)
+The single sign-on facility is required when you want to use your own 
+systems to authenticate customers, rather than relying on Shortcuts 
+Online Services.
+ 
 
-Shows how the single sign-on process works with Shortcuts 
-Online Services. Intended for implementors of single sign-on.
+This example shows how the single sign-on process works. It is only 
+intended for implementors of single sign-on. You can still use all
+the capabilities in the Shortcuts API without implementing single
+sign-on.
 
+[Single Signon](./other/single-signon)
 
 ---
 ## Notes:
