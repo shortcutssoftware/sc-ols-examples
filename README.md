@@ -53,9 +53,8 @@ Version 2 Shortcuts Online Services APIs are supported on the
 We will continue to support Version 1 API solutions developed 
 against the `pos.shortcutssoftware.com/webapi` domain, however, 
 the emphasis of our research and development efforts is targeted 
-at the Version 2 API on the `api.shortcutssoftware.io` domain, 
-because we are able to offer a superior API experience, with
-better performance and reliability this way.
+at the Version 2 API, because we are able to offer a superior API 
+experience, with better performance and reliability this way.
 
 You will see a mix of v1 and v2 API examples in this 
 repository. Examples will be marked as **(version 2)** 
@@ -103,24 +102,12 @@ is the way that requests are authenticated.
 
 ### JWT Authentication **(version 2)**
 
-At this stage we support two modes of authentication:
-
-#### Using on-premise details
-
-Authenticate using a site installation id and a serial number,
-issued when your site was set up and your on-premise software was
-installed. This is what you do when you want to call the APIs as 
-if they were being driven by your business, not by an individual. 
-The capabilities that you will have if you authenticate this way 
-are powerful, but they are not as configurable as credential-based 
-capabilities.
-
 #### Using OAuth credentials
 
 Authenticate using [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
-credentials, issued when you request API user access from Shortcuts
+credentials, issued when you request community access from Shortcuts
 Software Ltd, or when an individual user is created. These are what 
-you use  when you want to call the APIs as if they were being called 
+you use when you want to call the APIs as if they were being called 
 by an individual user (or community), where you might want to tailor 
 the permissions granted to the API caller. The capabilities that 
 you will have if you authenticate this way can be individually 
@@ -129,26 +116,27 @@ software.
 
 When you authenticate, you will be given a [JWT token](http://jwt.io)
 which will give you access to the API for 30 minutes. The token expiry 
-time is stored in the token itself, so you can proactively acquire
-a new token when it approaches expiry if you wish. Tokens are cheap
-and can be discarded and/or reacquired at will.
+time is stored in the token itself, so you can see it, and if you wish 
+you can proactively acquire a new token when yours approaches expiry. 
+Tokens are cheap and can be discarded and/or reacquired at will.
 
-_Important:_ Each time you call the **(version 2)** Shortcuts API you must 
-supply a JWT token in the `Authorization` header.
+**_Important: Each time you call the version 2 Shortcuts API you must 
+supply a JWT token in the `Authorization` header._**
 
-Please take a look at the following classes to see examples of
-the two types of authentication:
+Please take a look at the following class to see an example of
+version 2 API authentication:
 
-- [Using on-premise details](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
-- [Using oauth credentials](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
+- [Version 2 API authentication](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
-### OAuth request signing **(version 1)**
+### OAuth authentication
+
+#### Request signing **(version 1)**
 
 When you use the **(version 1)** Shortcuts Online Services API, you must sign
-each request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
+every request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
 specification.
 
-OAuth credentials are issued when you request API user access from Shortcuts
+OAuth credentials are issued when you request community access from Shortcuts
 Software Ltd, or when an individual user is created. These are what you use 
 when you want to call the APIs as if they were being called by an individual 
 user (or community), where you might want to tailor the permissions granted 
@@ -156,23 +144,20 @@ to the API caller.
 
 Please take a look at the following example:
 
-- [Using oauth credentials](./v1-examples/js/src/oauth.js)
+- [Version 1 authentication](./v1-examples/js/src/oauth.js)
 
-_Important:_ Each time you call the **(version 1)** Shortcuts API you must
-sign the request.
+**_Important: Each time you call the version 1 Shortcuts API you must
+sign the request in this way._**
 
 ### Comparison
 
-The big differences between authentication for the **(version 1)** and 
-the **(version 2)** APIs are:
+The big differences between authentication for the version 1 and 
+the version 2 APIs are:
 
-- Using the **(version 1)** API
+- Using the version 2 API
+  - You only need to authenticate once to acquire a JWT token (until the token expires).
+- Using the version 1 API
   - You need to sign every request individually.
-  - You can authenticate as a community, or as an individual user.
-- Using the **(version 2)** API with a JWT token
-  - You only need to authenticate once (until the token expires).
-  - You can authenticate as a Point Of Sales machine/as the business, 
-  or as a community, or as an individual user. 
 
 ## API breakdown
 
