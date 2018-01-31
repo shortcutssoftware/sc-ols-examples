@@ -1,7 +1,7 @@
 {
-  "name": "js-sample",
+  "name": "js-v1-example",
   "version": "1.0.0",
-  "description": "Example API usage of the Shortcuts Online Services API",
+  "description": "Example API usage of the Shortcuts Online Services API Version 1",
   "scripts": {
     "test": "mocha"
   },
