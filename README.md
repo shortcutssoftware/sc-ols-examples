@@ -197,6 +197,117 @@ target, and prefer them when making appointments.
 The Company APIs are used to retrieve information about the business 
 (the brand) from the Shortcuts API.
 
+This is an example of a signed [Postman](https://www.getpostman.com) request
+to the version 1 API to retrieve the sites that belong to a company.
+
+```text
+GET /webapi/company/2200/sites HTTP/1.1
+Host: pos.shortcutssoftware.com
+Authorization: OAuth oauth_consumer_key="dYQ3ZMrZOBDG9mMCpUby",oauth_token="F096VkVTh3KpLj6PXMtM",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1517377823",oauth_nonce="SsMPLr4K3Nb",oauth_version="1.0",oauth_signature="tmHi1kJOlx9lAsePozsqR31%2Bc0I%3D"
+Cache-Control: no-cache
+Postman-Token: a3527ebb-4780-18de-b67b-f81745f89e25
+
+```
+
+The response is:
+
+```json
+{
+    "sites": [
+        {
+            "display_name": "My Business 1",
+            "updated_utc_date_time": "2012-03-30T01:21:47",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://pos.shortcutssoftware.com/webapi/site/17844"
+        },
+        {
+            "display_name": "My Business 2",
+            "updated_utc_date_time": "2017-06-11T21:16:13",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://pos.shortcutssoftware.com/webapi/site/17843"
+        },
+        {
+            "display_name": "My Business 3",
+            "updated_utc_date_time": "2017-06-11T21:16:12",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://pos.shortcutssoftware.com/webapi/site/17842"
+        },
+        {
+            "display_name": "My Business 4",
+            "updated_utc_date_time": "2017-06-19T04:06:11",
+            "created_utc_date_time": "2015-04-21T06:01:45",
+            "version": "0",
+            "href": "https://pos.shortcutssoftware.com/webapi/site/30179"
+        }
+    ],
+    "paging": {
+        "page": 1,
+        "number_of_pages": 1
+    },
+    "href": "https://pos.shortcutssoftware.com/webapi/company/2200/sites"
+}
+```
+
+This is the same request made to the version 2 API:
+
+```text
+GET /company/2200/sites HTTP/1.1
+Host: api.shortcutssoftware.io
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vcG9zLWFwaS5zaG9ydGN1dHNzb2Z0d2FyZS5jb20vYXV0aGVudGljYXRlIiwic2NvcGUiOiJzZWxmIiwiaWF0IjoxNTE3Mzc4MDU3LCJleHAiOjE1MTczNzk4NTcsInJvbGVzIjpbImNvbW11bml0eV9hcHBsaWNhdGlvbl9hY2Nlc3N8MTAwfDEiXSwidXNlciI6eyJpZCI6IjQ3MjIiLCJuYW1lIjoiQVUiLCJzdXJuYW1lIjoiRGVtbyIsImdpdmVuX25hbWUiOiJBVSIsImRpc3BsYXlfbmFtZSI6IkFVIERlbW8iLCJlbWFpbCI6ImJldi5kYXZpc0BzaG9ydGN1dHMuY29tLmF1In19.Z3LAJpnkZIBTZaUFs8oxn7yOBvwymlHhSiZq0aH9bSI
+Cache-Control: no-cache
+Postman-Token: 11493158-7918-829e-0926-fc643a218e75
+```
+
+The response is:
+
+```json
+{
+    "sites": [
+        {
+            "display_name": "My Business 1",
+            "updated_utc_date_time": "2012-03-30T01:21:47",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://api.shortcutssoftware.io/site/17844"
+        },
+        {
+            "display_name": "My Business 2",
+            "updated_utc_date_time": "2017-06-11T21:16:13",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://api.shortcutssoftware.io/site/17843"
+        },
+        {
+            "display_name": "My Business 3",
+            "updated_utc_date_time": "2017-06-11T21:16:12",
+            "created_utc_date_time": "2012-03-30T01:21:47",
+            "version": "0",
+            "description": "",
+            "href": "https://api.shortcutssoftware.io/site/17842"
+        },
+        {
+            "display_name": "My Business 4",
+            "updated_utc_date_time": "2017-06-19T04:06:11",
+            "created_utc_date_time": "2015-04-21T06:01:45",
+            "version": "0",
+            "href": "https://api.shortcutssoftware.io/site/30179"
+        }
+    ],
+    "paging": {
+        "page": 1,
+        "number_of_pages": 1
+    },
+    "href": "https://api.shortcutssoftware.io/company/2200/sites"
+}
+```
 ### Site
 
 The Site APIs are used to retrieve information about the real physical
