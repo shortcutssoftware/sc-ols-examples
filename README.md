@@ -136,13 +136,15 @@ version 2 API authentication:
 
 - [Version 2 API authentication](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
-### OAuth authentication
+### OAuth authentication **(version 1)**
 
-#### Signing requests **(version 1)**
+#### Signing requests
 
 When you use the version 1 Shortcuts Online Services API, you must sign every
 request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
-specification.
+specification. There is no actual _authentication_ operation, rather, each
+request is processed when it is sent to the version 1 API. If the request's
+OAuth signature is valid then the request will be processed.
 
 OAuth credentials are issued when you request community access from Shortcuts
 Software Ltd, or when an individual user is created. These are what you use 
