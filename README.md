@@ -97,7 +97,7 @@ You can also run the tests from your favourite IDE or debugging tool.
 
 ## Authentication
 
-The biggest difference between the **(version 2)** and the **(version 1)** APIs 
+The biggest difference between the version 2 and the version 1 APIs 
 is the way that requests are authenticated.
 
 ### JWT Authentication **(version 2)**
