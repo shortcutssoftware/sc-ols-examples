@@ -45,20 +45,28 @@ the clearest possible picture of what is happening with the API. In
 your implementations you will make much more use of abstractions
 over the API. 
 
-### API versions
+### There are two API versions
 
-Shortcuts Online Services APIs are primarily supported on the
+Version 2 Shortcuts Online Services APIs are supported on the
 `api.shortcutssoftware.io` domain. 
 
-We will continue to support API solutions developed against the 
-legacy  `pos.shortcutssoftware.com/webapi` domain, however, the 
-emphasis of our research and development efforts is targeted at 
-the  `api.shortcutssoftware.io` domain, because on it we are 
-able to offer a far superior API experience.
+We will continue to support Version 1 API solutions developed 
+against the `pos.shortcutssoftware.com/webapi` domain, however, 
+the emphasis of our research and development efforts is targeted 
+at the Version 2 API on the `api.shortcutssoftware.io` domain, 
+because we are able to offer a superior API experience, with
+better performance and reliability this way.
 
-You will see a mix of newer and legacy API examples in this 
-repository. Examples will be marked as _(new)_ or _(legacy)_ 
-to allow you to differentiate between them.
+You will see a mix of v1 and v2 API examples in this 
+repository. Examples will be marked as **(version 2)** 
+or **(version 1)** to help you differentiate between them.
+
+The functionality available through version 1 of the Shortcuts API
+will also be available through version 2. However, newer functionality
+may be added to version 2 without being available in version 1.
+
+**_If necessary, you can use the version 2 API from a solution 
+that was initially built around version 1._**
 
 ## Getting Started
 
@@ -90,10 +98,10 @@ You can also run the tests from your favourite IDE or debugging tool.
 
 ## Authentication
 
-The biggest difference between the _(new)_ and the _(legacy)_ APIs 
+The biggest difference between the **(version 2)** and the **(version 1)** APIs 
 is the way that requests are authenticated.
 
-### JWT Authentication _(new)_
+### JWT Authentication **(version 2)**
 
 At this stage we support two modes of authentication:
 
@@ -125,7 +133,7 @@ time is stored in the token itself, so you can proactively acquire
 a new token when it approaches expiry if you wish. Tokens are cheap
 and can be discarded and/or reacquired at will.
 
-_Important:_ Each time you call the _(new)_ Shortcuts API you must 
+_Important:_ Each time you call the **(version 2)** Shortcuts API you must 
 supply a JWT token in the `Authorization` header.
 
 Please take a look at the following classes to see examples of
@@ -134,9 +142,9 @@ the two types of authentication:
 - [Using on-premise details](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
 - [Using oauth credentials](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
-### OAuth request signing _(legacy)_
+### OAuth request signing **(version 1)**
 
-When you use the _(legacy)_ Shortcuts Online Services API, you must sign
+When you use the **(version 1)** Shortcuts Online Services API, you must sign
 each request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
 specification.
 
@@ -150,18 +158,18 @@ Please take a look at the following example:
 
 - [Using oauth credentials](./v1-examples/js/src/oauth.js)
 
-_Important:_ Each time you call the _(legacy)_ Shortcuts API you must
+_Important:_ Each time you call the **(version 1)** Shortcuts API you must
 sign the request.
 
 ### Comparison
 
-The big differences between authentication for the _(legacy)_ and 
-the _(new)_ APIs are:
+The big differences between authentication for the **(version 1)** and 
+the **(version 2)** APIs are:
 
-- Using the _(legacy)_ API
+- Using the **(version 1)** API
   - You need to sign every request individually.
   - You can authenticate as a community, or as an individual user.
-- Using the _(new)_ API with a JWT token
+- Using the **(version 2)** API with a JWT token
   - You only need to authenticate once (until the token expires).
   - You can authenticate as a Point Of Sales machine/as the business, 
   or as a community, or as an individual user. 
