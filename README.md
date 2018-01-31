@@ -28,8 +28,8 @@ detailed at [Shortcuts API](http://www.shortcutssoftware.io/developer/).
 In most examples, each API used is covered in a unit test, so you 
 can debug through the code and observe what is happening. 
 
-If you browse through the API documentation above you will see 
-detailed information about how to call each of the individual 
+Within the [the API documentation](http://www.shortcutssoftware.io/developer/) 
+you will see detailed information about how to call each of the individual 
 APIs that give access to Shortcuts Online Services. However, to
 make things simple, these examples start you off with working 
 code that shows the way that individual APIs work together, 
