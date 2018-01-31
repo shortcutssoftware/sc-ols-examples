@@ -105,11 +105,13 @@ You can also run the tests from your favourite IDE or debugging tool.
 The biggest difference between the version 2 and the version 1 APIs 
 is the way that requests are authenticated.
 
-### JWT Authentication **(version 2)**
+### JWT tokens **(version 2)**
 
-#### Using OAuth credentials
+#### Acquiring JWT tokens
 
-Authenticate using [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
+When you use the version 2 Shortcuts Online Services API, you must
+acquire a [JWT token](http://jwt.io) by supplying 
+[OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
 credentials, issued when you request community access from Shortcuts
 Software Ltd, or when an individual user is created. These are what 
 you use when you want to call the APIs as if they were being called 
@@ -119,7 +121,7 @@ you will have if you authenticate this way can be individually
 configured without affecting the operation of your on-premise 
 software.
 
-When you authenticate, you will be given a [JWT token](http://jwt.io)
+When you authenticate, you will be given a JWT token
 which will give you access to the API for 30 minutes. The token expiry 
 time is stored in the token itself, so you can see it, and if you wish 
 you can proactively acquire a new token when yours approaches expiry. 
@@ -135,10 +137,10 @@ version 2 API authentication:
 
 ### OAuth authentication
 
-#### Request signing **(version 1)**
+#### Signing requests **(version 1)**
 
-When you use the **(version 1)** Shortcuts Online Services API, you must sign
-every request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
+When you use the version 1 Shortcuts Online Services API, you must sign every
+request according to the [OAuth 1.0](https://en.wikipedia.org/wiki/OAuth)
 specification.
 
 OAuth credentials are issued when you request community access from Shortcuts
@@ -149,7 +151,7 @@ to the API caller.
 
 Please take a look at the following example:
 
-- [Version 1 authentication](./v1-examples/js/src/oauth.js)
+- [Version 1 API authentication](./v1-examples/js/src/oauth.js)
 
 **_Important: Each time you call the version 1 Shortcuts API you must
 sign the request in this way._**

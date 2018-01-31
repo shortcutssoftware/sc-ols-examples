@@ -1,5 +1,5 @@
 {
-  "name": "sc-ols-examples-default-workflow",
+  "name": "default-workflow",
   "version": "1.0.0",
   "description": "Sample website implementation over the Shortcuts Widgets.",
   "scripts": {

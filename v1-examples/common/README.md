@@ -224,8 +224,11 @@ and also function `byServiceNameAndDateTimeFilterAndPriceBand()` in
 
 ### Client to be able to cancel booking before cancellation period expiration/cut off.
 
-This is a single-step process requiring only the construction of an href 
-identifying the appointment that is to be cancelled.
+This is a single-step process. The function takes three arguments: 
+
+1. the customer session href from the customer authentication step.
+1. an appointment href.
+1. a callback of the form `function(err, result)`.
 
 ```js
     function cancelAppointment(customerSessionHref, appointmentHref, done) {
