@@ -131,8 +131,8 @@ supply a JWT token in the `Authorization` header.
 Please take a look at the following classes to see examples of
 the two types of authentication:
 
-- [Using on-premise details](./api/java/src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
-- [Using oauth credentials](./api/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
+- [Using on-premise details](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
+- [Using oauth credentials](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
 ### OAuth request signing _(legacy)_
 
@@ -148,7 +148,7 @@ to the API caller.
 
 Please take a look at the following example:
 
-- [Using oauth credentials](./legacy/js/src/oauth.js)
+- [Using oauth credentials](./v1-examples/js/src/oauth.js)
 
 _Important:_ Each time you call the _(legacy)_ Shortcuts API you must
 sign the request.
@@ -221,31 +221,31 @@ so the Appointment APIs are never used in isolation.
 
 ## Examples
 
-### Legacy API
+### Shortcuts API Version 2
 
-#### [Common tasks](./legacy/common/)
+#### [Java API Example](./v2-examples/java)
+
+An end-to-end example of using the Shortcuts API from the Java language.
+
+### Shortcuts API Version 1
+
+#### [Common tasks](./v1-examples/common)
 
 APIs called when performing some common booking scenarios.
 
-#### [Default Worklow](./legacy/default-workflow)
+#### [Default Worklow](./widgets-examples/default-workflow)
 
 Shows a basic workflow using the Shortcuts Widgets and Online 
 Services with minimal changes from the widgets natural workflow order.
 
-#### [Javascript API Example](./legacy/js/)
+#### [Javascript API Example](./v1-examples/js)
 
 Shows sample implementation against the API using JavaScript.
 
-#### [Single Signon](./other/single-signon/)
+#### [Single Signon](./other/single-signon)
 
 Shows how the single sign-on process works with Shortcuts 
 Online Services. Intended for implementors of single sign-on.
-
-### New API
-
-#### [Java API Example](./api/java/)
-
-An end-to-end example of using the Shortcuts API from the Java language.
 
 
 ---
