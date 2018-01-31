@@ -198,7 +198,7 @@ The Company APIs are used to retrieve information about the business
 (the brand) from the Shortcuts API.
 
 This is an example of a signed [Postman](https://www.getpostman.com) request
-to the version 1 API to retrieve the sites that belong to a company.
+to the version 1 API to retrieve the sites that belong to a company:
 
 ```text
 GET /webapi/company/2200/sites HTTP/1.1
