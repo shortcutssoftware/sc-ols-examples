@@ -420,7 +420,7 @@ sign-on. [Single Signon](./other/single-signon)
 ## Notes:
 
 - When you develop request patterns that allow you to follow complex
-business processes that are not covered in this example, we would love 
+business processes that are not covered in these examples, we would love 
 to know about them. Please consider forking this repository, and creating 
 a [pull request](https://help.github.com/articles/about-pull-requests/)
 if you would like to share your creations. 
