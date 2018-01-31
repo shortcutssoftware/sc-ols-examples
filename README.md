@@ -61,8 +61,8 @@ the emphasis of our research and development efforts is targeted
 at the Version 2 API, because we are able to offer a superior API 
 experience, with better performance and reliability this way.
 
-You will see a mix of v1 and v2 API examples in this 
-repository. Examples will be marked as **(version 2)** 
+You will see a mix of version 1 and version 2 API examples in 
+this repository. Examples will be marked as **(version 2)** 
 or **(version 1)** to help you differentiate between them.
 
 The functionality available through version 1 of the Shortcuts API
@@ -134,7 +134,8 @@ supply a valid JWT token in the `Authorization` header._**
 Please take a look at the following class to see an example of
 version 2 API authentication:
 
-- [Version 2 API authentication](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
+- [Version 2 API authentication in Javascript](./v2-examples/js/src/authenticate.js)
+- [Version 2 API authentication in Java](./v2-examples/java/src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
 ### OAuth authentication **(version 1)**
 
