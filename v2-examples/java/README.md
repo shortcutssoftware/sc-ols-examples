@@ -22,17 +22,7 @@ sequences that implement common business processes.
 ### Authentication
 
 The first thing you need to do to use the Shortcuts API is to 
-authenticate. At this stage we support two modes of authentication:
-
-#### Using on-premise details
-
-Authenticate using a site installation id and a serial number,
-issued when your site was set up and your on-premise software was
-installed. This is what you do when you want to call the APIs as 
-if they were being driven by your business, not by an individual. 
-The capabilities that you will have if you authenticate this way 
-are powerful, but they are not as configurable as credential-based 
-capabilities.
+authenticate.
 
 #### Using OAuth credentials
 
@@ -60,7 +50,6 @@ code of `401 Unauthorized` when you call the Shortcuts APIs.
 Please take a look at the following classes to see examples of
 the two types of authentication:
 
-- [Using on-premise details](./src/main/java/com/shortcuts/example/java/authentication/JWTSerialNumberAuthenticationService.java)
 - [Using oauth credentials](./src/main/java/com/shortcuts/example/java/authentication/JWTOAuthAuthenticationService.java)
 
 ### Usage

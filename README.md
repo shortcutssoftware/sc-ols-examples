@@ -414,9 +414,7 @@ Online Services.
 This example shows how the single sign-on process works. It is only 
 intended for implementors of single sign-on. You can still use all
 the capabilities in the Shortcuts API without implementing single
-sign-on.
-
-[Single Signon](./other/single-signon)
+sign-on. [Single Signon](./other/single-signon)
 
 ---
 ## Notes:
