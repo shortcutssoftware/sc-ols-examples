@@ -385,7 +385,7 @@ ways to interact with the Appointment APIs.
 Please refer here for a curated list of common questions that API 
 developers ask, and example solutions. [Common tasks](./v2-examples/common)
 
-#### Calling the Shortcuts API from the Java language
+### Calling the Shortcuts API from the Java language
 
 Please refer here for an end-to-end example of using the Shortcuts API 
 from the Java language. [Java API Example](./v2-examples/java)
