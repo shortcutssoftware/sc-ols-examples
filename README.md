@@ -1,5 +1,10 @@
 # Shortcuts Code Examples
 
+1. [Overview](#overview)
+1. [Getting Started](#getting-started)
+1. [Authentication](#authentication)
+1. [Examples](#examples)
+
 This repository contains code examples and explanations to assist 
 developers with the use of Shortcuts APIs. 
 
@@ -159,28 +164,30 @@ the version 2 APIs are:
 - Using the version 1 API
   - You need to sign every request individually.
 
-## API breakdown
+## Examples
 
-API usage generally falls into one or more of the following categories.
+### Functional areas
+
+API usage generally falls into one or more of the areas discussed below.
 For example, the most common business process is to create a booking. 
-This can be done as follows:
+One way that this could be done is as follows:
 
-1. Authenticate,
 1. Search for services at a site,
 1. Select a service,
-1. Search for available appointments for that service,
-1. Authenticate the client,
-1. Create a booking for the client.
+1. Search for employees at a site,
+1. Select an employee,
+1. Search for available appointments for that service and employee,
+1. Create a booking.
 
-Following these steps will take you through some of the below categories.
+Following these steps will take you through some of the areas below.
 
-*It is important to remember that you are not limited to just the
-business processes in these examples.* It is entirely valid for
-you to make calls to various APIs below, and then make bookings 
-based on your own combinations of the data returned for your own
-reasons. For example: you could search for all employees who are 
-struggling to meet their `visit_count` kpi target, and prefer 
-them when making appointments.  
+**_It is important to know that you are not limited to just the
+business processes in the examples that follow._** It is entirely 
+valid for you to make calls to various APIs below, and then make 
+bookings based on your own combinations of the data returned, for 
+your own reasons. For example: you could search for all employees 
+who are struggling to meet their `visit_count` kpi target, and 
+prefer them when making appointments.  
 
 ### Company
 
@@ -211,8 +218,6 @@ the hands of a customer, there are also APIs to manage customer sessions.
 The Appointment APIs allow you to manage appointments for customers. The 
 appointment is where services, employees, rosters and customers come together,
 so the Appointment APIs are never used in isolation.
-
-## Examples
 
 ### Shortcuts API Version 2
 
