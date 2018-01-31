@@ -121,14 +121,15 @@ you will have if you authenticate this way can be individually
 configured without affecting the operation of your on-premise 
 software.
 
-When you authenticate, you will be given a JWT token
-which will give you access to the API for 30 minutes. The token expiry 
-time is stored in the token itself, so you can see it, and if you wish 
-you can proactively acquire a new token when yours approaches expiry. 
-Tokens are cheap and can be discarded and/or reacquired at will.
+When you correctly sign the request to the authenticate endpoint, 
+you will be given a JWT token which will give you access to the 
+API for 30 minutes. The token expiry time is stored in the token 
+itself, so you can see it, and if you wish you can proactively 
+acquire a new token when yours approaches expiry. Tokens are 
+cheap and can be discarded and/or reacquired at will.
 
 **_Important: Each time you call the version 2 Shortcuts API you must 
-supply a JWT token in the `Authorization` header._**
+supply a valid JWT token in the `Authorization` header._**
 
 Please take a look at the following class to see an example of
 version 2 API authentication:
@@ -183,13 +184,13 @@ One way that this could be done is as follows:
 
 Following these steps will take you through some of the areas below.
 
-**_It is important to know that you are not limited to just the
-business processes in the examples that follow._** It is entirely 
-valid for you to make calls to various APIs below, and then make 
-bookings based on your own combinations of the data returned, for 
-your own reasons. For example: you could search for all employees 
-who are struggling to meet their `visit_count` kpi target, and 
-prefer them when making appointments.  
+#### It is important to know that you are not limited to just the business processes in the examples that follow
+ 
+It is entirely valid for you to make calls to various APIs below, 
+and then make bookings based on your own combinations of the data 
+returned, for your own reasons. For example: you could search for 
+all employees who are struggling to meet their `visit_count` kpi 
+target, and prefer them when making appointments.  
 
 ### Company
 
