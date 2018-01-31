@@ -310,6 +310,10 @@ The response is:
     "href": "https://api.shortcutssoftware.io/company/2200/sites"
 }
 ```
+
+As you can see, the responses are identical except for the difference in `href` elements,
+which indicate the version of the API that should be called to retrieve further details.
+
 ### Site
 
 The Site APIs are used to retrieve information about the real physical
