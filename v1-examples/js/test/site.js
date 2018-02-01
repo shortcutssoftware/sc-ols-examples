@@ -7,8 +7,8 @@ describe('Site', function () {
     this.timeout(5000);
 
     describe('retrieveEmployeeByEmployeeAlias', function() {
-        it('should be able to retrieve Wendy', function (done) {
-            site.retrieveEmployeeByEmployeeAlias('Wendy', function (err, result) {
+        it('should be able to retrieve employee', function (done) {
+            site.retrieveEmployeeByEmployeeAlias('Katie', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -64,8 +64,8 @@ describe('Site', function () {
     });
     
     describe('retrieveServicesByServiceCategoryName()', function () {
-        it('should be able to retrieve beauty services', function (done) {
-            site.retrieveServicesByServiceCategoryName('Beauty', function (err, result) {
+        it('should be able to retrieve service categories', function (done) {
+            site.retrieveServicesByServiceCategoryName('Hair Styling', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -82,8 +82,8 @@ describe('Site', function () {
     });
     
     describe('retrieveServicesByServiceName()', function () {
-        it('should be able to retrieve wax leg service', function (done) {
-            site.retrieveServicesByServiceName('Wax Leg', function (err, result) {
+        it('should be able to retrieve by service', function (done) {
+            site.retrieveServicesByServiceName('Blowdry', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -101,8 +101,8 @@ describe('Site', function () {
 
     
     describe('retrieveServiceEmployeePricing()', function () {
-        it('should be able to retrieve employee pricing for the Wax Leg service.', function (done) {
-            site.retrieveServiceEmployeePricing('Wax Leg', function (err, result) {
+        it('should be able to retrieve employee pricing by service.', function (done) {
+            site.retrieveServiceEmployeePricing('Blowdry', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -119,8 +119,8 @@ describe('Site', function () {
     });
 
     describe('retrieveEmployeeServicePricing', function() {
-        it('should be able to retrieve service pricing for employee with alias of Wendy', function (done) {
-            site.retrieveEmployeeServicePricing('Wendy', function (err, result) {
+        it('should be able to retrieve service pricing by employee', function (done) {
+            site.retrieveEmployeeServicePricing('Katie', function (err, result) {
                 if (err) {
                     done(err);
                     return;

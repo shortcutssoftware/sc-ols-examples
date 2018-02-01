@@ -23,7 +23,7 @@ describe('Common Tasks', function () {
 
         it('search for appointments by service and date/time window', function (done) {
 
-            search.byServiceNameAndDateTimeFilter('Cut for Men', dateTimeFilter, function (err, result) {
+            search.byServiceNameAndDateTimeFilter('Blowdry', dateTimeFilter, function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -40,7 +40,7 @@ describe('Common Tasks', function () {
 
         it('search for appointments by service category and date/time window', function (done) {
 
-            search.byServiceCategoryAndDateTimeFilter('Hair', dateTimeFilter, function (err, result) {
+            search.byServiceCategoryAndDateTimeFilter('Hair Styling', dateTimeFilter, function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -57,7 +57,7 @@ describe('Common Tasks', function () {
 
         it('search for appointments by service and employee and date/time window', function (done) {
 
-            search.byServiceAndEmployeeNameAndDateTimeFilter('Cut for Men', 'Wendy', dateTimeFilter, function (err, result) {
+            search.byServiceAndEmployeeNameAndDateTimeFilter('Blowdry', 'Katie', dateTimeFilter, function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -78,7 +78,7 @@ describe('Common Tasks', function () {
                 upper: 100,
                 lower: 10
             };
-            search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function (err, result) {
+            search.byServiceNameAndDateTimeFilterAndPriceBand('Blowdry', dateTimeFilter, priceBand, function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -106,7 +106,7 @@ describe('Common Tasks', function () {
                 upper: 10,
                 lower: 1
             };
-            search.byServiceNameAndDateTimeFilterAndPriceBand('Cut for Men', dateTimeFilter, priceBand, function (err, result) {
+            search.byServiceNameAndDateTimeFilterAndPriceBand('Blowdry', dateTimeFilter, priceBand, function (err, result) {
                 if (err) {
                     done(err);
                     return;

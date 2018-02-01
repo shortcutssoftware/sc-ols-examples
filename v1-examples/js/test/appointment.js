@@ -29,8 +29,8 @@ describe('Appointment', function () {
                 done();
             })
         });
-        it('should be able to search for a Wax Leg service', function(done) {
-            search.byServiceName('Wax Leg', function(err, result) { 
+        it('should be able to search for a service', function(done) {
+            search.byServiceName('Blowdry', function(err, result) {
                 if(err) {
                     done(err);
                     return;

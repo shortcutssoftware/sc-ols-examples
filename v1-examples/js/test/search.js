@@ -5,8 +5,8 @@ describe('Search', function () {
     this.timeout(10000);
 
     describe('byServiceCategoryName()', function () {
-        it('should be able to search for availabilities Beauty services', function (done) {
-            search.byServiceCategoryName('Beauty', function (err, result) {
+        it('should be able to search for availabilities by service category', function (done) {
+            search.byServiceCategoryName('Hair Styling', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -23,8 +23,8 @@ describe('Search', function () {
     });
 
     describe('byServiceName()', function () {
-        it('should be able to search for availabilities of the Wax Leg service', function (done) {
-            search.byServiceName('Wax Leg', function (err, result) {
+        it('should be able to search for availabilities by service', function (done) {
+            search.byServiceName('Blowdry', function (err, result) {
                 if (err) {
                     done(err);
                     return;
@@ -42,8 +42,8 @@ describe('Search', function () {
 
     
     describe('byServiceAndEmployeeName()', function () {
-        it('should be able to search for availabilities of the Wax Leg service with Wendy', function (done) {
-            search.byServiceAndEmployeeName('Wax Leg', 'Wendy', function (err, result) {
+        it('should be able to search for availabilities by service and employee', function (done) {
+            search.byServiceAndEmployeeName('Blowdry', 'Katie', function (err, result) {
                 if (err) {
                     done(err);
                     return;
