@@ -66,7 +66,7 @@ this repository. Examples will be marked as **(version 2)**
 or **(version 1)** to help you differentiate between them.
 
 The functionality available through version 1 of the Shortcuts API
-will also be available through version 2. However, newer functionality
+is available through version 2. However, newer functionality
 may be added to version 2 without being available in version 1.
 
 **_If necessary, you can use the version 2 API from a solution 
@@ -380,10 +380,17 @@ Please refer to [appointment.js version 2 examples](./v2-examples/js/src/appoint
 or [appointment.js version 1 examples](./v1-examples/js/src/appointment.js) for more
 ways to interact with the Appointment APIs.
 
-### Common questions and solutions in the API
+### Common API queries and solutions in the API
 
-Please refer here for a curated list of common questions that API 
-developers ask, and example solutions. [Common tasks](./v2-examples/common)
+In this section you will find examples of using the API to solve common 
+scenarios used in the booking process. It is a useful place to start for 
+specific working examples of different scenarios that may occur. An 
+in-depth knowledge of the API is not required to get started with 
+these examples
+
+#### Booking
+
+[Common booking tasks](./v2-examples/common)
 
 ### Calling the Shortcuts API from the Java language
 
