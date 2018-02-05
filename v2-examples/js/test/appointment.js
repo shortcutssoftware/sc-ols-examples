@@ -48,10 +48,10 @@ describe('Appointment', function () {
                     done();
                 })
         });
-        it('should be able to search for a Wax Leg service', function (done) {
+        it('should be able to search for a service', function (done) {
             search.byServiceName(
                 sharedState.access_token,
-                'Wax Leg',
+                'Blowdry',
                 function (err, result) {
                     if (err) {
                         done(err);

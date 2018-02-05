@@ -26,10 +26,10 @@ describe('Site', function () {
     });
 
     describe('retrieveEmployeeByEmployeeAlias', function () {
-        it('should be able to retrieve Wendy', function (done) {
+        it('should be able to retrieve employee', function (done) {
             site.retrieveEmployeeByEmployeeAlias(
                 sharedState.access_token,
-                'Wendy',
+                'Katie',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -90,10 +90,10 @@ describe('Site', function () {
     });
 
     describe('retrieveServicesByServiceCategoryName()', function () {
-        it('should be able to retrieve beauty services', function (done) {
+        it('should be able to retrieve service categories', function (done) {
             site.retrieveServicesByServiceCategoryName(
                 sharedState.access_token,
-                'Beauty',
+                'Hair Styling',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -111,10 +111,10 @@ describe('Site', function () {
     });
 
     describe('retrieveServicesByServiceName()', function () {
-        it('should be able to retrieve wax leg service', function (done) {
+        it('should be able to retrieve service', function (done) {
             site.retrieveServicesByServiceName(
                 sharedState.access_token,
-                'Wax Leg',
+                'Blowdry',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -133,10 +133,10 @@ describe('Site', function () {
 
 
     describe('retrieveServiceEmployeePricing()', function () {
-        it('should be able to retrieve employee pricing for the Wax Leg service.', function (done) {
+        it('should be able to retrieve employee pricing for a service.', function (done) {
             site.retrieveServiceEmployeePricing(
                 sharedState.access_token,
-                'Wax Leg',
+                'Blowdry',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -154,10 +154,10 @@ describe('Site', function () {
     });
 
     describe('retrieveEmployeeServicePricing', function () {
-        it('should be able to retrieve service pricing for employee with alias of Wendy', function (done) {
+        it('should be able to retrieve service pricing for employee', function (done) {
             site.retrieveEmployeeServicePricing(
                 sharedState.access_token,
-                'Wendy',
+                'Katie',
                 function (err, result) {
                     if (err) {
                         done(err);

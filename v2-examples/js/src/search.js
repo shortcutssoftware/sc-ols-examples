@@ -37,6 +37,7 @@ var search = (function () {
                     availabilitySearches.push(new Promise(function (resolve, reject) {
                         api.post(
                             url.resolve(siteHref + '/', 'calculate_available_appointments'),
+                            { Authorization: 'JWT ' + jwtToken },
                             {
                                 requested_services: [{
                                     gender_code: 'unknown',

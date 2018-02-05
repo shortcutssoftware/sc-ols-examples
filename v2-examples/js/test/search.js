@@ -24,10 +24,10 @@ describe('Search', function () {
     });
 
     describe('byServiceCategoryName()', function () {
-        it('should be able to search for availabilities Beauty services', function (done) {
+        it('should be able to search for availabilities by service category', function (done) {
             search.byServiceCategoryName(
                 sharedState.access_token,
-                'Beauty',
+                'Hair Styling',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -45,10 +45,10 @@ describe('Search', function () {
     });
 
     describe('byServiceName()', function () {
-        it('should be able to search for availabilities of the Wax Leg service', function (done) {
+        it('should be able to search for availabilities by service name', function (done) {
             search.byServiceName(
                 sharedState.access_token,
-                'Wax Leg',
+                'Blowdry',
                 function (err, result) {
                     if (err) {
                         done(err);
@@ -67,11 +67,11 @@ describe('Search', function () {
 
 
     describe('byServiceAndEmployeeName()', function () {
-        it('should be able to search for availabilities of the Wax Leg service with Wendy', function (done) {
+        it('should be able to search for availabilities by service and employee', function (done) {
             search.byServiceAndEmployeeName(
                 sharedState.access_token,
-                'Wax Leg',
-                'Wendy',
+                'Blowdry',
+                'Katie',
                 function (err, result) {
                     if (err) {
                         done(err);

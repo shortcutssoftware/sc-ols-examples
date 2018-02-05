@@ -43,7 +43,7 @@ describe('Common Tasks', function () {
 
             search.byServiceNameAndDateTimeFilter(
                 sharedState.access_token,
-                'Cut for Men',
+                'Blowdry',
                 dateTimeFilter,
                 function (err, result) {
                     if (err) {
@@ -64,7 +64,7 @@ describe('Common Tasks', function () {
 
             search.byServiceCategoryAndDateTimeFilter(
                 sharedState.access_token,
-                'Hair',
+                'Hair Styling',
                 dateTimeFilter,
                 function (err, result) {
                     if (err) {
@@ -85,8 +85,8 @@ describe('Common Tasks', function () {
 
             search.byServiceAndEmployeeNameAndDateTimeFilter(
                 sharedState.access_token,
-                'Cut for Men',
-                'Wendy',
+                'Blowdry',
+                'Katie',
                 dateTimeFilter, function (err, result) {
                     if (err) {
                         done(err);
@@ -110,7 +110,7 @@ describe('Common Tasks', function () {
             };
             search.byServiceNameAndDateTimeFilterAndPriceBand(
                 sharedState.access_token,
-                'Cut for Men',
+                'Blowdry',
                 dateTimeFilter,
                 priceBand,
                 function (err, result) {
@@ -143,7 +143,7 @@ describe('Common Tasks', function () {
             };
             search.byServiceNameAndDateTimeFilterAndPriceBand(
                 sharedState.access_token,
-                'Cut for Men',
+                'Blowdry',
                 dateTimeFilter,
                 priceBand,
                 function (err, result) {
