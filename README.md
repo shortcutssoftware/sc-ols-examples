@@ -431,7 +431,7 @@ business processes that are not covered in these examples, we would love
 to know about them. Please consider forking this repository, and creating 
 a [pull request](https://help.github.com/articles/about-pull-requests/)
 if you would like to share your creations. 
-- Please [email us](mailto:rob.barrett@shortcuts.com.au) 
+- Please [email us](mailto:api-questions@shortcuts.com.au) 
 if you have any questions about this example.
 
 
