@@ -72,6 +72,10 @@ var api = (function () {
         request('POST', href, data, done);
     }
 
+    function put(href, data, done) {
+        request('PUT', href, data, done);
+    }
+
     function del(href, done) {
         request('DELETE', href, null, done);
     }
@@ -79,6 +83,7 @@ var api = (function () {
     return {
         get: get,
         post: post,
+        put: put,
         del: del
     };
 })();
