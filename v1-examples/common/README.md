@@ -45,9 +45,9 @@ service is known, and is able to be supplied as a parameter.
 ```
 
 Please refer to test of `search.byServiceNameAndDateTimeFilter` in 
-[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
+[common-tasks.js](../../v2-examples/js/test/common-tasks.js), 
 and also function `byServiceNameAndDateTimeFilter()` in 
-[search.js](../../v1-examples/js/src/search.js)
+[search.js](../js/src/search.js)
 
 
 ### Customer wants category of service (e.g. massage) in a specific date/time window but doesn’t know which kind of massage or who with.
@@ -110,9 +110,9 @@ for them all. The result is the union of all the individual search results.
 ```
 
 Please refer to test of `search.byServiceCategoryAndDateTimeFilter` in 
-[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
+[common-tasks.js](../../v2-examples/js/test/common-tasks.js), 
 and also function `byServiceCategoryAndDateTimeFilter()` in 
-[search.js](../../v1-examples/js/src/search.js)
+[search.js](../js/src/search.js)
 
 ### Customer wants specific service with specific stylist/therapist but doesn’t know available times/dates or gives range of date/time.
 
@@ -165,9 +165,9 @@ then used as parameters to call `calculate_avilable_appointments`.
 ```
 
 Please refer to test of `search.byServiceAndEmployeeNameAndDateTimeFilter` in 
-[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
+[common-tasks.js](../../v2-examples/js/test/common-tasks.js), 
 and also function `byServiceAndEmployeeNameAndDateTimeFilter()` in 
-[search.js](../../v1-examples/js/src/search.js)
+[search.js](../js/src/search.js)
 
 
 ### Customer wants specific service within time/date window, wants to choose price band, doesn’t know who with.
@@ -215,9 +215,9 @@ through the results, keeping only the appointments that fall within the price ba
 ```
 
 Please refer to test of `search.byServiceNameAndDateTimeFilterAndPriceBand` in 
-[common-tasks.js](../../v1-examples/js/test/common-tasks.js), 
+[common-tasks.js](../../v2-examples/js/test/common-tasks.js), 
 and also function `byServiceNameAndDateTimeFilterAndPriceBand()` in 
-[search.js](../../v1-examples/js/src/search.js)
+[search.js](../js/src/search.js)
 
 
 ### Customer to be able to cancel booking before cancellation period expiration/cut off.
@@ -236,4 +236,93 @@ This is a single-step process. The function takes three arguments:
     }
 ```
 
-Please refer to `cancelAppointment()` in [appointment.js](../../v1-examples/js/src/appointment.js)
+Please refer to `cancelAppointment()` in [appointment.js](../js/src/appointment.js)
+
+### Rescheduling
+
+The process of rescheduling an existing appointment is not available through the
+Shortcuts Widgets, but it is easy to implement using direct calls to the Shortcuts API.
+
+Please refer to [../js/test/appointment_reschedule.js](../js/test/appointment_reschedule.js)
+for a set of test cases that go through the process of booking an appointment, and
+then rescheduling it. The implementation of the calls is in the file 
+[../js/src/appointment_reschedule.js](../js/src/appointment_reschedule.js).
+
+The sequence of steps in the test is as follows:
+
+First, we authenticate the customer. This example uses a slightly different method 
+of customer authentication - we first authenticate against a 3rd party service, 
+and then call the Shortcuts API using the token provided by the 3rd party service.
+
+```js
+    function authenticateCustomer(username, password, done) {
+        api.get(url.resolve(config.tomaxUri, 'authenticate/' + username + '/' + password), function (err, result) {
+            if (err) {
+                done(err);
+            }
+            if (result.status != 200) {
+                done(new Error('3rd party authentication failed'));
+            }
+            var bearerToken = result.content;
+            var authenticateRequest = {
+                credential_type_code: 'access_token',
+                token_type: 'thc',
+                customer_id: config.customerId,
+                access_token: bearerToken
+            };
+            api.post(url.resolve(companyHref + '/', 'authenticate_customer'), authenticateRequest, function (err, result) {
+                if (err) {
+                    done(err);
+                }
+                if (result.status != 200) {
+                    done(new Error('Shortcuts single sign-on validation failed'));
+                }
+                done(null, result);
+            })
+        });
+    }
+```
+
+Then, we search for available appointments for a service. The choice of service here is
+arbitrary. Please see other examples if you require more sophisticated searches for 
+available appointments. Please also note that we select the first available slot for 
+booking, but we also record the time of the second available slot for later rescheduling.
+
+```js
+    sharedState.appointmentDetails = result.content.available_appointments[0];
+
+    // remember these details for the reschedule operation later
+    var nextAppointment = result.content.available_appointments[1];
+    sharedState.next_scheduled_date = nextAppointment.scheduled_date;
+    sharedState.next_start_time = nextAppointment.services[0].start_time;
+
+```
+
+Then, we book an appointment, as in other examples.
+
+Then, we retrieve the details of the appointment we have just created, including the
+appointment version. We create a clone of these details, and change the date and time
+to match the date and time of the 2nd available slot that we recorded earlier.
+
+```js
+    var rescheduleAppointmentRequest = _.clone(sharedState.appointment);
+    rescheduleAppointmentRequest.scheduled_date = sharedState.next_scheduled_date
+    rescheduleAppointmentRequest.start_time = sharedState.next_start_time;
+``` 
+
+Finally, we use this appointment definition to to reschedule the appointment. After
+the reschedule operation, you can use the `version` attribute of the appointment to
+verify that changes have been made to the appointment. You can also inspect the
+`scheduled_date` and `start_time` attributes.
+
+```js
+    var oldVersion = sharedState.appointment.version;
+    console.log('version before reschedule:', oldVersion)
+```
+...
+```js
+    var newVersion = result.content.version;
+    console.log('version after reschedule:', newVersion);
+    expect(newVersion).to.be.above(oldVersion);
+```
+

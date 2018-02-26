@@ -390,7 +390,7 @@ these examples
 
 #### Booking
 
-[Common booking tasks](./v2-examples/common)
+[Common booking tasks](./v1-examples/common)
 
 ### Calling the Shortcuts API from the Java language
 

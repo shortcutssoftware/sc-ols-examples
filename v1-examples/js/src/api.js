@@ -7,8 +7,10 @@ const log = require('./log.js');
 var api = (function () {
 
     function request(method, href, data, done) {
-        var endpoint, options, request, requestContent;
 
+        method = method.toUpperCase();
+
+        var endpoint, options, request, requestContent;
         endpoint = url.parse(href);
         options = {
             method: method,
@@ -18,7 +20,7 @@ var api = (function () {
             headers: { 'Authorization': oauth.sign(method, url.format(endpoint)) }
         };
 
-        if(method === 'POST') {
+        if(method === 'POST' || method === 'PUT') {
             requestContent = JSON.stringify(data || {});
             options.headers['Content-Type'] = 'application/json';
             options.headers['Content-Length'] = Buffer.byteLength(requestContent);
@@ -57,7 +59,7 @@ var api = (function () {
             done('Unknown protocol:' + endpoint.protocol)
         }
 
-        if(method === 'POST') {
+        if(method === 'POST' || method === 'PUT') {
             request.write(requestContent);
         }
 

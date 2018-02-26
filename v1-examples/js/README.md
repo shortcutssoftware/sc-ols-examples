@@ -28,7 +28,7 @@ The logging level used during the tests can be updated through the editing the [
 
 The following modules are available as part of this example.  The ones of particular interest are the [Site](#site), [Search](#search) and [Appointment](#appointment) modules.
 
-* The API module ([source](src/api.js)) provides `GET`, `POST` and `DELETE` operations against the Shortcuts API
+* The API module ([source](src/api.js)) provides HTTP operations against the Shortcuts API.
 
 * The Appointment module([source](src/appointment.js)) provides the ability to manage appointments on behalf of customers, including booking, retrieving and cancelling appointments.
 
