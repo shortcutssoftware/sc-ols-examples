@@ -1,0 +1,16 @@
+{
+  "name": "stylist-single-signon",
+  "version": "1.0.0",
+  "description": "Example webpage providing stylis single signon capabilities",
+  "author": "Shortcuts Software",
+  "license": "ISC",
+  "dependencies": {
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
