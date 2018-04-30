@@ -2,7 +2,7 @@ const request = require('request-promise');
 
 var stylistSingleSignon = (function () {
 
-    function getOAuthData(stylistCredentials, done) {
+    function getAuthCookies(stylistCredentials, done) {
 
         // 1. validate the stylist credentials object
         if (!stylistCredentials
@@ -47,7 +47,7 @@ var stylistSingleSignon = (function () {
             // stylist was authenticated. we are interested in the OAuth
             // tokens that were delivered by the signon server.
             console.log('successful authentication for stylist: %s', stylistCredentials.stylist_username)
-            done(null, getOAuthDataFromResponse(response));
+            done(null, getAuthCookiesFromResponse(response));
 
         }).catch(function (err) {
 
@@ -58,33 +58,31 @@ var stylistSingleSignon = (function () {
         })
     }
 
-    function getOAuthDataFromResponse(response) {
-        var oAuthData = {};
+    function getAuthCookiesFromResponse(response) {
+        var authCookies = {};
         var setCookieHeaders = response.headers['set-cookie'];
         for (var i = 0; i < setCookieHeaders.length; i++) {
             var setCookieHeader = setCookieHeaders[i];
             console.log('header:', setCookieHeader);
-            var headerChunks = setCookieHeader.split(/=|&|;/);
-            if (!headerChunks
-                || headerChunks.length < 5
-                || headerChunks[0] != 'OAuth') {
-                continue;
-            }
-            headerChunks.shift(); // not interested in the header name
-            while (headerChunks.length > 1) {
-                var name = headerChunks.shift();
-                var value = headerChunks.shift();
-                oAuthData[name] = value;
+            var headerChunks = setCookieHeader.split(/;/);
+            if (headerChunks && headerChunks.length > 0) {
+                let cookieNameAndValue = headerChunks[0];
+                let p = cookieNameAndValue.indexOf('=');
+                let cookieName = cookieNameAndValue.substr(0, p);
+                if (cookieName === 'OAuth' || cookieName === '.ASPAUTH') {
+                    let cookieValue = cookieNameAndValue.substr(p + 1);
+                    authCookies[cookieName] = cookieValue;
+                }
             }
         }
-        if (Object.keys(oAuthData).length == 0) {
-            throw new Error('unable to find OAuth data in response');
+        if (Object.keys(authCookies).length != 2) {
+            throw new Error('unable to find auth cookies in response');
         }
-        return oAuthData;
+        return authCookies;
     }
 
     return {
-        getOAuthData: getOAuthData
+        getAuthCookies: getAuthCookies
     }
 })();
 

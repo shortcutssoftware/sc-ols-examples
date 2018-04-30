@@ -1,6 +1,5 @@
 const stylistCredentials = require('./example-stylist-credentials');
 const stylistSingleSignon = require('../src/stylist-single-signon.js');
-const oauth = require('../src/oauth.js');
 const request = require('request-promise');
 
 describe('Stylist Single Signon', function () {
@@ -17,16 +16,14 @@ describe('Stylist Single Signon', function () {
 
     });
 
-    var sharedOAuthData = undefined;
-    var sharedOAuthHeader = undefined;
-    var sharedOAuthQueryString = undefined;
+    var sharedAuthCookies = undefined;
 
-    describe('getOAuthData()', function () {
+    describe('getAuthCookies()', function () {
 
         it('must return an error when called with empty credentials', function (done) {
-            stylistSingleSignon.getOAuthData(null, function (err, oAuthData) {
+            stylistSingleSignon.getAuthCookies(null, function (err, authCookies) {
                 expect(err).toBeDefined();
-                expect(oAuthData).toBeUndefined();
+                expect(authCookies).toBeUndefined();
                 done();
             });
         });
@@ -34,52 +31,37 @@ describe('Stylist Single Signon', function () {
         it('must return an error when called with invalid credentials', function (done) {
             var badStylistCredentials = JSON.parse(JSON.stringify(stylistCredentials));
             badStylistCredentials.stylist_password = 'bogus';
-            stylistSingleSignon.getOAuthData(badStylistCredentials, function (err, oAuthData) {
+            stylistSingleSignon.getAuthCookies(badStylistCredentials, function (err, authCookies) {
                 expect(err).toBeDefined();
-                expect(oAuthData).toBeUndefined();
+                expect(authCookies).toBeUndefined();
                 done();
             });
         });
 
-        it('must return oauth data  when called with valid credentials', function (done) {
-            stylistSingleSignon.getOAuthData(stylistCredentials, function (err, oAuthData) {
+        it('must return auth cookies when called with valid credentials', function (done) {
+            stylistSingleSignon.getAuthCookies(stylistCredentials, function (err, authCookies) {
                 expect(err).toEqual(null);
-                expect(oAuthData).toBeDefined();
-                // oauth data must be present
-                expect(oAuthData.OAuthAccessKey).toBeDefined();
-                expect(oAuthData.OAuthAccessSecret).toBeDefined();
-                expect(oAuthData.OAuthExpirationDate).toBeDefined();
-                sharedOAuthData = oAuthData;
+                expect(authCookies).toBeDefined();
+                expect(authCookies['OAuth']).toBeDefined();
+                expect(authCookies['.ASPAUTH']).toBeDefined();
+                sharedAuthCookies = authCookies;
                 done();
             });
         });
 
-        it('must return a valid OAuth header for the derived oAuthData', function (done) {
-            expect(sharedOAuthData).toBeDefined();
-            sharedOAuthData.OAuthConsumerKey = stylistCredentials.oauth_consumer_key;
-            sharedOAuthData.OAuthConsumerSecret = stylistCredentials.oauth_consumer_secret;
-            console.log('shared oauth data', sharedOAuthData);
-            let oAuthHeader = oauth.signedHeader(
-                'GET',
-                stylistCredentials.site_url,
-                {},
-                sharedOAuthData
-            );
-            expect(oAuthHeader).toBeDefined();
-            expect(oAuthHeader).toMatch(/^OAuth realm="https:\/\/pos\.shortcutssoftware\.com.*/);
-            sharedOAuthHeader = oAuthHeader;
-            done();
-        });
-
-        it('must return a valid response for the derived oAuth signature in the header', function (done) {
-            expect(sharedOAuthHeader).toBeDefined();
-            let requestUri = stylistCredentials.site_url;
+        it('must return a valid response from the site_url when called with the correct auth cookies', function (done) {
+            expect(sharedAuthCookies).toBeDefined();
+            var cookieString = '';
+            Object.keys(sharedAuthCookies).forEach(function (key) {
+                console.log('adding the [%s] cookie', key);
+                cookieString += (key + '=' + sharedAuthCookies[key] + '; ');
+            });
             request(
                 {
                     method: 'GET',
-                    uri: requestUri,
+                    uri: stylistCredentials.site_url,
                     headers: {
-                        'Authorization': sharedOAuthHeader
+                        'Cookie': cookieString
                     },
                     resolveWithFullResponse: true,
                     followRedirect: false
@@ -95,42 +77,5 @@ describe('Stylist Single Signon', function () {
             })
         });
 
-        it('must return a valid OAuth query string for the derived oAuthData', function (done) {
-            expect(sharedOAuthData).toBeDefined();
-            sharedOAuthData.OAuthConsumerKey = stylistCredentials.oauth_consumer_key;
-            sharedOAuthData.OAuthConsumerSecret = stylistCredentials.oauth_consumer_secret;
-            console.log('shared oauth data', sharedOAuthData);
-            let oAuthQueryString = oauth.signedQueryString(
-                'GET',
-                stylistCredentials.site_url,
-                {},
-                sharedOAuthData
-            );
-            expect(oAuthQueryString).toBeDefined();
-            expect(oAuthQueryString).toMatch(/^.*\&oauth_signature=.*/);
-            sharedOAuthQueryString = oAuthQueryString;
-            done();
-        });
-
-        it('must return a valid response for the derived oAuth signature in the query string', function (done) {
-            expect(sharedOAuthQueryString).toBeDefined();
-            let requestUri = stylistCredentials.site_url + '?' + sharedOAuthQueryString;
-            request(
-                {
-                    method: 'GET',
-                    uri: requestUri,
-                    resolveWithFullResponse: true,
-                    followRedirect: false
-                }
-            ).then(function (response) {
-                if (response.statusCode != 200) {
-                    throw new Error('unable to open site: ' + stylistCredentials.site_url);
-                }
-                console.log('opened site after stylist single signon: ' + stylistCredentials.site_url)
-                done();
-            }).catch(function (err) {
-                done(err);
-            })
-        });
     });
 });
