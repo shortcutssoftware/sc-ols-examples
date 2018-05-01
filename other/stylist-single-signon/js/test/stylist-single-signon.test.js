@@ -51,10 +51,28 @@ describe('Stylist Single Signon', function () {
 
         it('must return a valid response from the site_url when called with the correct auth cookies', function (done) {
             expect(sharedAuthCookies).toBeDefined();
+
+            // sharedAuthCookies contains the 'Set-Cookie' headers
+            // returned from the signon server when we performed the
+            // stylist single signon.
+            //
+            // this test shows how to extract the cookie values, and
+            // use them in a programmatic request to Shortcuts live.
+
             var cookieString = '';
             Object.keys(sharedAuthCookies).forEach(function (key) {
                 console.log('adding the [%s] cookie', key);
-                cookieString += (key + '=' + sharedAuthCookies[key] + '; ');
+                let setCookieString = sharedAuthCookies[key];
+                let setCookieParts = setCookieString.split(';');
+                let cookieNameAndValue = setCookieParts[0];
+                let p = cookieNameAndValue.indexOf('=');
+                let cookieValue = cookieNameAndValue.substr(p + 1);
+                if (cookieString.length > 0) {
+                    if (!cookieString.match(/^.*; +$/)) {
+                        cookieString += '; ';
+                    }
+                }
+                cookieString += (key + '=' + cookieValue + '; ');
             });
             request(
                 {

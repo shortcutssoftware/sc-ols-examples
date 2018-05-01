@@ -47,7 +47,7 @@ var stylistSingleSignon = (function () {
             // stylist was authenticated. we are interested in the OAuth
             // tokens that were delivered by the signon server.
             console.log('successful authentication for stylist: %s', stylistCredentials.stylist_username)
-            done(null, getAuthCookiesFromResponse(response));
+            done(null, getAuthCookiesSetByResponse(response));
 
         }).catch(function (err) {
 
@@ -58,21 +58,15 @@ var stylistSingleSignon = (function () {
         })
     }
 
-    function getAuthCookiesFromResponse(response) {
+    function getAuthCookiesSetByResponse(response) {
         var authCookies = {};
         var setCookieHeaders = response.headers['set-cookie'];
         for (var i = 0; i < setCookieHeaders.length; i++) {
             var setCookieHeader = setCookieHeaders[i];
-            console.log('header:', setCookieHeader);
-            var headerChunks = setCookieHeader.split(/;/);
-            if (headerChunks && headerChunks.length > 0) {
-                let cookieNameAndValue = headerChunks[0];
-                let p = cookieNameAndValue.indexOf('=');
-                let cookieName = cookieNameAndValue.substr(0, p);
-                if (cookieName === 'OAuth' || cookieName === '.ASPAUTH') {
-                    let cookieValue = cookieNameAndValue.substr(p + 1);
-                    authCookies[cookieName] = cookieValue;
-                }
+            let cookieName = setCookieHeader.split('=')[0]
+            if (cookieName === 'OAuth' || cookieName === '.ASPAUTH') {
+                console.log('header:', setCookieHeader);
+                authCookies[cookieName] = setCookieHeader;
             }
         }
         if (Object.keys(authCookies).length != 2) {
