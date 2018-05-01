@@ -62,6 +62,7 @@ describe('Stylist Single Signon', function () {
             var cookieString = '';
             Object.keys(sharedAuthCookies).forEach(function (key) {
                 console.log('adding the [%s] cookie', key);
+
                 let setCookieString = sharedAuthCookies[key];
                 let setCookieParts = setCookieString.split(';');
                 let cookieNameAndValue = setCookieParts[0];
@@ -89,6 +90,47 @@ describe('Stylist Single Signon', function () {
                     throw new Error('unable to open site: ' + stylistCredentials.site_url);
                 }
                 console.log('opened site after stylist single signon: ' + stylistCredentials.site_url)
+                done();
+            }).catch(function (err) {
+                done(err);
+            })
+        });
+
+        it('must reissue a cookie correctly when supplied with the correct auth cookies', function (done) {
+            expect(sharedAuthCookies).toBeDefined();
+
+            // sharedAuthCookies contains the 'Set-Cookie' headers
+            // returned from the signon server when we performed the
+            // stylist single signon.
+            //
+            // this test shows how to build a url with query string
+            // parameters, that, when invoked (GET), will reissue
+            // the required cookies to the shortcutssoftware domain.
+            //
+            // this is necessary because a browser operating in a
+            // secure manner can only receive cookies issued on the
+            // same domain that it is requesting from
+
+            console.log('reissuing the [OAuth] cookie');
+
+            let setCookieString = sharedAuthCookies['OAuth'];
+            let encodedSetCookieString = btoa(setCookieString);
+            let cookieIssuerUrl = 'https://cookie.shortcutssoftware.com/issue';
+
+            request(
+                {
+                    method: 'GET',
+                    uri: cookieIssuerUrl + '?cookie=' + encodedSetCookieString,
+                    resolveWithFullResponse: true,
+                    followRedirect: false
+                }
+            ).then(function (response) {
+                if (response.statusCode != 200) {
+                    throw new Error('unable to open site: ' + cookieIssuerUrl);
+                }
+                let setCookieResponseHeaders = response.headers['set-cookie'];
+                console.log('response with %s cookies', setCookieResponseHeaders.length);
+                expect(setCookieResponseHeaders[0]).toEqual(setCookieString);
                 done();
             }).catch(function (err) {
                 done(err);
