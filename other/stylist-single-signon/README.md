@@ -1,12 +1,12 @@
 # Stylist single sign-on
 
-This folder contains example code for the _stylist single sign-on_ 
-capability.
+This folder contains example code for the _Stylist single sign-on_ 
+feature.
 
 ## Overview
 
 _Stylist single sign-on_ refers to the capability where an organization
-provides a mechanism for Shortcuts to call back to their own system in
+provides a mechanism for Shortcuts to call back to their own systems in
 order to validate a stylist's credentials, rather than using the Shortcuts
 signon servers to validate the stylist's credentials.
 
@@ -20,23 +20,23 @@ them to log on twice.
 The first step to making this feature work is to contact Shortcuts and 
 arrange for the _Stylist single sign-on_ feature to be enabled for your
 organization. Because each organization differs in the way that it manages
-passwords and credentials, we will have to provide a mechanism unique to
+passwords and credentials, we will have to provide a pathway unique to
 you that allows us to call back to you with stylist credentials in order
 for you to validate them.
 
 The next step is for the organization to put in place some code that will
-drive the _Stylist single sign-on_ process from their end. 
+drive the _Stylist single sign-on_ process from your end. 
 
 The (simple) process is:
 
-1. The organization will collect the stylist's credentials and supply them
-to Shortcuts for validation.
-    1. Shortcuts will call back to the organization to validate
-    the supplied credentials  
-    1. If this validation is successful then the organization will 
+1. You will collect the stylist's credentials and supply them
+to the Shortcuts signon server for validation.
+    1. Shortcuts will call back to you to validate the supplied 
+    credentials  
+    1. If this validation is successful then you will 
     receive 2 cookies that allow the stylist access to their 
     site in the Shortcuts Live environment.
-1. The organization will make a request to the Shortcuts Live environment,
+1. You will then make a request to the Shortcuts Live environment,
 and supply the cookies obtained above. This will be enough to allow access
 to a site.
 
@@ -46,15 +46,19 @@ It is possible to do this programmatically, as the following tests show:
 ## However
 
 Due to security safeguards in different browsers, it is not possible to
-set cookies for another domain (let's say domain B), while you are a web
-page running in domain A.
+reliably get and set cookies for another domain (let's say domain B), 
+while you are a web page running in domain A.
 
 If you are using a web page to perform the _Stylist single sign-on_ 
 process, then you will have to do a little bit of extra legwork, so the
 process described above becomes:
 
-- Collect the stylist's credentials and supply them to Shortcuts for 
-validation. This can be done by issuing a request as shown in 
+- Collect the stylist's credentials and supply them via a _self-hosted
+server_ to Shortcuts for validation. 
+(We have provided an example implementation of such a server in 
+NodeJS for you at [server.js](./js/src/server.js), but you can 
+implement a this server in almost any technology). The 
+authentication is done by issuing a request as shown in 
 [stylist-single-signon.js](./js/src/stylist-single-signon.js), the 
 relevant call is:
 ~~~ javascript
@@ -74,22 +78,28 @@ request({
         })
 ~~~
 
-- Take the object that is returned by this call. It contains the two
-cookies that will enable you to access the Shortcuts Live environment.
+- Take the object that is returned by this call to the server. It 
+contains the two cookies that will enable you to access the Shortcuts 
+Live environment.
 
 *Note: because you are not on a webpage hosted by the Shortcuts Live 
-environment, your browser will not allow you to set these cookies for
-that environment. These cookies are issued to the `shortcutssoftware.com`
-domain, and so will only be accepted by your browser if it is on a page
-hosted on the `shortcutssoftware.com` domain*
+domain, your browser will not allow you to reliably get and 
+set cookies for that domain. These cookies are issued to the 
+`shortcutssoftware.com` domain, and so may only be accepted by your 
+browser if it is on a page hosted on the `shortcutssoftware.com` domain*
 
 - To enable this issuing of cookies to work, we use a mechanism whereby
-the browser page in domain A (your domain) opens a new window, which
-makes a GET request to domain B (`shortcutssoftware.com`). The response
-to this request sets the cookie you need, and then the new window closes.
+the browser page in domain A (your domain) opens a new iframe on 
+the `shortcutssoftware.com` domain, which makes a GET request to domain 
+`shortcutssoftware.com` using these cookie values. Because this request 
+is on the `shortcutssoftware.com` domain, the browser accepts 
+the cookie that you need. You may not have visibility of the contents
+of the iframe and the cookies issued to that iframe from your web page,
+but that is ok. The browser will remember those cookies when they are 
+later required to be sent to the Shortcuts Live pages.
 
-- The organization will open up a browser window for the Shortcuts Live 
-environment. Since the cookies set in the temporary window were stored
-on the `shortcutssoftware.com` domain, the stylist stylist will be able
+- You then open up a browser window for the Shortcuts Live 
+environment. Since the cookies set in the iframe were stored
+for the `shortcutssoftware.com` domain, the stylist will be able
 to access to their site in the Shortcuts Live environment.
 

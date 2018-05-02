@@ -16,7 +16,7 @@ var stylistSingleSignon = (function () {
 
         // 2. create an Authorization header by encoding the stylist credentials
         var credentialPair = stylistCredentials.stylist_username + ':' + stylistCredentials.stylist_password;
-        var encoded = btoa(credentialPair);
+        var encoded = Buffer.from(credentialPair).toString('base64');
         var authorizationHeaderValue = 'Basic ' + encoded;
 
         // 3. make a request to the signon server. note that the stylist

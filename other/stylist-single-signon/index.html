@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stylist Single Sign-on html page example</title>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            function submitForm() {
+
+                // 1. gather submission data from form
+                let stylistCredentials = {
+                    stylist_username: $('#username').val(),
+                    stylist_password: $('#secret').val(),
+                    oauth_consumer_key: $('#oauth_consumer_key').val(),
+                    grant_type: $('#grant_type').val(),
+                    site_url: $('#site_url').val()
+                };
+
+                // 2. make a request to the self-hosted signon
+                // server, which will return the necessary cookies
+                $.ajax(
+                    {
+                        url: 'http://localhost:8080/stylist-single-signon',
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        data: JSON.stringify(stylistCredentials),
+                    }).then(
+                    function (data, textStatus, jqXHR) {
+                        // stylist was authenticated. we are interested in the OAuth
+                        // tokens that were delivered by the signon server.
+                        console.log('successful authentication for stylist: %s', stylistCredentials.stylist_username);
+
+                        let cookieData = data;
+                        issueShortcutsCookie(cookieData['.ASPAUTH']);
+                        issueShortcutsCookie(cookieData['OAuth']);
+
+                        setTimeout(function () {
+                            console.log('opening stylist site in Shortcuts Live: %s', stylistCredentials.site_url);
+                            window.location.replace(stylistCredentials.site_url);
+                        }, 2000);
+                    },
+                    function (jqXHR, textStatus, errorThrown) {
+                        // stylist was not authenticated
+                        alert('stylist was not authenticated. ' +
+                            textStatus + ': ' +
+                            JSON.stringify(errorThrown));
+                    }
+                );
+            }
+
+            function issueShortcutsCookie(cookieString) {
+                console.log('issuing cookie %s', cookieString);
+
+                let encodedSetCookieString = btoa(cookieString);
+                let cookieIssuerUrl = 'https://cookie.shortcutssoftware.com/issue';
+                let srcUrl = cookieIssuerUrl + '?cookie=' + encodedSetCookieString;
+
+                $('body').append('<iframe src="' + srcUrl + '"></iframe>');
+            }
+
+            $('#form').submit(function () {
+                submitForm();
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>Stylist Single Sign-on html page example</h1>
+<form id="form">
+    <label>Username:</label>
+    <br>
+    <input id="username" name="username" type="text"/>
+    <br>
+    <label>Password:</label>
+    <br>
+    <input id="secret" name="secret" type="password"/>
+    <br>
+    <label>Grant type:</label>
+    <br>
+    <input id="grant_type" name="grant_type" type="text" value="client_credentials"/>
+    <br>
+    <label>OAuth Consumer Key:</label>
+    <br>
+    <input id="oauth_consumer_key" name="oauth_consumer_key" type="text" value="MQTBolOfuj13PrR3a4LR"/>
+    <br>
+    <label>Stylist site url:</label>
+    <br>
+    <input id="site_url" name="site_url" type="url" value="https://pos.shortcutssoftware.com/site/37176">
+    <br>
+    <input type="submit" value="Submit"/>
+</form>
+</body>
+</html>
