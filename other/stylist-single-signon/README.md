@@ -43,44 +43,61 @@ to a site.
 It is possible to do this programmatically, as the following tests show: 
 [stylist-single-signon.test.js](./js/test/stylist-single-signon.test.js)
 
+An example test:
+~~~ javascript
+        it('must return auth cookies when called with valid credentials', function (done) {
+            stylistSingleSignon.getAuthCookies(stylistCredentials, function (err, authCookies) {
+                expect(err).toEqual(null);
+                expect(authCookies).toBeDefined();
+                expect(authCookies['OAuth']).toBeDefined();
+                expect(authCookies['.ASPAUTH']).toBeDefined();
+                sharedAuthCookies = authCookies;
+                done();
+            });
+        });
+~~~
+
+The code that actually invokes the Shortcuts signon server in the
+correct way is in [stylist-single-signon.js](./js/src/stylist-single-signon.js)
+and can be freely altered or reused. The relevant call is:
+~~~ javascript
+     request({
+     
+                 method: 'POST',
+                 uri: 'https://signon.shortcutssoftware.com/authenticate',
+                 headers: {
+                     'Authorization': authorizationHeaderValue
+                 },
+                 form: {
+                     grant_type: stylistCredentials.grant_type,
+                     oauth_consumer_key: stylistCredentials.oauth_consumer_key
+                 },
+                 resolveWithFullResponse: true
+     
+             })
+~~~
+
 ## However
 
 Due to security safeguards in different browsers, it is not possible to
-reliably get and set cookies for another domain (let's say domain B), 
-while you are a web page running in domain A.
+reliably get and set cookies for another domain (`shortcutssoftware.com`), 
+while you are on a web page hosted in your domain.
 
 If you are using a web page to perform the _Stylist single sign-on_ 
 process, then you will have to do a little bit of extra legwork, so the
 process described above becomes:
 
 - Collect the stylist's credentials and supply them via a _self-hosted
-server_ to Shortcuts for validation. 
-(We have provided an example implementation of such a server in 
-NodeJS for you at [server.js](./js/src/server.js), but you can 
-implement a this server in almost any technology). The 
-authentication is done by issuing a request as shown in 
-[stylist-single-signon.js](./js/src/stylist-single-signon.js), the 
-relevant call is:
-~~~ javascript
-request({
-
-            method: 'POST',
-            uri: 'https://signon.shortcutssoftware.com/authenticate',
-            headers: {
-                'Authorization': authorizationHeaderValue
-            },
-            form: {
-                grant_type: stylistCredentials.grant_type,
-                oauth_consumer_key: stylistCredentials.oauth_consumer_key
-            },
-            resolveWithFullResponse: true
-
-        })
-~~~
+  server_ to Shortcuts for validation. 
+  - (We have provided an example implementation of such a server in 
+    NodeJS for you at [server.js](./js/src/server.js), but you can 
+    implement a this server in almost any technology). The 
+    authentication is done by issuing a request as shown in 
+    [stylist-single-signon.js](./js/src/stylist-single-signon.js).
 
 - Take the object that is returned by this call to the server. It 
-contains the two cookies that will enable you to access the Shortcuts 
-Live environment.
+  contains the two cookies that will enable you to access the 
+  Shortcuts Live environment.
 
 *Note: because you are not on a webpage hosted by the Shortcuts Live 
 domain, your browser will not allow you to reliably get and 
@@ -93,7 +110,7 @@ the browser page in domain A (your domain) opens a new iframe on
 the `shortcutssoftware.com` domain, which makes a GET request to domain 
 `shortcutssoftware.com` using these cookie values. Because this request 
 is on the `shortcutssoftware.com` domain, the browser accepts 
-the cookie that you need. You may not have visibility of the contents
+the cookie that is issued. You may not have visibility of the contents
 of the iframe and the cookies issued to that iframe from your web page,
 but that is ok. The browser will remember those cookies when they are 
 later required to be sent to the Shortcuts Live pages.
@@ -109,15 +126,16 @@ to access to their site in the Shortcuts Live environment.
    `other/stylist-single-signon/js` folder.
 1. Run the following command to install dependencies: `npm install`
 1. Run the following command to execute all the tests: `npm test`.
-   You can see the results of the tests printed out on the console
-   as they run. Alternatively, you can use the IDE of your choice
-   to run the tests and debug them to get a better understanding
-   of what the individual steps are.
+   1. You can see the results of the tests printed out on the console
+      as they run. 
+   1. Alternatively, you can use the IDE of your choice
+      to run the tests and debug them to get a better understanding
+      of what the individual steps are.
 1. Run the following command to start the http server: `npm start`.
-   You will see a message saying `Stylist single signon server listening on port 8080!`.
-   You can then open up the following page in a browser to test
-   the _Stylist single signon_ feature through the browser of your choice:
-   [http://localhost:8080/index.html](http://localhost:8080/index.html).
+   1. You will see a message saying `Stylist single signon server listening on port 8080!`.
+   1. You can then open up the following page in a browser to test
+      the _Stylist single signon_ feature through the browser of your choice:
+      [http://localhost:8080/index.html](http://localhost:8080/index.html).
 
 
 ## Notes:
@@ -130,5 +148,9 @@ to access to their site in the Shortcuts Live environment.
   is sensitive, please copy and use 
   [example-stylist-credentials-template.js](./js/test/example-stylist-credentials-template.js)
   as a guide to creating this file using your own stylist credentials.
+- We have not applied any styling to the example web page, but in the
+  case of the iframes, it is not necessary to display these, their only
+  function is to cause the correct cookies to be issued on the correct 
+  domain. You can safely hide or dispose of them.
 - Please [email us](mailto:api-questions@shortcuts.com.au) 
   if you have any questions about this example.
