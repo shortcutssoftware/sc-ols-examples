@@ -5,6 +5,8 @@ const stylistSingleSignon = require('./stylist-single-signon.js');
 
 app.use(bodyParser.json());
 
+app.use(express.static('./'))
+
 app.post('/stylist-single-signon', function (req, res) {
 
     // receive the stylist credentials as a JSON payload.

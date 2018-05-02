@@ -9,7 +9,7 @@
             function submitForm() {
 
                 // 1. gather submission data from form
-                let stylistCredentials = {
+                var stylistCredentials = {
                     stylist_username: $('#username').val(),
                     stylist_password: $('#secret').val(),
                     oauth_consumer_key: $('#oauth_consumer_key').val(),
@@ -24,6 +24,7 @@
                         url: 'http://localhost:8080/stylist-single-signon',
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
+                        crossDomain: true,
                         dataType: "json",
                         data: JSON.stringify(stylistCredentials),
                     }).then(
