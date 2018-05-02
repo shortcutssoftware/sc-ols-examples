@@ -89,11 +89,15 @@ process described above becomes:
 
 - Collect the stylist's credentials and supply them via a _self-hosted
   server_ to Shortcuts for validation. 
-  - (We have provided an example implementation of such a server in 
+  - We have provided an example implementation of such a server in 
     NodeJS for you at [server.js](./js/src/server.js), but you can 
-    implement a this server in almost any technology). The 
+    implement a this server in almost any technology. The 
     authentication is done by issuing a request as shown in 
     [stylist-single-signon.js](./js/src/stylist-single-signon.js).
+  - We have also used this server to deliver the html page that is 
+    used to gather the stylist's credentials. See [index.html](./js/src/index.html).
+    You do not need to host these two things on the same server. 
+    It is done this way in the example purely for convenience.
 
 - Take the object that is returned by this call to the server. It 
   contains the two cookies that will enable you to access the 
@@ -101,7 +105,7 @@ process described above becomes:
 
 *Note: because you are not on a webpage hosted by the Shortcuts Live 
 domain, your browser will not allow you to reliably get and 
-set cookies for that domain. These cookies are issued to the 
+set cookies for that domain. These cookies were issued to the 
 `shortcutssoftware.com` domain, and so may only be accepted by your 
 browser if it is on a page hosted on the `shortcutssoftware.com` domain*
 
@@ -120,7 +124,7 @@ environment. Since the cookies set in the iframe were stored
 for the `shortcutssoftware.com` domain, the stylist will be able
 to access to their site in the Shortcuts Live environment.
 
-## How to run
+## How to run this example
 
 1. Clone this repository, then change directory to the 
    `other/stylist-single-signon/js` folder.
@@ -130,7 +134,7 @@ to access to their site in the Shortcuts Live environment.
       as they run. 
    1. Alternatively, you can use the IDE of your choice
       to run the tests and debug them to get a better understanding
-      of what the individual steps are.
+      of what individual steps are happening.
 1. Run the following command to start the http server: `npm start`.
    1. You will see a message saying `Stylist single signon server listening on port 8080!`.
    1. You can then open up the following page in a browser to test
@@ -141,7 +145,7 @@ to access to their site in the Shortcuts Live environment.
 ## Notes:
 
 - The example server implementation does not use HTTPS. Please ensure 
-  that when you provide a real implementation you only support HTTPS
+  that when you deliver a real implementation you only support HTTPS
   for any traffic where passwords are transmitted.
 - The tests expect a file of the name `example-stylist-credentials.js` 
   that declares stylist credentials. Since the information in this file 
