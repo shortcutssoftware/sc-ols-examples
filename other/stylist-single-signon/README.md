@@ -103,3 +103,32 @@ environment. Since the cookies set in the iframe were stored
 for the `shortcutssoftware.com` domain, the stylist will be able
 to access to their site in the Shortcuts Live environment.
 
+## How to run
+
+1. Clone this repository, then change directory to the 
+   `other/stylist-single-signon/js` folder.
+1. Run the following command to install dependencies: `npm install`
+1. Run the following command to execute all the tests: `npm test`.
+   You can see the results of the tests printed out on the console
+   as they run. Alternatively, you can use the IDE of your choice
+   to run the tests and debug them to get a better understanding
+   of what the individual steps are.
+1. Run the following command to start the http server: `npm start`.
+   You will see a message saying `Stylist single signon server listening on port 8080!`.
+   You can then open up the following page in a browser to test
+   the _Stylist single signon_ feature through the browser of your choice:
+   [http://localhost:8080/index.html](http://localhost:8080/index.html).
+
+
+## Notes:
+
+- The example server implementation does not use HTTPS. Please ensure 
+  that when you provide a real implementation you only support HTTPS
+  for any traffic where passwords are transmitted.
+- The tests expect a file of the name `example-stylist-credentials.js` 
+  that declares stylist credentials. Since the information in this file 
+  is sensitive, please copy and use 
+  [example-stylist-credentials-template.js](./js/test/example-stylist-credentials-template.js)
+  as a guide to creating this file using your own stylist credentials.
+- Please [email us](mailto:api-questions@shortcuts.com.au) 
+  if you have any questions about this example.
