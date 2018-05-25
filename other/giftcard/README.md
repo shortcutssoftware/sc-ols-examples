@@ -7,7 +7,7 @@ checking balances, redeem, etc.
 
 ### GiftCard Activation
 This endpoint allows you to activate a Shortcuts GiftCard under an existing GiftCard program. 
-It is worth mentioning that use will need to go to Shortcuts GiftCard Console to register a 
+It is worth mentioning that users will need to go to Shortcuts GiftCard Console to register a 
 card number first before you activate a GiftCard.
 
 Activation endpoint:
