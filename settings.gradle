@@ -1,2 +1,4 @@
 include ':other:single-signon'
 include ':v2-examples:java'
+include 'other:giftcard'
+
