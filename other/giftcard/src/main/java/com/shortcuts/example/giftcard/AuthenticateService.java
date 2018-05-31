@@ -1,6 +1,8 @@
 package com.shortcuts.example.giftcard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shortcuts.example.giftcard.Models.AuthenticateRequest;
+import com.shortcuts.example.giftcard.Models.AuthenticateResponse;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -25,12 +27,7 @@ public class AuthenticateService {
         CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(httpPost);
         String httpResponseBody = EntityUtils.toString(httpResponse.getEntity());
 
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-        if(statusCode == 200){
-            AuthenticateResponse authenticateResponse = objectMapper.readValue(httpResponseBody, AuthenticateResponse.class);
-            return authenticateResponse;
-        }
-
-        throw new RuntimeException(String.format("Authentication fail: %s, %s", statusCode, httpResponseBody));
+        AuthenticateResponse authenticateResponse = objectMapper.readValue(httpResponseBody, AuthenticateResponse.class);
+        return authenticateResponse;
     }
 }
