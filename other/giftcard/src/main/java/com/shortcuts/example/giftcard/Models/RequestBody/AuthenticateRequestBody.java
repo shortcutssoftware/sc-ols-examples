@@ -1,4 +1,4 @@
-package com.shortcuts.example.giftcard.Models;
+package com.shortcuts.example.giftcard.Models.RequestBody;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthenticateRequest {
+public class AuthenticateRequestBody {
 
     @JsonProperty("credential_type_code")
     private String credentialTypeCode;

@@ -1,8 +1,8 @@
 package com.shortcuts.example.giftcard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shortcuts.example.giftcard.Models.AuthenticateRequest;
-import com.shortcuts.example.giftcard.Models.AuthenticateResponse;
+import com.shortcuts.example.giftcard.Models.RequestBody.AuthenticateRequestBody;
+import com.shortcuts.example.giftcard.Models.Response.AuthenticateResponse;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -19,11 +19,11 @@ public class AuthenticateService {
     ObjectMapper objectMapper = new ObjectMapper();
 
     @SneakyThrows
-    public AuthenticateResponse authenticate(AuthenticateRequest authenticateRequest){
+    public AuthenticateResponse authenticate(AuthenticateRequestBody authenticateRequestBody){
         HttpPost httpPost = new HttpPost(authenticateUrl);
 
         httpPost.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-        httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(authenticateRequest)));
+        httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(authenticateRequestBody)));
         CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(httpPost);
         String httpResponseBody = EntityUtils.toString(httpResponse.getEntity());
 

@@ -1,4 +1,4 @@
-package com.shortcuts.example.giftcard.Models;
+package com.shortcuts.example.giftcard.Models.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

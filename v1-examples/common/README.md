@@ -264,13 +264,13 @@ and then call the Shortcuts API using the token provided by the 3rd party servic
                 done(new Error('3rd party authentication failed'));
             }
             var bearerToken = result.content;
-            var authenticateRequest = {
+            var authenticateRequestBody = {
                 credential_type_code: 'access_token',
                 token_type: 'thc',
                 customer_id: config.customerId,
                 access_token: bearerToken
             };
-            api.post(url.resolve(companyHref + '/', 'authenticate_customer'), authenticateRequest, function (err, result) {
+            api.post(url.resolve(companyHref + '/', 'authenticate_customer'), authenticateRequestBody, function (err, result) {
                 if (err) {
                     done(err);
                 }
