@@ -2,17 +2,16 @@ package com.shortcuts.example.giftcard.Models.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Data
-public class TransactionServiceResponse {
+@EqualsAndHashCode(callSuper=false)
+public class TransactionResponse extends BaseResponse {
+
     @JsonProperty("transaction_id")
     private String transactionId;
-
-    @JsonProperty("authorization_code")
-    private String authorizationCode;
 
     @JsonProperty("transaction_ex_tax_amount")
     private BigDecimal transactionExTaxAmount;
@@ -27,7 +26,7 @@ public class TransactionServiceResponse {
     private BigDecimal giftcardIncTaxBalance;
 
     @JsonProperty("giftcard_expiry_date")
-    private LocalDateTime giftcardExpiryDate;
+    private String giftcardExpiryDate;
 
     @JsonProperty("giftcard_currency_code")
     private String giftcardCurrencyCode;

@@ -1,13 +1,15 @@
 package com.shortcuts.example.giftcard;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shortcuts.example.giftcard.Models.RequestBody.ActivateCardRequestBody;
 import com.shortcuts.example.giftcard.Models.RequestBody.CancelLastRequestBody;
 import com.shortcuts.example.giftcard.Models.RequestBody.RedeemCardRequestBody;
 import com.shortcuts.example.giftcard.Models.RequestBody.ReloadCardRequestBody;
+import com.shortcuts.example.giftcard.Models.RequestHeader;
 import com.shortcuts.example.giftcard.Models.Response.CardServiceResponse;
-import com.shortcuts.example.giftcard.Models.Response.TransactionServiceResponse;
+import com.shortcuts.example.giftcard.Models.Response.TransactionResponse;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -26,50 +28,59 @@ public class GiftCardService {
 
     ObjectMapper objectMapper = configureObjectMapper();
 
+    /**
+     * Activate GiftCard
+     * Endpoint: /giftcard/{giftcard_number}/activate
+     *
+     * @param giftcardNumber @required
+     * @param requestHeader  @required
+     * @param requestBody @required
+     * @return TransactionResponse
+     */
     @SneakyThrows
-    public TransactionServiceResponse activateGiftCard(
-            String giftcardNumber,
-            String jwtToken,
-            String serialNumber,
-            String password,
-            ActivateCardRequestBody requestBody
-    ){
-        //https://api.shortcutssoftware.io/giftcard/{giftcard_number}/activate
+    public TransactionResponse activateGiftCard(String giftcardNumber, RequestHeader requestHeader,
+                                                ActivateCardRequestBody requestBody){
         String endpoint = String.format(baseUrl, giftcardNumber) + "/activate";
-        HttpPost httpPost = setupHttpPost(endpoint, jwtToken, serialNumber, password);
+        HttpPost httpPost = setupHttpPost(endpoint, requestHeader);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
         String httpResponseBody = sendPostRequest(httpPost);
 
-        TransactionServiceResponse response = objectMapper.readValue(httpResponseBody, TransactionServiceResponse.class);
+        TransactionResponse response = objectMapper.readValue(httpResponseBody, TransactionResponse.class);
         return response;
     }
 
+    /**
+     * Balance inquire
+     * Endpoint: /giftcard/{giftcard_number}
+     *
+     * @param giftcardNumber @required
+     * @param requestHeader @required
+     * @return CardServiceResponse
+     */
     @SneakyThrows
-    public CardServiceResponse balanceInquire(
-            String giftcardNumber,
-            String jwtToken,
-            String serialNumber,
-            String password){
-        //https://api.shortcutssoftware.io/giftcard/{giftcard_number}
+    public CardServiceResponse balanceInquire(String giftcardNumber, RequestHeader requestHeader){
         String endpoint = String.format(baseUrl, giftcardNumber);
-        HttpGet httpGet = setupHttpGet(endpoint, jwtToken, serialNumber, password);
+        HttpGet httpGet = setupHttpGet(endpoint, requestHeader);
         String httpResponseBody = sendGetRequest(httpGet);
 
         CardServiceResponse response = objectMapper.readValue(httpResponseBody, CardServiceResponse.class);
         return response;
     }
 
+    /**
+     * Redeem giftcard
+     * Endpoint: /giftcard/{giftcard_number}/redeem
+     *
+     * @param giftcardNumber @required
+     * @param requestHeader @required
+     * @param requestBody @required
+     * @return CardServiceResponse
+     */
     @SneakyThrows
-    public CardServiceResponse RedeemGiftCard(
-            String giftcardNumber,
-            String jwtToken,
-            String serialNumber,
-            String password,
-            RedeemCardRequestBody requestBody
-    ){
-        //https://api.shortcutssoftware.io/giftcard/{giftcard_number}/redeem
+    public CardServiceResponse redeemGiftCard(String giftcardNumber, RequestHeader requestHeader,
+                                              RedeemCardRequestBody requestBody){
         String endpoint = String.format(baseUrl, giftcardNumber) + "/redeem";
-        HttpPost httpPost = setupHttpPost(endpoint, jwtToken, serialNumber, password);
+        HttpPost httpPost = setupHttpPost(endpoint, requestHeader);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
         String httpResponseBody = sendPostRequest(httpPost);
 
@@ -77,35 +88,47 @@ public class GiftCardService {
         return response;
     }
 
+    /**
+     * Reload GiftCard
+     * Endpoint: /giftcard/{giftcard_number}/reload
+     *
+     * @param giftcardNumber @required
+     * @param requestHeader @required
+     * @param requestBody @required
+     * @return TransactionResponse
+     */
     @SneakyThrows
-    public TransactionServiceResponse ReloadGiftCard(
+    public TransactionResponse reloadGiftCard(
             String giftcardNumber,
-            String jwtToken,
-            String serialNumber,
-            String password,
+            RequestHeader requestHeader,
             ReloadCardRequestBody requestBody
     ){
-        //https://api.shortcutssoftware.io/giftcard/{giftcard_number}/reload
         String endpoint = String.format(baseUrl, giftcardNumber) + "/reload";
-        HttpPost httpPost = setupHttpPost(endpoint, jwtToken, serialNumber, password);
+        HttpPost httpPost = setupHttpPost(endpoint, requestHeader);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
         String httpResponseBody = sendPostRequest(httpPost);
 
-        TransactionServiceResponse response = objectMapper.readValue(httpResponseBody, TransactionServiceResponse.class);
+        TransactionResponse response = objectMapper.readValue(httpResponseBody, TransactionResponse.class);
         return response;
     }
 
+    /**
+     * Cancel last operation
+     * Endpoint: giftcard/{giftcard_number}/cancel_last_operation
+     *
+     * @param giftcardNumber @required
+     * @param requestHeader @required
+     * @param requestBody @required
+     * @return CardServiceResponse
+     */
     @SneakyThrows
-    public CardServiceResponse CancelLastOperation(
+    public CardServiceResponse cancelLastOperation(
             String giftcardNumber,
-            String jwtToken,
-            String serialNumber,
-            String password,
+            RequestHeader requestHeader,
             CancelLastRequestBody requestBody
     ){
-        //https://api.shortcutssoftware.io/giftcard/{giftcard_number}/cancel_last_operation
         String endpoint = String.format(baseUrl, giftcardNumber) + "/cancel_last_operation";
-        HttpPost httpPost = setupHttpPost(endpoint, jwtToken, serialNumber, password);
+        HttpPost httpPost = setupHttpPost(endpoint, requestHeader);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
         String httpResponseBody = sendPostRequest(httpPost);
 
@@ -114,23 +137,26 @@ public class GiftCardService {
     }
 
     private ObjectMapper configureObjectMapper(){
-        return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return objectMapper;
     }
 
-    private HttpGet setupHttpGet(String endpoint, String jwtToken, String serialNumber, String password){
+    private HttpGet setupHttpGet(String endpoint, RequestHeader requestHeader){
         HttpGet httpGet = new HttpGet(endpoint);
-        httpGet.addHeader("Authorization", String.format("JWT %s", jwtToken));
-        httpGet.addHeader("username", serialNumber);
-        httpGet.addHeader("password", password);
+        httpGet.addHeader("Authorization", String.format("JWT %s", requestHeader.getJwtToken()));
+        httpGet.addHeader("username", requestHeader.getSerialNumber());
+        httpGet.addHeader("password", requestHeader.getWcfHeaderPassword());
         return httpGet;
     }
 
-    private HttpPost setupHttpPost(String endpoint, String jwtToken, String serialNumber, String password){
+    private HttpPost setupHttpPost(String endpoint, RequestHeader requestHeader){
         HttpPost httpPost = new HttpPost(endpoint);
         httpPost.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-        httpPost.addHeader("Authorization", String.format("JWT %s", jwtToken));
-        httpPost.addHeader("username", serialNumber);
-        httpPost.addHeader("password", password);
+        httpPost.addHeader("Authorization", String.format("JWT %s", requestHeader.getJwtToken()));
+        httpPost.addHeader("username", requestHeader.getSerialNumber());
+        httpPost.addHeader("password", requestHeader.getWcfHeaderPassword());
         return httpPost;
     }
 
