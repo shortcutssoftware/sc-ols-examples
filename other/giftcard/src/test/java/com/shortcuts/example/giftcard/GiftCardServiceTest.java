@@ -53,7 +53,7 @@ public class GiftCardServiceTest {
     @Test
     public void testBalanceInquireSuccessful(){
         CardServiceResponse response = giftCardService.balanceInquire("62997400000001248644", requestHeader);
-        System.out.println(response.getMemberBalanceResponse().getBalanceExTaxAmount());
+        assertEquals(BigDecimal.valueOf(0.00), response.getTransactionExTaxAmount());
     }
 
     @Test
