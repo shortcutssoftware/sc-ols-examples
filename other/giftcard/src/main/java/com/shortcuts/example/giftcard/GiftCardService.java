@@ -147,7 +147,6 @@ public class GiftCardService {
         HttpGet httpGet = new HttpGet(endpoint);
         httpGet.addHeader("Authorization", String.format("JWT %s", requestHeader.getJwtToken()));
         httpGet.addHeader("username", requestHeader.getSerialNumber());
-        httpGet.addHeader("password", requestHeader.getWcfHeaderPassword());
         return httpGet;
     }
 
@@ -156,7 +155,6 @@ public class GiftCardService {
         httpPost.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
         httpPost.addHeader("Authorization", String.format("JWT %s", requestHeader.getJwtToken()));
         httpPost.addHeader("username", requestHeader.getSerialNumber());
-        httpPost.addHeader("password", requestHeader.getWcfHeaderPassword());
         return httpPost;
     }
 

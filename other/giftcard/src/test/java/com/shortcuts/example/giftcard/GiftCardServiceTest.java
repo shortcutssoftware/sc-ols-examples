@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class GiftCardServiceTest {
@@ -18,9 +19,6 @@ public class GiftCardServiceTest {
     private static final String TEST_INSTALLATION_ID = "5C3EEC2C-4820-45DD-92A5-505DBF60D7CE";
 
     private static final String TEST_SERIAL_NUMBER = "BWQK6ARB77JJ";
-
-    //TODO: delete once prod giftcard deployed
-    private static final String TEST_PASSWORD = "password";
 
     private String testJwtToken;
 
@@ -41,7 +39,7 @@ public class GiftCardServiceTest {
 
         if(authenticateResponse.getError_type_code() == null){
             testJwtToken = authenticateResponse.getAccessToken();
-            requestHeader = new RequestHeader(testJwtToken, TEST_SERIAL_NUMBER, TEST_PASSWORD);
+            requestHeader = new RequestHeader(testJwtToken, TEST_SERIAL_NUMBER);
         }
     }
 
@@ -49,7 +47,7 @@ public class GiftCardServiceTest {
     public void testBalanceInquireError(){
         CardServiceResponse response = giftCardService.balanceInquire("62997400000000534581", requestHeader);
         assertTrue(response.getError_type_code().equals(BaseResponse.ERROR_TYPE_CODE.system));
-        //assertEquals(response.getMessage(), "Card 62997400000000534581 not registered");
+        assertEquals("Card '62997400000000534581' cannot be used at this site.", response.getMessage());
     }
 
     @Test

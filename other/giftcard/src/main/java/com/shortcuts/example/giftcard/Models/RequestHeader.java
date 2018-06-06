@@ -10,7 +10,4 @@ public class RequestHeader {
     private String jwtToken;
 
     private String serialNumber;
-
-    //TODO: delete this one once the prod deployed
-    private String wcfHeaderPassword;
 }
