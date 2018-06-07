@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class TransactionResponse extends BaseResponse {
+public class TransactionResponse extends BaseResponse{
 
     @JsonProperty("transaction_id")
     private String transactionId;

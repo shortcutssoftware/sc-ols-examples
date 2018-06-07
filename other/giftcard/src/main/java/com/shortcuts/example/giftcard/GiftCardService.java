@@ -16,6 +16,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -32,19 +33,17 @@ public class GiftCardService {
      * Endpoint: /giftcard/{giftcard_number}/activate
      *
      * @param giftcardNumber @required
-     * @param requestHeaders  @required
-     * @param requestBody @required
+     * @param requestHeaders @required
+     * @param requestBody    @required
      * @return TransactionResponse
      */
     @SneakyThrows
     public TransactionResponse activateGiftCard(String giftcardNumber, RequestHeaders requestHeaders,
-                                                ActivateCardRequestBody requestBody){
+                                                ActivateCardRequestBody requestBody) {
         String endpoint = String.format(baseUrl, giftcardNumber) + "/activate";
         HttpPost httpPost = setupHttpPost(endpoint, requestHeaders);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
-        String httpResponseBody = sendPostRequest(httpPost);
-
-        TransactionResponse response = objectMapper.readValue(httpResponseBody, TransactionResponse.class);
+        TransactionResponse response = sendHttpRequest(httpPost, TransactionResponse.class);
         return response;
     }
 
@@ -57,12 +56,11 @@ public class GiftCardService {
      * @return CardServiceResponse
      */
     @SneakyThrows
-    public CardServiceResponse balanceInquire(String giftcardNumber, RequestHeaders requestHeaders){
+    public CardServiceResponse balanceInquire(String giftcardNumber, RequestHeaders requestHeaders) {
         String endpoint = String.format(baseUrl, giftcardNumber);
         HttpGet httpGet = setupHttpGet(endpoint, requestHeaders);
-        String httpResponseBody = sendGetRequest(httpGet);
 
-        CardServiceResponse response = objectMapper.readValue(httpResponseBody, CardServiceResponse.class);
+        CardServiceResponse response = sendHttpRequest(httpGet, CardServiceResponse.class);
         return response;
     }
 
@@ -72,18 +70,17 @@ public class GiftCardService {
      *
      * @param giftcardNumber @required
      * @param requestHeaders @required
-     * @param requestBody @required
+     * @param requestBody    @required
      * @return CardServiceResponse
      */
     @SneakyThrows
     public CardServiceResponse redeemGiftCard(String giftcardNumber, RequestHeaders requestHeaders,
-                                              RedeemCardRequestBody requestBody){
+                                              RedeemCardRequestBody requestBody) {
         String endpoint = String.format(baseUrl, giftcardNumber) + "/redeem";
         HttpPost httpPost = setupHttpPost(endpoint, requestHeaders);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
-        String httpResponseBody = sendPostRequest(httpPost);
+        CardServiceResponse response = sendHttpRequest(httpPost, CardServiceResponse.class);
 
-        CardServiceResponse response = objectMapper.readValue(httpResponseBody, CardServiceResponse.class);
         return response;
     }
 
@@ -93,7 +90,7 @@ public class GiftCardService {
      *
      * @param giftcardNumber @required
      * @param requestHeaders @required
-     * @param requestBody @required
+     * @param requestBody    @required
      * @return TransactionResponse
      */
     @SneakyThrows
@@ -101,13 +98,12 @@ public class GiftCardService {
             String giftcardNumber,
             RequestHeaders requestHeaders,
             ReloadCardRequestBody requestBody
-    ){
+    ) {
         String endpoint = String.format(baseUrl, giftcardNumber) + "/reload";
         HttpPost httpPost = setupHttpPost(endpoint, requestHeaders);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
-        String httpResponseBody = sendPostRequest(httpPost);
+        TransactionResponse response = sendHttpRequest(httpPost, TransactionResponse.class);
 
-        TransactionResponse response = objectMapper.readValue(httpResponseBody, TransactionResponse.class);
         return response;
     }
 
@@ -117,7 +113,7 @@ public class GiftCardService {
      *
      * @param giftcardNumber @required
      * @param requestHeaders @required
-     * @param requestBody @required
+     * @param requestBody    @required
      * @return CardServiceResponse
      */
     @SneakyThrows
@@ -125,31 +121,30 @@ public class GiftCardService {
             String giftcardNumber,
             RequestHeaders requestHeaders,
             CancelLastRequestBody requestBody
-    ){
+    ) {
         String endpoint = String.format(baseUrl, giftcardNumber) + "/cancel_last_operation";
         HttpPost httpPost = setupHttpPost(endpoint, requestHeaders);
         httpPost.setEntity(new StringEntity(objectMapper.writeValueAsString(requestBody)));
-        String httpResponseBody = sendPostRequest(httpPost);
+        CardServiceResponse response = sendHttpRequest(httpPost, CardServiceResponse.class);
 
-        CardServiceResponse response = objectMapper.readValue(httpResponseBody, CardServiceResponse.class);
         return response;
     }
 
-    private ObjectMapper configureObjectMapper(){
+    private ObjectMapper configureObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
     }
 
-    private HttpGet setupHttpGet(String endpoint, RequestHeaders requestHeaders){
+    private HttpGet setupHttpGet(String endpoint, RequestHeaders requestHeaders) {
         HttpGet httpGet = new HttpGet(endpoint);
         httpGet.addHeader("Authorization", String.format("JWT %s", requestHeaders.getJwtToken()));
         httpGet.addHeader("username", requestHeaders.getSerialNumber());
         return httpGet;
     }
 
-    private HttpPost setupHttpPost(String endpoint, RequestHeaders requestHeaders){
+    private HttpPost setupHttpPost(String endpoint, RequestHeaders requestHeaders) {
         HttpPost httpPost = new HttpPost(endpoint);
         httpPost.addHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
         httpPost.addHeader("Authorization", String.format("JWT %s", requestHeaders.getJwtToken()));
@@ -158,28 +153,15 @@ public class GiftCardService {
     }
 
     @SneakyThrows
-    private String sendGetRequest(HttpGet httpGet){
-        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(httpGet);
+    private <T extends BaseResponse> T sendHttpRequest(HttpUriRequest httpRequest, Class<T> clazz){
+        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(httpRequest);
 
         String jsonResponse = EntityUtils.toString(httpResponse.getEntity());
 
-        if(httpResponse.getStatusLine().getStatusCode() != 200){
+        if (httpResponse.getStatusLine().getStatusCode() != 200) {
             BaseResponse baseResponse = objectMapper.readValue(jsonResponse, BaseResponse.class);
             throw new RuntimeException(String.format("Error Type: %s, %s", baseResponse.getError_type_code(), baseResponse.getMessage()));
         }
-        return jsonResponse;
-    }
-
-    @SneakyThrows
-    private String sendPostRequest(HttpPost httpPost){
-        CloseableHttpResponse httpResponse = HttpClientBuilder.create().build().execute(httpPost);
-
-        String jsonResponse = EntityUtils.toString(httpResponse.getEntity());
-
-        if(httpResponse.getStatusLine().getStatusCode() != 200){
-            BaseResponse baseResponse = objectMapper.readValue(jsonResponse, BaseResponse.class);
-            throw new RuntimeException(String.format("Error Type: %s, %s", baseResponse.getError_type_code(), baseResponse.getMessage()));
-        }
-        return jsonResponse;
+        return objectMapper.readValue(jsonResponse, clazz);
     }
 }
