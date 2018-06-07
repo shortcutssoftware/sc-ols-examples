@@ -14,9 +14,7 @@ public class BaseResponse {
     private ERROR_TYPE_CODE error_type_code;
 
     private String message;
-
-    private String detailMessage;
-
+    
     private String property_name;
 
     private String data;

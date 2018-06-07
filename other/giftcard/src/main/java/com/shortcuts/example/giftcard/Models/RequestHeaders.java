@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RequestHeader {
+public class RequestHeaders {
 
     private String jwtToken;
 
