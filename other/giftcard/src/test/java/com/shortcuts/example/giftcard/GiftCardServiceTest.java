@@ -62,10 +62,10 @@ public class GiftCardServiceTest {
         BigDecimal activationAmount = new BigDecimal(500.00);
 
         ActivateCardRequestBody request = new ActivateCardRequestBody();
-        request.setSiteTransactionId("1");
+        request.setSiteTransactionId("-1");
         request.setSiteTransactionDateTime("2018-06-01T23:35:35.05");
         request.setActivationIncTaxAmount(activationAmount);
-        TransactionResponse response = giftCardService.activateGiftCard("62997400000001248644", requestHeaders, request);
+        TransactionResponse response = giftCardService.activateGiftCard("62997400000001248645", requestHeaders, request);
         assertEquals("500", response.getTransactionExTaxAmount().toString());
     }
 
@@ -88,40 +88,40 @@ public class GiftCardServiceTest {
         /**
          * new balance = Activation amount - redemption amount
          */
-        BigDecimal redemptionAmount = new BigDecimal(250.00);
+        BigDecimal redemptionAmount = new BigDecimal(50.00);
         BigDecimal balanceAmount = new BigDecimal(0.00);
 
         RedeemCardRequestBody request = new RedeemCardRequestBody();
-        request.setSiteTransactionId("2");
+        request.setSiteTransactionId("-1");
         request.setSiteTransactionDateTime("2018-06-01T23:36:42.04");
         request.setRedemptionAmount(redemptionAmount);
-        CardServiceResponse response = giftCardService.redeemGiftCard("62997400000001248644", requestHeaders, request);
-        assertEquals("-250" ,response.getTransactionExTaxAmount().toString());
-        assertEquals("0.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        CardServiceResponse response = giftCardService.redeemGiftCard("62997400000001248645", requestHeaders, request);
+        assertEquals("-50" ,response.getTransactionExTaxAmount().toString());
+        assertEquals("450.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
     }
 
     @Test
     public void ReloadCardSuccessful(){
-        BigDecimal reloadAmount = new BigDecimal(500.00);
+        BigDecimal reloadAmount = new BigDecimal(20.00);
 
         ReloadCardRequestBody request = new ReloadCardRequestBody();
-        request.setSiteTransactionId("3");
+        request.setSiteTransactionId("-1");
         request.setSiteTransactionDateTime("2018-06-01T23:37:42.04");
         request.setReloadAmount(reloadAmount);
-        TransactionResponse response = giftCardService.reloadGiftCard("62997400000001248644", requestHeaders, request);
-        assertEquals("500", response.getTransactionExTaxAmount().toString());
+        TransactionResponse response = giftCardService.reloadGiftCard("62997400000001248645", requestHeaders, request);
+        assertEquals("20", response.getTransactionExTaxAmount().toString());
     }
 
     @Test
     public void CancelLastOperationSuccessful(){
-        BigDecimal cancelLastAmount = new BigDecimal(500.00);
+        BigDecimal cancelLastAmount = new BigDecimal(20.00);
 
         CancelLastRequestBody request = new CancelLastRequestBody();
-        request.setSiteTransactionId("4");
+        request.setSiteTransactionId("-1");
         request.setSiteTransactionDateTime("2018-06-01T23:40:42.04");
-        request.setOriginalSiteTransactionId("3");
+        request.setOriginalSiteTransactionId("-1");
         request.setOriginalTransactionAmount(cancelLastAmount);
-        CardServiceResponse response = giftCardService.cancelLastOperation("62997400000001248644", requestHeaders, request);
-        assertEquals("0.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        CardServiceResponse response = giftCardService.cancelLastOperation("62997400000001248645", requestHeaders, request);
+        assertEquals("450.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
     }
 }
