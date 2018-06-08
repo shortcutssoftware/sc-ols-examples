@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
@@ -26,7 +27,7 @@ public class TransactionResponse extends BaseResponse{
     private BigDecimal giftcardIncTaxBalance;
 
     @JsonProperty("giftcard_expiry_date")
-    private String giftcardExpiryDate;
+    private LocalDateTime giftcardExpiryDate;
 
     @JsonProperty("giftcard_currency_code")
     private String giftcardCurrencyCode;

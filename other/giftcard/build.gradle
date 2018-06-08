@@ -6,6 +6,11 @@ repositories {
 }
 
 dependencies {
+
+    // json serialization/desrialization
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9"
+
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
     compile group: 'commons-logging', name: 'commons-logging', version: '1.2'

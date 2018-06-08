@@ -3,6 +3,7 @@ package com.shortcuts.example.giftcard;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.shortcuts.example.giftcard.Models.RequestBody.ActivateCardRequestBody;
 import com.shortcuts.example.giftcard.Models.RequestBody.CancelLastRequestBody;
 import com.shortcuts.example.giftcard.Models.RequestBody.RedeemCardRequestBody;
@@ -132,7 +133,9 @@ public class GiftCardService {
 
     private ObjectMapper configureObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.findAndRegisterModules()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
     }
