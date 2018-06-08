@@ -27,8 +27,8 @@ https://api.shortcutssoftware.io/giftcard/62997400000000400401/activate
 }
 ```
 
-<span style="color:red">P.S ```site_transaction_id``` can be set to any reference number from your system
- or leave it as 0 ```"site_transaction_id":"0"```.</span>
+P.S <span style="color:red">```site_transaction_id```</span> can be set to any reference number from your system
+ or leave it as 0 <span style="color:red">```"site_transaction_id":"0"```.</span>
 
 example response:
 ```json
