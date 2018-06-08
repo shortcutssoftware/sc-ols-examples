@@ -223,3 +223,9 @@ Example response:
 }
 ```
 
+##Example tests
+1. Gain access to GiftCard program console. Register GiftCard numbers 
+under Number Registration. (Number Registrations -> Register).
+2. Go to ```test.properties``` file, change the value of ```site.serial_number``` 
+3. In the same file, change the value of```giftcard.registered.ready```
+with your registered GiftCard number.

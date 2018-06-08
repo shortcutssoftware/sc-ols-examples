@@ -1,43 +1,45 @@
 package com.shortcuts.example.giftcard;
 
-import com.shortcuts.example.giftcard.Models.RequestBody.AuthenticateRequestBody;
+import com.shortcuts.example.giftcard.Models.RequestBody.AuthenticateRequestHeaders;
 import com.shortcuts.example.giftcard.Models.Response.AuthenticateResponse;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 import static org.junit.Assert.assertTrue;
 
 
 public class AuthenticateServiceTest {
 
-    String testJwtToken;
+    Properties properties;
 
     @Before
     public void setupTest(){
-        AuthenticateRequestBody authenticateRequestBody =
-                new AuthenticateRequestBody(
-                        "serial",
-                        "BWQK6ARB77JJ",
-                        "5C3EEC2C-4820-45DD-92A5-505DBF60D7CE"
-                );
-
-        AuthenticateResponse authenticateResponse = new AuthenticateService().authenticate(authenticateRequestBody);
-
-        if(authenticateResponse.getError_type_code() == null){
-            testJwtToken = authenticateResponse.getAccessToken();
+        try{
+            Properties properties = new Properties();
+            File file = new File(new File("."), "test.properties").getAbsoluteFile();
+            if (file.exists()) {
+                properties.load(new FileInputStream(file));
+            }
+            this.properties = properties;
+        } catch (IOException ex){
+            throw new RuntimeException(ex);
         }
     }
 
     @Test
     public void testAuthenticate(){
-        AuthenticateRequestBody authenticateRequestBody =
-                new AuthenticateRequestBody(
-                        "serial",
-                        "BWQK6ARB77JJ",
-                        "5C3EEC2C-4820-45DD-92A5-505DBF60D7CE"
-                );
-
-        AuthenticateResponse authenticateResponse = new AuthenticateService().authenticate(authenticateRequestBody);
+        AuthenticateRequestHeaders authenticateRequestHeaders = new AuthenticateRequestHeaders(
+                properties.getProperty("oauth.consumer_key"),
+                properties.getProperty("oauth.consumer_secret"),
+                properties.getProperty("oauth.access_token_key"),
+                properties.getProperty("oauth.access_token_secret")
+        );
+        AuthenticateResponse authenticateResponse = new AuthenticateService(authenticateRequestHeaders).authenticate();
         assertTrue(authenticateResponse.getError_type_code() == null);
     }
 }

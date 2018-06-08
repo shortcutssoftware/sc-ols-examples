@@ -8,17 +8,18 @@ import com.shortcuts.example.giftcard.Models.Response.TransactionResponse;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class GiftCardServiceTest {
 
-    private static final String TEST_INSTALLATION_ID = "5C3EEC2C-4820-45DD-92A5-505DBF60D7CE";
-
-    private static final String TEST_SERIAL_NUMBER = "BWQK6ARB77JJ";
+    private String siteSerialNumber;
 
     private String testJwtToken;
 
@@ -26,102 +27,116 @@ public class GiftCardServiceTest {
 
     private GiftCardService giftCardService = new GiftCardService();
 
+    private Properties properties;
+
+    private String giftCardNumber;
+
     @Before
     public void setupAuthentication(){
-        AuthenticateRequestBody authenticateRequestBody =
-                new AuthenticateRequestBody(
-                        "serial",
-                        TEST_SERIAL_NUMBER,
-                        TEST_INSTALLATION_ID
-                );
+        try{
+            properties = getTestProperties();
+            siteSerialNumber = properties.getProperty("site_serial_number");
+            giftCardNumber = properties.getProperty("giftcard.registered.ready");
+        } catch (IOException ex){
+            throw new RuntimeException(ex);
+        }
 
-        AuthenticateResponse authenticateResponse = new AuthenticateService().authenticate(authenticateRequestBody);
+        AuthenticateRequestHeaders authenticateRequestHeaders = new AuthenticateRequestHeaders(
+                properties.getProperty("oauth.consumer_key"),
+                properties.getProperty("oauth.consumer_secret"),
+                properties.getProperty("oauth.access_token_key"),
+                properties.getProperty("oauth.access_token_secret")
+        );
+
+        AuthenticateResponse authenticateResponse = new AuthenticateService(authenticateRequestHeaders).authenticate();
 
         if(authenticateResponse.getError_type_code() == null){
             testJwtToken = authenticateResponse.getAccessToken();
-            requestHeaders = new RequestHeaders(testJwtToken, TEST_SERIAL_NUMBER);
+            requestHeaders = new RequestHeaders(testJwtToken, siteSerialNumber);
         }
+
     }
 
     @Test
-    public void testBalanceInquireError(){
-        try{
-            giftCardService.balanceInquire("62997400000000534581", requestHeaders);
-        } catch (RuntimeException actual){
-            assertTrue(actual.getMessage().contains("Error Type: system, Card '62997400000000534581' cannot be used at this site."));
-        }
+    public void giftCardOperationTests(){
+        activateGiftCard();
+
+        balanceInquire();
+
+        redeemGiftCard();
+
+        reloadGiftCard();
+
+        cancelLastOperation();
     }
 
-    @Test
-    public void testBalanceInquireSuccessful(){
-        CardServiceResponse response = giftCardService.balanceInquire("62997400000001248644", requestHeaders);
-        assertEquals("0", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
-    }
-
-    @Test
-    public void ActivateCardSuccessful(){
-        BigDecimal activationAmount = new BigDecimal(500.00);
+    public void activateGiftCard(){
+        BigDecimal activationAmount = new BigDecimal(200.00);
 
         ActivateCardRequestBody request = new ActivateCardRequestBody();
         request.setSiteTransactionId("0");
         request.setSiteTransactionDateTime(LocalDateTime.now());
         request.setActivationIncTaxAmount(activationAmount);
-        TransactionResponse response = giftCardService.activateGiftCard("62997400000001248646", requestHeaders, request);
-        assertEquals("500", response.getTransactionExTaxAmount().toString());
+        TransactionResponse response = giftCardService.activateGiftCard(giftCardNumber, requestHeaders, request);
+        assertEquals("200", response.getTransactionExTaxAmount().toString());
+        System.out.println(String.format("Activation amount: %s", activationAmount));
     }
 
-    @Test
-    public void ActivateCardFail(){
-        ActivateCardRequestBody request = new ActivateCardRequestBody();
-        request.setSiteTransactionId("");
-        request.setSiteTransactionDateTime(LocalDateTime.now());
-        request.setActivationIncTaxAmount(new BigDecimal(00.00));
 
-        try{
-            giftCardService.activateGiftCard("62997400000001248644", requestHeaders, request);
-        } catch (RuntimeException actual){
-            assertTrue(actual.getMessage().contains("Error Type: system, There was an unspecified error on the server.  Please try the transaction again or contact Shortcuts support."));
-        }
+    public void balanceInquire(){
+        BigDecimal balance = new BigDecimal(200.00);
+        CardServiceResponse response = giftCardService.balanceInquire(giftCardNumber, requestHeaders);
+        assertEquals("200.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        System.out.println(String.format("Giftcard balance: %s", balance));
     }
 
-    @Test
-    public void RedeemCardSuccessful(){
+    public void redeemGiftCard(){
         /**
          * new balance = Activation amount - redemption amount
          */
         BigDecimal redemptionAmount = new BigDecimal(50.00);
-
+        BigDecimal balance = new BigDecimal(150.00);
         RedeemCardRequestBody request = new RedeemCardRequestBody();
         request.setSiteTransactionId("0");
         request.setSiteTransactionDateTime(LocalDateTime.now());
         request.setRedemptionAmount(redemptionAmount);
-        CardServiceResponse response = giftCardService.redeemGiftCard("62997400000001248646", requestHeaders, request);
+        CardServiceResponse response = giftCardService.redeemGiftCard(giftCardNumber, requestHeaders, request);
         assertEquals("-50" ,response.getTransactionExTaxAmount().toString());
-        assertEquals("450.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        assertEquals("150.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        System.out.println(String.format("Redeem amount: %s, Balance: %s", redemptionAmount, new BigDecimal(150.00)));
     }
 
-    @Test
-    public void ReloadCardSuccessful(){
+    public void reloadGiftCard(){
         BigDecimal reloadAmount = new BigDecimal(20.00);
-
+        BigDecimal balance = new BigDecimal(170.00);
         ReloadCardRequestBody request = new ReloadCardRequestBody();
         request.setSiteTransactionId("0");
         request.setSiteTransactionDateTime(LocalDateTime.now());
         request.setReloadAmount(reloadAmount);
-        TransactionResponse response = giftCardService.reloadGiftCard("62997400000001248646", requestHeaders, request);
+        TransactionResponse response = giftCardService.reloadGiftCard(giftCardNumber, requestHeaders, request);
         assertEquals("20", response.getTransactionExTaxAmount().toString());
+        System.out.println(String.format("Reload amount: %s, Balance: %s", reloadAmount, balance));
     }
 
-    @Test
-    public void CancelLastOperationSuccessful(){
+    public void cancelLastOperation(){
         BigDecimal cancelLastAmount = new BigDecimal(20.00);
-
+        BigDecimal balance = new BigDecimal(150.00);
         CancelLastRequestBody request = new CancelLastRequestBody();
         request.setSiteTransactionId("0");
         request.setSiteTransactionDateTime(LocalDateTime.now());
         request.setOriginalSiteTransactionId("0");
         request.setOriginalTransactionAmount(cancelLastAmount);
-        CardServiceResponse response = giftCardService.cancelLastOperation("62997400000001248646", requestHeaders, request);
-        assertEquals("400.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        CardServiceResponse response = giftCardService.cancelLastOperation(giftCardNumber, requestHeaders, request);
+        assertEquals("150.0000", response.getMemberBalanceResponse().getBalanceExTaxAmount().toString());
+        System.out.println(String.format("Cancel last transaction: %s, balance: %s", cancelLastAmount, balance));
+    }
+
+    private Properties getTestProperties() throws IOException {
+        Properties properties = new Properties();
+        File file = new File(new File("."), "test.properties").getAbsoluteFile();
+        if (file.exists()) {
+            properties.load(new FileInputStream(file));
+        }
+        return properties;
     }
 }

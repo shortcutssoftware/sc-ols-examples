@@ -10,6 +10,7 @@ dependencies {
     // json serialization/desrialization
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.8.9"
     compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.9"
+    compile 'org.springframework.security.oauth:spring-security-oauth:2.1.1.RELEASE'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
