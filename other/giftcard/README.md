@@ -21,16 +21,19 @@ Example request:
 https://api.shortcutssoftware.io/giftcard/62997400000000400401/activate
 
 {
-    "site_transaction_id":"1",
+    "site_transaction_id":"0",
     "site_transaction_date_time":"2018-05-24T12:43:00",
     "activation_inc_tax_amount":200
 }
 ```
 
+P.S <span style="color:red">```site_transaction_id```</span> can be set to any reference number from your system
+ or leave it as 0 <span style="color:red">```"site_transaction_id":"0"```.</span>
+
 example response:
 ```json
 {
-    "transaction_id": "1",
+    "transaction_id": "0",
     "transaction_ex_tax_amount": 200,
     "transaction_inc_tax_amount": 200,
     "giftcard_ex_tax_balance": 200,
@@ -99,7 +102,7 @@ Example request:
 https://api.shortcutssoftware.io/giftcard/62997400000000400401/redeem
 
 {
-    "site_transaction_id":"2",
+    "site_transaction_id":"0",
     "site_transaction_date_time":"2018-05-24T12:45:00",
     "redemption_amount":25
 }
@@ -108,7 +111,7 @@ https://api.shortcutssoftware.io/giftcard/62997400000000400401/redeem
 Example response:
 ```json
 {
-    "transaction_id": "2",
+    "transaction_id": "0",
     "transaction_reference_id": "",
     "authorization_code": "",
     "transaction_ex_tax_amount": -25,
@@ -150,7 +153,7 @@ Example request:
 https://api.shortcutssoftware.io/giftcard/62997400000000400401/reload
 
 {
-    "site_transaction_id":"3",
+    "site_transaction_id":"0",
     "site_transaction_date_time":"2018-05-24T12:45:00",
     "reload_amount":25
 }
@@ -159,7 +162,7 @@ https://api.shortcutssoftware.io/giftcard/62997400000000400401/reload
 Example response:
 ```json
 {
-    "transaction_id": "3",
+    "transaction_id": "0",
     "transaction_reference_id": "",
     "transaction_ex_tax_amount": 25,
     "transaction_inc_tax_amount": 25,
@@ -185,7 +188,7 @@ Example request:
 https://api.shortcutssoftware.io/giftcard/62997400000000400401/cancel_last_operation
 
 {
-    "site_transaction_id":"4",
+    "site_transaction_id":"0",
     "site_transaction_date_time":"2018-05-24T12:46:00",
     "original_site_transaction_id":"3",
     "original_transaction_amount":25,
@@ -196,7 +199,7 @@ https://api.shortcutssoftware.io/giftcard/62997400000000400401/cancel_last_opera
 Example response:
 ```json
 {
-    "transaction_id": "4",
+    "transaction_id": "0",
     "transaction_reference_id": "",
     "authorization_code": "",
     "transaction_ex_tax_amount": -25,
@@ -222,4 +225,14 @@ Example response:
     }
 }
 ```
+
+##Example test run
+1. Gain access to GiftCard program console. Register GiftCard numbers 
+under Number Registration. (Number Registrations -> Register).
+
+2. Go to ```test.properties``` file, change the value of ```site.serial_number```
+, OAuth token: ```cosumer_key```, ```consumer_secret```, ```access_token_key```, ```access_token_secret```
+
+3. In the same file, change the value of```giftcard.registered.ready```
+with your registered GiftCard number from step 1.
 
