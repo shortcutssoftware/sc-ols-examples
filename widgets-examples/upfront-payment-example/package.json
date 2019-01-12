@@ -1,0 +1,14 @@
+{
+  "name": "default-workflow",
+  "version": "1.0.0",
+  "description": "Sample website implementation over the Shortcuts Widgets.",
+  "scripts": {
+    "lite": "lite-server --port 10001",
+    "start": "npm run lite"
+  },
+  "author": "Shortcuts Software",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.4.0"
+  }
+}
