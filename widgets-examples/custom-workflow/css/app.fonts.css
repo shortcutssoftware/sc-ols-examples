@@ -1,0 +1,434 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "saas-icons";
+    src:url("fonts/SaaS-icons.eot");
+    src:url("fonts/SaaS-icons.svg#saas-icons") format("svg"),
+        url("fonts/SaaS-icons.eot?#iefix") format("embedded-opentype"),
+        url("fonts/SaaS-icons.woff") format("woff"),
+        url("fonts/SaaS-icons.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+[data-icon]:before {
+    font-family: "saas-icons" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "saas-icons" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-tip:before {
+    content: "a";
+}
+.icon-all:before {
+    content: "b";
+}
+.icon-appbook:before {
+    content: "c";
+}
+.icon-appbook-config:before {
+    content: "d";
+}
+.icon-appbook-setup:before {
+    content: "e";
+}
+.icon-arrow-down:before {
+    content: "f";
+}
+.icon-arrow-left:before {
+    content: "g";
+}
+.icon-arrow-right:before {
+    content: "h";
+}
+.icon-arrow-up:before {
+    content: "i";
+}
+.icon-arrow-left:before,
+.icon-back:before,
+.icon-previous:before {
+    content: "j";
+}
+.icon-barcode:before {
+    content: "k";
+}
+.icon-bell:before {
+    content: "l";
+}
+.icon-bookmark:before {
+    content: "m";
+}
+.icon-business-setup:before {
+    content: "n";
+}
+.icon-cancel:before {
+    content: "o";
+}
+.icon-choose-file:before {
+    content: "p";
+}
+.icon-confirmation:before {
+    content: "q";
+}
+.icon-custom-fields:before {
+    content: "r";
+}
+.icon-customers:before {
+    content: "s";
+}
+.icon-customers2:before {
+    content: "t";
+}
+.icon-remove:before,
+.icon-delete-sale:before {
+    content: "u";
+}
+.icon-checkmark-circle:before,
+.icon-done:before {
+    content: "v";
+}
+.icon-down:before {
+    content: "w";
+}
+.icon-pencil:before,
+.icon-edit:before {
+    content: "x";
+}
+.icon-employees:before {
+    content: "y";
+}
+.icon-employees-roster:before {
+    content: "z";
+}
+.icon-end-sale:before {
+    content: "A";
+}
+.icon-envelope:before {
+    content: "B";
+}
+.icon-favourite:before {
+    content: "C";
+}
+.icon-filter:before {
+    content: "D";
+}
+.icon-arrow-right:before,
+.icon-next:before,
+.icon-forward:before {
+    content: "E";
+}
+.icon-general-settings:before {
+    content: "F";
+}
+.icon-help:before {
+    content: "G";
+}
+.icon-history:before {
+    content: "H";
+}
+.icon-home:before {
+    content: "I";
+}
+.icon-in-service:before {
+    content: "J";
+}
+.icon-information:before {
+    content: "K";
+}
+.icon-item-setup:before {
+    content: "L";
+}
+.icon-last-week:before {
+    content: "M";
+}
+.icon-lock:before {
+    content: "N";
+}
+.icon-look-and-feel:before {
+    content: "O";
+}
+.icon-list:before,
+.icon-menu:before {
+    content: "P";
+}
+.icon-menu2:before {
+    content: "Q";
+}
+.icon-minus:before {
+    content: "R";
+}
+.icon-next-week:before {
+    content: "S";
+}
+.icon-clear:before,
+.icon-no:before {
+    content: "T";
+}
+.icon-operations:before {
+    content: "U";
+}
+.icon-payment:before {
+    content: "V";
+}
+.icon-payment-setup:before {
+    content: "W";
+}
+.icon-person:before {
+    content: "X";
+}
+.icon-phone2:before {
+    content: "Y";
+}
+.icon-phone:before {
+    content: "Z";
+}
+.icon-picture:before {
+    content: "0";
+}
+.icon-plus:before {
+    content: "1";
+}
+.icon-pos:before {
+    content: "2";
+}
+.icon-pos-config:before {
+    content: "3";
+}
+.icon-pos-setup:before {
+    content: "4";
+}
+.icon-print:before {
+    content: "5";
+}
+.icon-product-categories:before {
+    content: "6";
+}
+.icon-products:before {
+    content: "\e000";
+}
+.icon-receipt:before {
+    content: "8";
+}
+.icon-refresh:before {
+    content: "9";
+}
+.icon-refund:before {
+    content: "!";
+}
+.icon-regional-settings:before {
+    content: "\"";
+}
+.icon-connection-settings:before {
+    content: "9";
+}
+.icon-roles:before {
+    content: "#";
+}
+.icon-roster:before {
+    content: "$";
+}
+.icon-roster-activities:before {
+    content: "%";
+}
+.icon-all-day:before,
+.icon-roster-today:before {
+    content: "&";
+}
+.icon-services:before {
+    content: "'";
+}
+.icon-suppliers:before {
+    content: "(";
+}
+.icon-tag:before {
+    content: ")";
+}
+.icon-tag-all:before {
+    content: "*";
+}
+.icon-tasks:before {
+    content: "+";
+}
+.icon-tax:before {
+    content: ",";
+}
+.icon-transactions:before {
+    content: "-";
+}
+.icon-triangle-down:before,
+.icon-toggle-expanded:before {
+    content: ".";
+}
+.icon-triangle-left:before {
+    content: "/";
+}
+.icon-triangle-right:before,
+.icon-toggle-collapsed:before {
+    content: ":";
+}
+.icon-triangle-up:before {
+    content: ";";
+}
+.icon-undo:before {
+    content: "<";
+}
+.icon-unlock:before {
+    content: "=";
+}
+.icon-up:before {
+    content: ">";
+}
+.icon-warning:before {
+    content: "?";
+}
+.icon-wizard:before {
+    content: "@";
+}
+.icon-checkmark:before,
+.icon-yes:before {
+    content: "[";
+}
+.icon-club:before {
+    content: "]";
+}
+.icon-signup:before {
+    content: "^";
+}
+.icon-birthday:before {
+    content: "_";
+}
+.icon-check:before {
+    content: "`";
+}
+.icon-trading-summary:before {
+    content: "|";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-reports:before {
+    content: "#";
+}
+.icon-roles:before {
+    content: "#";
+}
+.icon-reports:before {
+    content: "{";
+}
+.icon-services:before {
+    content: "'";
+}
+.icon-reports-1:before {
+    content: "}";
+}
+.icon-products:before {
+    content: "7";
+}
+.icon-products:before {
+    content: "\e000";
+}
+.icon-support:before {
+    content: "~";
+}
+.icon-copy:before {
+    content: "\\";
+}
+.icon-move:before {
+    content: "\e001";
+}
+.icon-multipleshifts:before {
+    content: "\e002";
+}
+.icon-product-sales-summary:before {
+    content: "\e003";
+}
+.icon-warning:before {
+    content: "?";
+}
+.icon-clock:before {
+    content: "\e004";
+}
+.icon-public-holiday:before {
+    content: "\e005";
+}
+.icon-customize-view:before {
+    content: "\e006";
+}
+.icon-service-sales-analysis:before {
+    content: "\e007";
+}
+.icon-bookme:before {
+    content: "\e008";
+}
+.icon-booking-analysis:before {
+    content: "\e009";
+}
+.icon-service-sales-analysis:before {
+    content: "\e007";
+}
+.icon-item-setup:before {
+    content: "L";
+}
+.icon-pin:before {
+    content: "\e00a";
+}
+.icon-product-sales-summary:before {
+    content: "\e003";
+}
+.icon-employees-utilisation:before {
+    content: "\e00b";
+}
+.icon-sales-summary:before {
+    content: "\e00c";
+}
+.icon-day-view:before {
+    content: "\e00d";
+}
+.icon-week-view:before {
+    content: "\e00e";
+}
+.icon-export:before {
+  content: "\e00f";
+}
+.icon-appointment-log:before {
+  content: "\e010";
+}
+.icon-employee-performance:before {
+  content: "\e011";
+}

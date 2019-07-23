@@ -1,0 +1,313 @@
+#topBar,
+#bottomBar {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  z-index: 999;
+  -webkit-transition: -webkit-transform ease 0.5s;
+  transition: transform ease 0.5s;
+}
+#topBar {
+  top: 0;
+  width: 100%;
+  height: 6rem;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+}
+#topBar.hidden {
+  -webkit-transform: translate3d(0, -110%, 0);
+  transform: translate3d(0, -110%, 0);
+}
+#topBar.iOSTopPadding {
+  padding-top: 2rem;
+}
+#bottomBar {
+  bottom: 0;
+  height: 6rem;
+  overflow: hidden;
+}
+#bottomBar.hidden {
+  -webkit-transform: translate3d(0, 110%, 0);
+  transform: translate3d(0, 110%, 0);
+}
+#bottomBar .bottomButton {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  -webkit-transition: -webkit-transform ease 0.6s;
+  transition: transform ease 0.6s;
+}
+.bottomButton > .buttonDetails {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+  -webkit-transition: width ease 0.6s;
+  transition: width ease 0.6s;
+}
+.bottomButton > .buttonDetails > div {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  opacity: 1;
+  padding-top: 1rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  -webkit-transition: opacity ease 0.6s;
+  transition: opacity ease 0.6s;
+}
+.bottomButton > .buttonDetails > div.hidden {
+  opacity: 0;
+}
+.bottomButton > .buttonDetails .buttonIcon {
+  font-size: 2.5rem;
+  line-height: 0.9;
+}
+#topBar > div {
+  height: 100%;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+#topBar > .topButtons {
+  width: 4.800000000000001rem;
+  position: relative;
+  float: left;
+}
+#topBar > .topButtons.floatRight {
+  float: right;
+}
+#topBar > .topButtons > .topBackButton,
+#topBar > .topButtons > .topMenuButton,
+#topBar > .topButtons > .topCycleButton,
+#topBar > .topButtons > .topMapButton,
+#topBar .greetingText {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: -webkit-transform ease 0.4s, opacity ease 0.4s;
+  transition: transform ease 0.4s, opacity ease 0.4s;
+}
+#topBar > .titleText {
+  position: relative;
+  pointer-events: none;
+}
+#topBar .greetingText {
+  padding: 0 4.800000000000001rem;
+}
+#topBar.hidden .topBackButton,
+#topBar.hidden .topMenuButton,
+#topBar.hidden .topCycleButton,
+#topBar.hidden .topMapButton,
+#topBar.hidden .greetingText {
+  -webkit-transition: none;
+  transition: none;
+}
+#topBar .topButtons:not(.backButtonActive) > .topBackButton,
+#topBar .topButtons.backButtonActive > .topMenuButton,
+#topBar .topButtons.backButtonActive + .topButtons > .topCycleButton,
+#topBar .topButtons > .topCycleButton.hidden,
+#topBar .topButtons > .topMapButton.hidden,
+#topBar .greetingText.hidden {
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transform: translate3d(0, -1rem, 0);
+  transform: translate3d(0, -1rem, 0);
+}
+#topBar .topMenuText {
+  margin-top: 0.3rem;
+  /* Realign the menu icon with the rest of the text */
+}
+#topBar.setupScreen .topMenuButton,
+#topBar.setupScreen .topCycleButton,
+#topBar.setupScreen .topMapButton {
+  display: none;
+}
+#topBar > .topButtons > .topCycleButton {
+  margin-top: -2px;
+}
+#loadingIndicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  -webkit-transition: 0.5s opacity ease;
+  transition: 0.5s opacity ease;
+}
+#loadingIndicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+#loadingIndicator > .progressBar {
+  position: absolute;
+  width: 2.5rem;
+  height: 0.3rem;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  border-radius: 100%;
+  animation: progressBarSlide 1500ms infinite ease-in-out;
+  -webkit-animation: progressBarSlide 1500ms infinite ease-in-out;
+  -moz-animation: progressBarSlide 1500ms infinite ease-in-out;
+  background-color: turquoise;
+  box-shadow: 0px 0px 1rem 0.5rem #40e0d0, 0px 0px 3rem 0.5rem #40e0d0;
+  -webkit-box-shadow: 0px 0px 1rem 0.5rem #40e0d0, 0px 0px 3rem 0.5rem #40e0d0;
+}
+#loadingIndicator.hidden > .progressBar {
+  display: none;
+  animation: none;
+  -webkit-animation: none;
+  -moz-animation: none;
+}
+@-webkit-keyframes progressBarSlide {
+  0% {
+    -webkit-transform: translate3d(-16rem, 0, 0);
+    transform: translate3d(-16rem, 0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(16rem, 0, 0);
+    transform: translate3d(16rem, 0, 0);
+    opacity: 0;
+  }
+}
+@-moz-keyframes progressBarSlide {
+  0% {
+    -moz-transform: translate3d(-16rem, 0, 0);
+    transform: translate3d(-16rem, 0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -moz-transform: translate3d(16rem, 0, 0);
+    transform: translate3d(16rem, 0, 0);
+    opacity: 0;
+  }
+}
+@keyframes progressBarSlide {
+  0% {
+    -webkit-transform: translate3d(-16rem, 0, 0);
+    transform: translate3d(-16rem, 0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translate3d(16rem, 0, 0);
+    transform: translate3d(16rem, 0, 0);
+    opacity: 0;
+  }
+}
+#bottomBar:not(.hidden) ~ .transitionPage > .pageContainer > *:only-child {
+  padding-bottom: 7rem !important;
+}
+.scrollsBeneathTopBar {
+  padding-top: 7rem !important;
+}
+#topBar.iOSTopPadding ~ .transitionPage .scrollsBeneathTopBar {
+  padding-top: 9rem !important;
+}
+#bottomBar:not(.hidden) ~ #sidebarOptions {
+  padding-bottom: 6rem;
+}
+#topBar:not(.hidden) ~ #sidebarOptions {
+  padding-top: 6rem;
+}
+#topBar.iOSTopPadding:not(.hidden) ~ #sidebarOptions {
+  padding-top: 8rem;
+}
+#sidebarOptions {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  width: 23rem;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transform: translate3d(-7.666666666666667rem, 0, 0);
+  transform: translate3d(-7.666666666666667rem, 0, 0);
+  -webkit-transition: -webkit-transform ease 0.5s;
+  transition: transform ease 0.5s;
+}
+#main.showSidebar > #sidebarOptions {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#main.showSidebar > .transitionPage,
+#main.showSidebar > #sidebarBlocker {
+  -webkit-transform: translate3d(23rem, 0, 0);
+  transform: translate3d(23rem, 0, 0);
+}
+#sidebarBlocker {
+  z-index: 900;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  -webkit-transition: -webkit-transform ease 0.5s, opacity ease 0.5s;
+  transition: transform ease 0.5s, opacity ease 0.5s;
+}
+#main.showSidebar > #sidebarBlocker {
+  opacity: 1;
+  pointer-events: all;
+}
+#sidebarOptions > .option {
+  padding: 1.3rem 0;
+  margin: 0 1rem;
+  font-size: 130%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#sidebarOptions > .option:not(:first-child) {
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+#sidebarOptions > .option > .text {
+  padding-left: 1rem;
+}
+#topBar.setupScreen {
+  background-color: #cb585b;
+  color: white;
+}

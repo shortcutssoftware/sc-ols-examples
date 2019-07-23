@@ -1,0 +1,159 @@
+#dashboardMain .tile-row {
+  width: 100%;
+  max-width: 50rem;
+  display: table;
+  margin: auto;
+}
+#dashboardMain .tile.selectedTile {
+  -webkit-transition: -webkit-transform ease 0.4s;
+  transition: transform ease 0.4s;
+}
+#dashboardMain .tile.showing {
+  opacity: 1;
+  -webkit-transform: perspective(2000);
+  transform: perspective(2000);
+}
+#dashboardMain .tile {
+  border: 0.5rem solid transparent;
+  position: relative;
+  min-height: 11rem;
+  background-clip: padding-box;
+  display: table-cell;
+  -webkit-transition: -webkit-transform ease-out 0.3s, opacity ease-out 0.3s;
+  transition: transform ease-out 0.3s, opacity ease-out 0.3s;
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  overflow: hidden;
+  opacity: 0;
+  -webkit-transform: perspective(2000) rotateX(35deg) rotateY(-40deg);
+  transform: perspective(2000) rotateX(35deg) rotateY(-40deg);
+}
+#dashboardMain .tile > * {
+  position: absolute;
+}
+#dashboardMain .tile .numberAlert {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border-radius: 100%;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  content: attr(data-number-alert);
+  font-size: 1.6rem;
+  line-height: 3ex;
+  width: 3ex;
+  height: 3ex;
+}
+#dashboardMain .tile .numberAlertAvoider {
+  float: right;
+  font-size: 1.6rem;
+  width: 3ex;
+  height: 3ex;
+}
+#dashboardMain .tile .photoBackground {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+#dashboardMain .tile > div.label {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+#dashboardMain .tile > div.label > span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+#dashboardMain .tile .appointmentRow {
+  padding-bottom: 1rem;
+}
+#dashboardMain .tile .appointmentRow:before {
+  font-family: "saas-icons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-right: 0.5rem;
+  content: "&";
+}
+#dashboardMain .balancePointsText {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+#dashboardMain .balancePointsText > span {
+  font-size: 2.5rem;
+}
+#dashboardMain .tile[data-number-alert="0"] .numberAlert,
+#dashboardMain .tile[data-number-alert="0"] .numberAlertAvoider {
+  display: none;
+}
+#dashboardMain .liveTile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  visibility: hidden;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1rem;
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
+}
+#dashboardMain .liveTile.previousLiveTile {
+  visibility: visible;
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
+#dashboardMain .liveTile.currentLiveTile {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+#dashboardMain.inited .liveTile.previousLiveTile,
+#dashboardMain.inited .liveTile.currentLiveTile {
+  -webkit-transition: -webkit-transform ease 0.9s;
+  transition: transform ease 0.9s;
+}
+table.availability {
+  table-layout: fixed;
+  width: 90%;
+  min-width: 125px;
+  font-size: 1.1rem;
+  margin: 1rem auto;
+}
+table.availability .barBg {
+  width: 0.6rem;
+  height: 3.5rem;
+  margin: 0 auto;
+  padding: 0.3rem;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+table.availability .barBg > .bar {
+  width: 100%;
+  height: 100%;
+  -webkit-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-transition: -webkit-transform ease 0.4s, background-color ease 0.4s;
+  transition: transform ease 0.4s, background-color ease 0.4s;
+  -webkit-transform: scaleY(1);
+  transform: scaleY(1);
+  background-color: #00bb00;
+}
+.tile:not(.showing) table.availability .bar {
+  -webkit-transform: scaleY(0) !important;
+  transform: scaleY(0) !important;
+}
