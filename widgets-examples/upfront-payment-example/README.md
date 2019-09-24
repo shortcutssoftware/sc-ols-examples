@@ -37,13 +37,9 @@ This website has been designed to be able to be run independently of a dynamic s
 1. The site is configured to accept Stripe as the payment provider. (Please contact Shortcuts Support to enable the site accepting the Stripe payment).
 
 
-## How to add in Upfront payment support to webwidget 
+## How to add in Upfront payment support to webwidget
 
-- Add in the Stripe js script snippet to the HTML page that serves the webwidget.
-
-```
-<script src="https://checkout.stripe.com/checkout.js"></script>
-```
+- The Stripe script tag will be loaded during runtime by the WebWidget script.
 
 - In the webwidget config (where the OAuth secret key is defined), the following configuration must be added to the config, or the webwidget will not enable the upfront payment capability.
 

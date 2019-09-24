@@ -1,8 +1,8 @@
 ﻿define(function () {
     return {
-        widgetBaseUri: 'd19ujuohqco9tx.cloudfront.net/webwidgets/7-17-30-50052',
+        widgetBaseUri: 'd19ujuohqco9tx.cloudfront.net/webwidgets/7-20-12-84',
         apiUri: 'pos.shortcutssoftware.com/webapi',
-        apiVersion: '7.17.30',
+        apiVersion: '7.20.12.84',
         culture: 'en-us',
         // IMPORTANT
         // In a production system, these should be provided by dynamic AJAX call, session cookie
