@@ -80,6 +80,8 @@ public class SalonAuthorizationServer {
         validatedCredentials.setFirstName(authenticationCredentials.getFirstName());
         validatedCredentials.setLastName(authenticationCredentials.getLastName());
         validatedCredentials.setEmail(authenticationCredentials.getEmail());
+        validatedCredentials.setPhoneNumber(authenticationCredentials.getPhoneNumber());
+
         return validatedCredentials;
     }
 

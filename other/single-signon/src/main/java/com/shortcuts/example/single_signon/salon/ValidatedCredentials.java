@@ -9,6 +9,7 @@ public class ValidatedCredentials {
     private String firstName;
     private String lastName;
     private String email;
+    private String phoneNumber;
 
     @JsonProperty("first_name")
     public String getFirstName() {
@@ -36,4 +37,9 @@ public class ValidatedCredentials {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @JsonProperty("phone_number")
+    public String getPhoneNumber() {return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 }
